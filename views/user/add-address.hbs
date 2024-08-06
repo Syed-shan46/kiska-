@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add-Address</title>
+</head>
+
+<body>
+    <div class="container pb-2">
+        <form action="/post-address" method="post">
+            <input type="hidden" name="totalAmount" value="1000">
+            <div class="row">
+                <div class="col-lg-9">
+                    <input type="hidden" name="userId" value="{{userId}}">
+                    <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label> Name *</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div><!-- End .col-sm-6 -->
+                    </div><!-- End .row -->
+
+
+                    <label>house *</label>
+                    <input type="text" class="form-control" name="house" required>
+
+                    <label>Street address *</label>
+                    <input type="text" class="form-control" placeholder="House number and Street name" name="street"
+                        required>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Town / City *</label>
+                            <input type="text" class="form-control" name="city" required>
+                        </div><!-- End .col-sm-6 -->
+                    </div><!-- End .row -->
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>state *</label>
+                            <input type="text" class="form-control" name="state" required>
+                        </div><!-- End .col-sm-6 -->
+                    </div><!-- End .row -->
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Postcode / ZIP *</label>
+                            <input type="text" class="form-control" name="zipCode" required>
+                        </div><!-- End .col-sm-6 -->
+
+                        <div class="col-sm-6">
+                            <label>Phone *</label>
+                            <input type="tel" class="form-control" name="phone" required>
+                        </div><!-- End .col-sm-6 -->
+                    </div><!-- End .row -->
+
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+
+
+                </div><!-- End .col-lg-9 -->
+
+            </div><!-- End .row -->
+        </form>
+    </div>
+</body>
+
+</html>

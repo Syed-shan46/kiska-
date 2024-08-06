@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="container">
+        {{>admin-header}}
+        <div class="container mt-5 pt-5 pb-5">
+            <form action="/admin/update-product/{{product._id}}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_id" value="{{product._id}}">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="">
+                            <div class="form-group ">
+                                <label for="">Name</label>
+                                <input type="text" class="form-control" name="name" value="{{product.name}}">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="">Price</label>
+                                    <input type="text" name="price" class="form-control" id=""
+                                        value="{{product.price}}">
+                                </div>
+
+
+                                <div class="form-group col-md-6">
+                                    <label for="">Category</label>
+                                    <select id="category" class="form-control" name="category" required>
+                                        {{#each categories}}
+                                        <option value="{{this._id}}" {{#if (eq this._id
+                                            ../product.category)}}selected{{/if}}>{{this.categoryName}}</option>
+                                        {{/each}}
+                                    </select>
+
+                                    {{!-- <option value="Mobile" {{#if (eq product.category "Mobile" )}}selected{{/if}}>
+                                        Mobile
+                                    </option>
+                                    <option value="Shoes" {{#if (eq product.category "Shoes" )}}selected{{/if}}>
+                                        Shoes
+                                    </option> --}}
+
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="mainImage" class="form-label">Main image </label>
+                                        <input type="file" id="mainImage" class="form-control" name="mainImage"
+                                            accept="image/*">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="images" class="form-label">Images </label>
+                                        <input type="file" id="images" class="form-control" name="images"
+                                            accept="image/*" multiple>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            {{!-- <div class="form-group col-md-6">
+                                <img id="imagePreview" src="/images/{{product.image}}" alt="Image Preview"
+                                    style="max-width: 100%; height: 50px;">
+                            </div> --}}
+
+                            <div class="col-12">
+                                <label for="">Description</label>
+
+                                <textarea class="form-control" rows="7" name="description"
+                                    id="">{{product.description}}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Update</button>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

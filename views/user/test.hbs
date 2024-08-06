@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+</head>
+<body>
+    <h1>Order Details</h1>
+    <p>Order ID: {{order.orderId}}</p>
+    <p>User ID: {{order.userId}}</p>
+    <p>Order Status: {{order.orderStatus}}</p>
+    <p>Payment Status: {{order.paymentStatus}}</p>
+    <p>Order Date: {{order.orderDate}}</p>
+
+    <h2>Products:</h2>
+    <ul>
+        {{#each order.products}}
+        <li>
+            <p>Product ID: {{this.productId._id}}</p>
+            <p>Product Name: {{this.productId.name}}</p>
+            <p>Quantity: {{this.quantity}}</p>
+            <p>Price: {{this.productId.price}}</p>
+        </li>
+        {{/each}}
+    </ul>
+
+    <h2>Total Amount: {{order.totalAmount}}</h2>
+</body>
+</html>

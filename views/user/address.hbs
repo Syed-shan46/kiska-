@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+
+                <div class="row justify-content-center">
+
+
+                    <div class="col-md-8 col-lg-8 justify-content-center">
+                        <div class="tab-content">
+
+
+                            <div class="tab-pane fade show active" id="tab-account" role="tabpanel"
+                                aria-labelledby="tab-account-link">
+                                <div>
+
+
+
+                                    <div class="row">
+                                        {{#each userData.addresses}}
+                                        <div class="col-lg-6">
+                                            <div class="card card-dashboard">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">Address {{@index}} :</h3>
+                                                    <!-- End .card-title -->
+
+                                                    <p>
+                                                        Name: {{this.name}}<br>
+                                                        House: {{this.house}}<br>
+                                                        Street: {{this.street}}<br>
+                                                        Place: {{this.city}}, {{this.state}}<br>
+                                                        ZipCode: {{this.zipCode}}<br>
+                                                        Phone: {{this.phone}}<br>
+                                                    </p>
+
+                                                    <div class="d-flex justify-content-between">
+                                                        <button class="btn"
+                                                            onclick="editAddress('{{{json this}}}', '{{@index}}')">
+                                                            <i class="icon-edit" style="font-size: 20px;"></i>
+                                                        </button>
+
+                                                        <button class="btn" onclick="removeAddress('{{@index}}')">
+                                                            <i class="icon-close" style="font-size: 20px;"></i>
+                                                        </button>
+                                                    </div>
+                                                </div><!-- End .card-body -->
+                                            </div><!-- End .card-dashboard -->
+                                        </div><!-- End .col-lg-6 -->
+                                        {{/each}}
+
+                                        <hr>
+                                    </div>
+
+                                </div><!-- .End .tab-pane -->
+                            </div>
+                        </div><!-- End .col-lg-9 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+                <div class="row add-Address bg-lighter justify-content-center mb-5" id="Add-first-Address">
+                    <div class="address-card">
+                        <div class="address-content">
+                            <h3 class="text-custom-color">ADD Address</h3>
+                        </div>
+                        <div class="add-button">
+
+                            <button class="btn btn-primary btn-circle" onclick="addAddress(true,false)">
+                                <i class="icon-plus"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- End .dashboard -->
+        </div><!-- End .page-content -->
+
+        <script>
+            Handlebars.registerHelper('json', function (context) {
+                return JSON.stringify(context);
+            });
+        </script>
+</body>
+
+</html>

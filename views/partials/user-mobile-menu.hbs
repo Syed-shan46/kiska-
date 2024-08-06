@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container mobile-menu-dark">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+            <form action="#" method="get" class="mobile-search">
+                <label for="mobile-search" class="sr-only">Search</label>
+                <input type="search" class="form-control srch" name="mobile-search" id="mobile-search"
+                    placeholder="Search in..." required>
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </form>
+
+
+
+            <div class="tab-content">
+                    <div class="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel"
+                        aria-labelledby="mobile-menu-link">
+                        <nav class="mobile-nav">
+                            <ul class="mobile-menu">
+                                <li class="active">
+                                    <a href="/">Home</a>   
+                                </li>
+                                <li>
+                                    <a href="/store">Store</a>
+                                    
+                                </li>
+                                <li>
+                                    <a href="product.html" class="sf-with-ul">Orders</a>
+                                    
+                                </li>
+                                <li>
+                                    <a href="#">Profile</a>
+                                    
+                                </li>
+                            </ul>
+                        </nav><!-- End .mobile-nav -->
+                    </div><!-- .End .tab-pane -->
+                <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
+                    <nav class="mobile-cats-nav">
+                        <ul class="mobile-cats-menu">
+                            <li><a class="mobile-cats-lead" href="#">Daily offers</a></li>
+                            <li><a class="mobile-cats-lead" href="#">Gift Ideas</a></li>
+                            <li><a href="#">Beds</a></li>
+                            <li><a href="#">Lighting</a></li>
+                            <li><a href="#">Sofas & Sleeper sofas</a></li>
+                            <li><a href="#">Storage</a></li>
+                            <li><a href="#">Armchairs & Chaises</a></li>
+                            <li><a href="#">Decoration </a></li>
+                            <li><a href="#">Kitchen Cabinets</a></li>
+                            <li><a href="#">Coffee & Tables</a></li>
+                            <li><a href="#">Outdoor Furniture </a></li>
+                        </ul><!-- End .mobile-cats-menu -->
+                    </nav><!-- End .mobile-cats-nav -->
+                </div><!-- .End .tab-pane -->
+            </div><!-- End .tab-content -->
+
+            {{#if isLoggedIn }}
+            <form action="/logout" class="ml-4" method="post">
+                <button class="btn btn-danger" type="submit">Logout</button>
+            </form>
+            {{else}}
+            <button onclick="window.location.href='/register'" class="btn btn-danger btn-sm ml-4">Login</button>
+            {{/if}}
+            <div class="social-icons mt-2">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+  const menuItems = document.querySelectorAll(".mobile-menu li");
+
+  menuItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      // Remove 'active' class from all items
+      menuItems.forEach((el) => el.classList.remove("active"));
+
+      // Add 'active' class to the clicked item
+      this.classList.add("active");
+
+      // Debugging: Log the class list of the clicked item
+      console.log(this.classList);
+    });
+  });
+});
+
+    </script>
+</body>
+
+</html>

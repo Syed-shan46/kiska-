@@ -1,0 +1,41 @@
+body,
+html {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    /* Prevent horizontal overflow */
+}
+
+.btn {
+    border-radius: 8px !important;
+}
+
+.header-intro-clearance {
+    background-color: #1d2228 !important;
+}
+
+.search-btn {
+    border-radius: 0 !important;
+}
+
+.icon-bars {
+    font-size: 22px;
+}
+
+.cart-btn-head {
+    font-size: 30px;
+}
+
+.intro-content {
+    margin-top: 100px !important;
+}
+
+.intro-title{
+    color:#6c757d !important;
+    text-shadow: 1px 1px 3px rgb(0 0 0);
+    font-weight: 500 !important;
+}
+
+.srch {
+    border-radius: 8px !important;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="mt-5 pt-5"></div>
+    <h1>Order Details</h1>
+    <p>Order ID: {{order.orderId}}</p>
+    <p>Customer: {{order.userId.name}}</p>
+    <p>Email: {{order.userId.email}}</p>
+    <p>Phone: {{order.userId.phone}}</p>
+    <p>Date: {{order.orderDate}}</p>
+    <p>Status: {{order.orderStatus}}</p>
+    <p>Payment Status: {{order.paymentStatus}}</p>
+
+    <h2>Shipping Address</h2>
+    <p>{{order.address.[0].house}}</p>
+    <p>{{order.address.[0].street}}, {{order.address.[0].city}}</p>
+    <p>{{order.address.[0].state}}, {{order.address.[0].zipCode}}</p>
+
+    <h2>Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th class="pl-3">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each order.products}}
+            <tr>
+                <td>{{this.productId.name}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.productId.price}}</td>
+                <td>{{this.totalAmount}}</td>
+                <td><img src="/images/{{this.productId.image}}" width="70px" alt=""></td>
+
+            </tr>
+            {{/each}}
+
+        </tbody>
+
+    </table>
+
+    <h5><b>Total:</b> {{order.totalAmount}}</h5>
+
+</body>
+
+</html>

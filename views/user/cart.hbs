@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .card {}
+
+        .icon-cart {
+
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            border: 1px solid red;
+            border-color: rgb(174, 162, 162);
+
+        }
+
+        .qty {
+            width: 30px;
+            height: 30;
+            display: flex;
+            justify-content: center;
+            border: 1px solid red;
+            border-color: rgb(174, 162, 162);
+        }
+
+        .qty-no {
+            margin-top: 2px;
+        }
+
+        .title {
+            font-size: 14px;
+        }
+
+        .remove-btn {
+            background-color: rgba(255, 0, 0, 0.852);
+            width: 30px !important;
+            border-radius: 2px;
+            height: 30px !important;
+        }
+
+        .btns {
+            border: none !important;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    {{!-- This will not include any additional styles --}}
+
+
+    <div class="">
+
+        <main class="main  pt-5">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+            <div class="container page-content">
+                <div class="row mt-md-5 pt-md-5">
+                    {{#if cartItems.length }}
+                    {{#each cartItems }}
+                    <main class="col-md-9">
+                        <article class="card mb-3 p-4">
+
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <a href="/product/{{this.product._id}}">
+                                                <div class="itemside">
+                                                    <div class=""><img src="/images/{{this.product.mainImage}}"
+                                                            width="100px" height="100px" class="border img-sm">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <span class="text-muted">{{this.product.category}}</span><br>
+                                            <a href="#" class="title">{{this.product.name}} </a><br>
+                                            <span class="text-muted">For each: ₹{{this.product.price}}</span>
+                                        </div>
+                                    </div>
+                                </div> <!-- col.// -->
+
+                                <div class="col ">
+                                    <div class="row ">
+                                        <div class="col">
+                                            <div class="row ml-1">
+                                                <form action="/cart/decrease" method="POST">
+                                                    <input type="hidden" name="cartItemId" value="{{this._id}}">
+                                                    <div class="icon-cart">
+                                                        <button class="btn" type="submit">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                                <div class="qty">
+                                                    <div class="qty-no">{{this.quantity}}</div>
+                                                </div>
+                                                <form action="/cart/increase" method="POST">
+                                                    <input type="hidden" name="cartItemId" value="{{this._id}}">
+                                                    <div class="icon-cart">
+                                                        <button class="btn" type="submit">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col mt-2">
+                                    <div class="price h5">₹ {{this.eachTotal}}</div>
+                                </div>
+                                <form action="/cart/remove" method="POST">
+                                    <input type="hidden" name="cartItemId" value="{{this._id}}">
+                                    <div class="col flex-grow-0 text-right">
+                                        <button type="submit" class="btn">
+                                            <div href="#" class="btn remove-btn"> <i class="fa fa-times text-white"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div> <!-- row.// -->
+                        </article> <!-- card .// -->
+                    </main> <!-- col.// -->
+
+
+                    {{/each}}
+                    {{/if}}
+                    {{#if cartItems }}
+                    <main class="col-lg-4">
+                        <div class="summary summary-cart">
+
+
+                            <h3 class="summary-title">Cart Total
+                            </h3>
+                            <table class="table table-summary">
+                                <tbody>
+                                    <tr class="summary-subtotal">
+                                        <td>Subtotal:</td>
+                                        <td> ₹ {{totalAmount}}</td>
+                                    </tr><!-- End .summary-subtotal -->
+                                    <tr class="summary-shipping">
+                                        <td>Shipping:</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+
+                                    <tr class="summary-shipping-row">
+                                        <td>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="free-shipping" name="shipping"
+                                                    class="custom-control-input">
+                                                <label class="custom-control-label" for="free-shipping">Free
+                                                    Shipping</label>
+                                            </div><!-- End .custom-control -->
+                                        </td>
+                                        <td>₹0.00</td>
+                                    </tr><!-- End .summary-shipping-row -->
+
+                                    <tr class="summary-shipping-row">
+                                        <td>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="standart-shipping" name="shipping"
+                                                    class="custom-control-input">
+                                                <label class="custom-control-label"
+                                                    for="standart-shipping">Standard:</label>
+                                            </div><!-- End .custom-control -->
+                                        </td>
+                                        <td>₹10.00</td>
+                                    </tr><!-- End .summary-shipping-row -->
+
+                                    <tr class="summary-shipping-row">
+                                        <td>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="express-shipping" name="shipping"
+                                                    class="custom-control-input">
+                                                <label class="custom-control-label"
+                                                    for="express-shipping">Express:</label>
+                                            </div><!-- End .custom-control -->
+                                        </td>
+                                        <td>₹20.00</td>
+                                    </tr><!-- End .summary-shipping-row -->
+
+                                    <tr class="summary-shipping-estimate">
+                                        <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a>
+                                        </td>
+                                        <td>&nbsp;</td>
+                                    </tr><!-- End .summary-shipping-estimate -->
+
+                                    <tr class="summary-total">
+                                        <td>Total:</td>
+                                        <td>₹{{this.totalAmount}}</td>
+                                    </tr><!-- End .summary-total -->
+                                </tbody>
+                            </table><!-- End .table table-summary -->
+
+                            <a href="cart/checkout" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO
+                                CHECKOUT</a>
+                        </div><!-- End .summary -->
+
+                        <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
+                                SHOPPING</span><i class="icon-refresh"></i></a>
+                    </main><!-- End .col-lg-3 -->
+                    {{else}}
+                    <div class="container mt-5 pt-5">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <h3>No items in cart</h3>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="/" class="btn btn-dark">Go to Home <i class="icon-long-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                </div> <!-- row.// -->
+            </div><!-- End .cart -->
+    </div><!-- End .page-content -->
+    {{>user-mobile-menu}}
+    </main><!-- End .main -->
+    </div>
+</body>
+
+</html>

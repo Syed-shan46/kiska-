@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .card-dashboard {
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.744);
+    }
+    .summary {
+        border-radius: 10px;
+    }
+</style>
+<body>
+    <div class="page-content mt-5">
+         <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/cart">Cart</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+        <div class="checkout">
+            <div class="container">
+                <div class="checkout-discount">
+                    {{!-- <form action="">
+                        <input type="text" class="form-control" required id="checkout-discount-input">
+                        <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to
+                                enter
+                                your code</span></label>
+                    </form> --}}
+                    {{!-- {{#each userAddress.addresses }} --}}
+                </div><!-- End .checkout-discount -->
+                <form action="/create-payment" method="post">
+                    <div class="row">
+                        <div class="col-lg-9 justify-content-center align-items-center">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    {{#if (eq userAddress.addresses.length 0)}}
+                                    <h3 class="card-title">No address added..!</h3><!-- End .card-title -->
+                                    <a href="/profile/address" class="btn btn-outline-dark-2 mt-2">
+                                        <span>Add Address</span><i class="icon-long-arrow-right"></i>
+                                    </a>
+                                    {{else}}
+                                    <h3 class="card-title">Select an address</h3><!-- End .card-title -->
+                                    {{/if}}
+
+                                    {{#each userAddress.addresses }}
+                                    <div class="card card-dashboard mt-2">
+                                        <div class="card p-4">
+                                            <div class="form-check ">
+                                                <input class="form-check-input" type="radio" name="addressRadio"
+                                                    id="address-{{@index}}" value="{{@index}}">
+                                                <label class="form-check-label ml-4" for="address-{{@index}}">
+                                                    {{house}}<br>
+                                                    {{street}}, {{city}}, {{state}}, {{zipCode}}<br>
+                                                    {{phone}}
+                                                </label>
+                                            </div>
+                                            <p id="selectedAddress"></p>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div><!-- End .col-lg-6 onchange="displaySelectedAddress(this.value)" -->
+                            </div>
+                            <!-- End .row <a href="#profilealertmodal"><i class="icon-arrow-up"></i>Remove Address</a> -->
+                            <div class="cart-bottom">
+                            </div><!-- End .cart-bottom -->
+                        </div><!-- End .col-lg-9 -->
+                        <aside class="col-lg-3">
+                            <div class="summary">
+                                <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+                                <table class="table table-summary">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {{#if cartItems.length }}
+                                        {{#each cartItems }}
+                                        <tr>
+                                            <td><a href="#">{{this.product.name}}</a></td>
+                                            <td>{{this.eachTotal}}</td>
+                                        </tr>
+                                        {{/each}}
+                                        {{/if}}
+
+
+                                        
+                                        <tr>
+                                            <td>Shipping:</td>
+                                            <td>Free shipping</td>
+                                        </tr>
+                                        <tr class="summary-total">
+                                            <td>Total:</td>
+                                            <td>{{totalAmount}}</td>
+                                        </tr><!-- End .summary-total -->
+                                    </tbody>
+                                </table><!-- End .table table-summary -->
+
+                                <div class="accordion-summary" id="accordion-payment">
+                                    <div class="card">
+
+
+                                    </div><!-- End .card -->
+
+
+                                    <div class="card">
+                                        <div class="card-header" id="heading-3">
+
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
+                                            data-parent="#accordion-payment">
+                                            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit
+                                                amet,
+                                                consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card">
+                                        <div class="card-header" id="heading-4">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse"
+                                                    href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                                                    Stripe <small class="float-right paypal-link">What is
+                                                        Stripe?</small>
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-4" class="collapse" aria-labelledby="heading-4"
+                                            data-parent="#accordion-payment">
+                                            <div class="card-body">
+                                                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non,
+                                                semper
+                                                suscipit, posuere a, pede. Donec nec justo eget felis facilisis
+                                                fermentum.
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+
+
+                                    <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block mt-2">
+                                        <span class="btn-text">Place Order</span>
+                                        <span class="btn-hover-text">Proceed to Checkout</span>
+                                    </button>
+                                </div><!-- End .summary -->
+                        </aside><!-- End .col-lg-3 -->
+                    </div><!-- End .row -->
+                </form>
+            </div><!-- End .container -->
+        </div><!-- End .checkout -->
+    </div><!-- End .page-content -->
+</body>
+
+</html>
