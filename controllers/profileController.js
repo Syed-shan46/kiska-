@@ -48,7 +48,7 @@ const getAddress = async (req, res) => {
             const orders = await Order.find({ userId }).populate('products.productId');
             res.render('user/profile', { userData, isLoggedIn: !!req.session.userId, orders });
         } else {
-            res.redirect('/login');
+            res.redirect('/register');
         }
     } catch (error) {
         console.error('Error in getProfile:', error);
