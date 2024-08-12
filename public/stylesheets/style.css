@@ -39,3 +39,19 @@ html {
 .srch {
     border-radius: 8px !important;
 }
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom of the screen */
+    right: 20px; /* Distance from the right side of the screen */
+    z-index: 100; /* Ensure it appears above other elements */
+}
+
+.watsapp-icon{
+    font-size: 24px;
+    padding: 11px;
+    align-items: center;
+    border-radius: 50px;
+   background-color: rgb(17, 203, 17);
+}
+
