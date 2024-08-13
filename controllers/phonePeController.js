@@ -54,55 +54,55 @@
 //         });
 // }
 
-// statusController = (req, res) => {
-//     const { merchantTransactionId } = req.params;
-//     if (merchantTransactionId) {
-//         const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX
-//         const options = {
-//             method: 'get',
-//             url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
-//             headers: {
-//                 accept: 'application/json',
-//                 'Content-Type': 'application/json',
-//                 "X-MERCHANT-ID": merchantTransactionId,
-//                 'X-VERIFY': xVerify,
-//             },
+// // statusController = (req, res) => {
+// //     const { merchantTransactionId } = req.params;
+// //     if (merchantTransactionId) {
+// //         const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX
+// //         const options = {
+// //             method: 'get',
+// //             url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
+// //             headers: {
+// //                 accept: 'application/json',
+// //                 'Content-Type': 'application/json',
+// //                 "X-MERCHANT-ID": merchantTransactionId,
+// //                 'X-VERIFY': xVerify,
+// //             },
 
-//         };
-//         axios
-//             .request(options)
-//             .then(function (response) {
-//                 console.log(response.data);
-//                 if (response.data.code === 'PAYMENT_SUCCESS') {
+// //         };
+// //         axios
+// //             .request(options)
+// //             .then(function (response) {
+// //                 console.log(response.data);
+// //                 if (response.data.code === 'PAYMENT_SUCCESS') {
                     
-//                 }
-//                 else if (response.data.code === 'PAYMENT_ERROR') {
-//                     // {
-//                     //     "success": false,
-//                     //     "code": "PAYMENT_ERROR",
-//                     //     "message": "Payment Failed",
-//                     //     "data": {
-//                     //       "merchantId": "PGTESTPAYUAT",
-//                     //       "merchantTransactionId": "MT7850590068188104",
-//                     //       "transactionId": "T2111221437456190170379",
-//                     //       "amount": 100,
-//                     //       "state": "FAILED",
-//                     //       "responseCode": "ZM",
-//                     //       "responseCodeDescription": "Invalid m-pin entered",
-//                     //       "paymentInstrument": null
-//                     //     }
-//                     //   }
+// //                 }
+// //                 else if (response.data.code === 'PAYMENT_ERROR') {
+// //                     // {
+// //                     //     "success": false,
+// //                     //     "code": "PAYMENT_ERROR",
+// //                     //     "message": "Payment Failed",
+// //                     //     "data": {
+// //                     //       "merchantId": "PGTESTPAYUAT",
+// //                     //       "merchantTransactionId": "MT7850590068188104",
+// //                     //       "transactionId": "T2111221437456190170379",
+// //                     //       "amount": 100,
+// //                     //       "state": "FAILED",
+// //                     //       "responseCode": "ZM",
+// //                     //       "responseCodeDescription": "Invalid m-pin entered",
+// //                     //       "paymentInstrument": null
+// //                     //     }
+// //                     //   }
 
-//                 }
-//             })
-//             .catch(function (error) {
-//                 console.error(error);
-//             });
-//         res.send({ merchantTransactionId });
-//     }
-//     else {
-//         res.send({ error: 'Error' });
-//     }
-// }
+// //                 }
+// //             })
+// //             .catch(function (error) {
+// //                 console.error(error);
+// //             });
+// //         res.send({ merchantTransactionId });
+// //     }
+// //     else {
+// //         res.send({ error: 'Error' });
+// //     }
+// // }
 
-// module.exports = { payController, statusController }
+// module.exports = { payController }
