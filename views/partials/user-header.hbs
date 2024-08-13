@@ -34,17 +34,25 @@
 
                     <div class="header-dropdown-link">
                         <div class="dropdown compare-dropdown">
-                            {{#if isLoggedIn}}
+
                             <div class="dropdown cart-dropdown">
 
 
+                                {{#if isLoggedIn }}
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false" data-display="static">
                                     <i class="icon-shopping-cart text-white cart-btn-header"></i>
                                     <span class="cart-count">{{cartCount}}</span>
 
                                 </a>
+                                {{else}}
+                                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" data-display="static">
+                                    <i class="icon-user text-white cart-btn-header" style="font-size: 30px;"></i>
+                                    
 
+                                </a>
+                                {{/if}}
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <div class="dropdown-cart-products ">
                                         {{#if cartItems.length }}
@@ -89,21 +97,22 @@
                                     <div class="mt-2"></div>
                                     {{/if}}
 
-
+                                    {{#if isLoggedIn }}
                                     <div class="dropdown-cart-action">
                                         <a href="/cart" class="btn btn-primary">View Cart</a>
                                         <a href="checkout.html"
                                             class="btn btn-outline-primary-2"><span>Checkout</span><i
                                                 class="icon-long-arrow-right"></i></a>
                                     </div><!-- End .dropdown-cart-total -->
+                                    {{else}}
+                                    <a href="/register" class="btn btn-primary">Login</a>
+                                    {{/if}}
                                 </div><!-- End .dropdown-menu -->
 
                             </div><!-- End .cart-dropdown -->
 
                         </div>
-                        {{else}}
-                        <a href="/register"><h3><i  class="icon-user text-white cart-btn-header"></i></h3></a>
-                        {{/if}}
+
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .container -->
