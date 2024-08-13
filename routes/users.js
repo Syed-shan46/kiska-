@@ -50,6 +50,6 @@ router.get('/category-columns', categoryColumns)
 router.get('/category-2columns', category2Columns);
 
 /// refund 
-router.get('/ref-can', (req, res) => {
+router.get('/refcan', (req, res) => {
     res.render('user/refund-cancel');
 })
