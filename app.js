@@ -45,7 +45,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fetchCartData);
 app.use(getCartCount);
-app.use(setIsLoggedIn);
+app.use(setIsLoggedIn); 
 
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);

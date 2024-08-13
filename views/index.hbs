@@ -48,9 +48,9 @@
 
 <body>
 
-    <main class="main">
-        <div class="intro-slider-container mt-lg-5 pt-lg-5 mt-3">
-            <div class="intro-slider owl-carousel owl-simple owl-nav-inside mt-lg-3" data-toggle="owl" data-owl-options='{
+    <main class="main  mt-lg-5 pt-lg-5 mt-3">
+        <div class="intro-slider-container">
+            <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl" data-owl-options='{
                         "nav": false,
                         "responsive": {
                             "992": {
@@ -221,14 +221,7 @@
                                     <img src="/images/{{this.mainImage}}" alt="Product image" class="product-image">
                                 </a>
 
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                            wishlist</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare"
-                                        title="Compare"><span>Compare</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
-                                        title="Quick view"><span>Quick view</span></a>
-                                </div><!-- End .product-action-vertical -->
+                                
 
 
                             </figure><!-- End .product-media -->
@@ -243,13 +236,12 @@
                                 <div class="product-price">
                                     ₹{{this.price}}{{this.quantity}}
                                 </div><!-- End .product-price -->
-
                             </div><!-- End .product-body -->
                             <form action="cart/add" method="POST">
                                 <input type="hidden" name="userId" value="{{../userId}}">
                                 <input type="hidden" name="productId" value="{{this._id}}">
 
-                                <button type="submit" class="btn btn-dark" title="Add to cart"><span>add
+                                <button type="submit" class="btn btn-dark ml-3" title="Add to cart"><span>add
                                         to
                                         cart</span></button>
 
@@ -261,7 +253,7 @@
 
                     </div><!-- End .owl-carousel -->
                     <div class="row justify-content-center">
-                        <a href="/store" class="btn btn-dark mt-1 text-white">Go to Store<i
+                        <a href="/store" class="btn btn-outline-dark mt-2"> STORE<i
                                 class="fa-solid fa-arrow-right-long"></i></a>
                     </div>
                 </div><!-- .End .tab-pane -->
@@ -2245,6 +2237,55 @@
                     </div><!-- End .row -->
                 </div><!-- End .container -->
             </div><!-- End .icon-boxes-container --> --}}
+
+            <footer class="footer">
+        	<div class="footer-middle">
+	            <div class="container">
+	            	<div class="row justify-content-center">
+	            		
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="about.html">About Kiska</a></li>
+	            					<li><a href="">Contact us</a></li>
+	            					<li><a href="/register">Log in</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Payment Methods</a></li>
+	            					<li><a href="#">Returns</a></li>
+	            					<li><a href="#">Shipping</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Sign In</a></li>
+	            					<li><a href="cart.html">View Cart</a></li>
+	            					<li><a href="#">Track My Order</a></li>
+	            					<li><a href="#">Help</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+	            	</div><!-- End .row -->
+	            </div><!-- End .container -->
+	        </div><!-- End .footer-middle -->
+
+	        
+        </footer><!-- End .footer -->
 
             <div class="footer-bottom">
                 <div class="container">
