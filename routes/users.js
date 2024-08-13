@@ -53,3 +53,7 @@ router.get('/category-2columns', category2Columns);
 router.get('/refcan', (req, res) => {
     res.render('user/refund-cancel');
 })
+
+router.get('/tnc', (req,res) => {
+    res.render('user/TnConditions')
+})
