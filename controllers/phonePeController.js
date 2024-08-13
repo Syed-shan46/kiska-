@@ -44,7 +44,7 @@ payController = (req, res) => {
     axios
         .request(options)
         .then(function (response) {
-            //console.log(response.data);
+            console.log(response.data);
             const url = response.data.data.instrumentResponse.redirectInfo.url;
             res.redirect(url);
             //res.send({ url });
