@@ -64,6 +64,6 @@ router.get('/privacy', (req, res) => {
     res.render('user/pv');
 })
 
-router.get('/pay', payController)
+router.get('/pay', payController);
 
 router.get('/redirect-url/:merchantTransactionId', statusController);
