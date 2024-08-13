@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 const { viewUserProduct } = require('../controllers/admin/viewController');
 const { handleRegister, handleLogin, handleLogout, registerPage } = require('../controllers/authController');
 const { postAddress, getAddress } = require('../controllers/profileController');
@@ -9,7 +10,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
-//const { payController } = require('../controllers/phonePeController');
+const { payController, statusController } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -59,8 +60,10 @@ router.get('/tnc', (req, res) => {
     res.render('user/TnConditions')
 })
 
-router.get('/privacy', (req,res)=> {
+router.get('/privacy', (req, res) => {
     res.render('user/pv');
 })
 
-//router.get('/pay', payController);
+router.get('/pay', payController)
+
+router.get('/redirect-url/:merchantTransactionId', statusController);
