@@ -9,6 +9,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
+const { payController } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -54,6 +55,12 @@ router.get('/refcan', (req, res) => {
     res.render('user/refund-cancel');
 })
 
-router.get('/tnc', (req,res) => {
+router.get('/tnc', (req, res) => {
     res.render('user/TnConditions')
 })
+
+router.get('/privacy', (req,res)=> {
+    res.render('user/pv');
+})
+
+router.get('/pay', payController);
