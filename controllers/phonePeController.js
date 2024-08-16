@@ -24,9 +24,9 @@ payController = async (req, res) => {
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 100,
-        "redirectUrl": "https://webhook.site/36c133ad-2157-4920-9ef0-6cd63d10550a",
+        "redirectUrl": "https://kiska.in",
         "redirectMode": "POST",
-        "callbackUrl": "https://webhook.site/36c133ad-2157-4920-9ef0-6cd63d10550a",
+        "callbackUrl": "https://kiska.in",
         "mobileNumber": "9999999999",
         "paymentInstrument": {
             "type": "PAY_PAGE"
