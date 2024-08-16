@@ -64,7 +64,7 @@ router.get('/privacy', (req, res) => {
     res.render('user/pv');
 })
 
-router.get('/pay', (req, res) => {
+router.get('/payment', (req, res) => {
     res.render('user/pv');
 });
 
