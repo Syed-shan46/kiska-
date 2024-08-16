@@ -1,10 +1,10 @@
 const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
-const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
-const MERCHANT_ID = 'M221LS4ADJ5UN'
+const PHONE_PE_HOST_URL = 'https://api-preprod.phonepe.com/apis/pg-sandbox' //'https://api.phonepe.com/apis/hermes'
+const MERCHANT_ID =  'PGTESTPAYUAT77' // 'M221LS4ADJ5UN'
 const SALT_INDEX = 1
-const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
+const SALT_KEY =  '14fa5465-f8a7-443f-8477-f986b8fcfde9' //'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 const payEndPoint = '/pg/v1/pay'
 const merchantTransactionId = uniqid();
 const userId = 12356784;
