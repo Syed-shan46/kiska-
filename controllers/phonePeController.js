@@ -60,7 +60,6 @@ payController = async (req, res) => {
         })
         .catch(function (error) {
             console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
-            res.send({ error: 'PhonePe API Error' });
         });
 
 
