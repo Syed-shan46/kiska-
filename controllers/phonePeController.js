@@ -1,22 +1,21 @@
 const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
-const PHONE_PE_HOST_URL = 'https://api-preprod.phonepe.com/apis/pg-sandbox'
-const MERCHANT_ID = 'UATM221LS4ADJ5UN'
+const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
+const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_INDEX = 1
-const SALT_KEY = 'accaf302-67f3-4b26-8142-6066047d40fa'
-const payEndPoint = '/pg/v1/pay';
+const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
+const payEndPoint = '/pg/v1/pay'
 const merchantTransactionId = uniqid();
-const userId = 123;
+const userId = 12356784;
 
-payController = (req, res) => {
-
-
+payController = async (req, res, next) => {
+    console.log("merchant id", merchantTransactionId)
     const payLoad = {
         "merchantId": MERCHANT_ID,
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
-        "amount": 30000,
+        "amount": 3000,
         "redirectUrl": `http://localhost:3000/redirect-url/${merchantTransactionId}`,
         "redirectMode": "REDIRECT",
         "mobileNumber": "9999999999",
@@ -27,7 +26,7 @@ payController = (req, res) => {
 
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
     const base63EncodedPayLoad = bufferObj.toString('base64');
-    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX
+    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
 
     const options = {
         method: 'post',
@@ -45,12 +44,17 @@ payController = (req, res) => {
         .request(options)
         .then(function (response) {
             console.log(response.data);
-            const url = response.data.data.instrumentResponse.redirectInfo.url;
-            res.redirect(url);
-            //res.send({ url });
+            if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
+                const url = response.data.data.instrumentResponse.redirectInfo.url;
+                res.redirect(url);
+            } else {
+                console.error('Unexpected response structure:', response.data);
+                res.send({ error: 'Unexpected response structure' });
+            }
         })
         .catch(function (error) {
-            console.error(error);
+            console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
+            res.send({ error: 'PhonePe API Error' });
         });
 }
 
@@ -64,7 +68,7 @@ statusController = (req, res) => {
             headers: {
                 accept: 'application/json',
                 'Content-Type': 'application/json',
-                "X-MERCHANT-ID": merchantTransactionId,
+                "X-MERCHANT-ID": MERCHANT_ID,
                 'X-VERIFY': xVerify,
             },
 
@@ -74,10 +78,10 @@ statusController = (req, res) => {
             .then(function (response) {
                 console.log(response.data);
                 if (response.data.code === 'PAYMENT_SUCCESS') {
-                    
+
                 }
                 else if (response.data.code === 'PAYMENT_ERROR') {
-                    
+
 
                 }
             })
