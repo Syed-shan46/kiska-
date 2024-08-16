@@ -18,9 +18,9 @@ payController = async (req, res) => {
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 100,
-        "redirectUrl": "https://kiska.in",
+        "redirectUrl": `https://kiska.in/redirect-url/${merchantTransactionId}`,
         "redirectMode": "POST",
-        "callbackUrl": "https://kiska.in",
+        "callbackUrl": `https://kiska.in/callback-url`,
         "mobileNumber": "9999999999",
         "paymentInstrument": {
             "type": "PAY_PAGE"
@@ -101,4 +101,17 @@ statusController = (req, res) => {
     }
 }
 
-module.exports = { payController, statusController }
+callbackUrl = (req, res) => {
+    (req, res) => {
+        const callbackData = req.body;
+
+        // Process the callback data
+        // Example: Verify payment status, update order status, etc.
+        console.log('Callback Data:', callbackData);
+
+        // Respond to PhonePe
+        res.send('Callback received');
+    }
+}
+
+module.exports = { payController, statusController , callbackUrl}
