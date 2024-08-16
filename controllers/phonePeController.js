@@ -2,18 +2,16 @@ const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes' //'https://api-preprod.phonepe.com/apis/pg-sandbox'
-const MERCHANT_ID = 'M221LS4ADJ5UN' //'PGTESTPAYUAT77'
 const SALT_INDEX = 1
-const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'// '14fa5465-f8a7-443f-8477-f986b8fcfde9' 
 const payEndPoint = '/pg/v1/pay'
 const merchantTransactionId = uniqid();
 const userId = 12356784;
 
-payController = async (req, res, next) => {
+payController = async (req, res) => {
 
     console.log("merchant id", merchantTransactionId)
     const payLoad = {
-        "merchantId": MERCHANT_ID,
+        "merchantId": process.env.MERCHANT_ID,
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 3000,
@@ -30,7 +28,7 @@ payController = async (req, res, next) => {
     const base63EncodedPayLoad = bufferObj.toString('base64');
     //const base63EncodedPayLoad = 'ewogICJtZXJjaGFudElkIjogIlBHVEVTVFBBWVVBVDc3IiwKICAibWVyY2hhbnRUcmFuc2FjdGlvbklkIjogIjNmZzg3MGx6dzlmc240IiwKICAibWVyY2hhbnRVc2VySWQiOiAxMjM1Njc4NCwKICAiYW1vdW50IjogMzAwMCwKICAicmVkaXJlY3RVcmwiOiAiaHR0cHM6Ly93ZWJob29rLnNpdGUvMzZjMTMzYWQtMjE1Ny00OTIwLTllZjAtNmNkNjNkMTA1NTBhIiwKICAicmVkaXJlY3RNb2RlIjogIlBPU1QiLAogICJjYWxsYmFja1VybCI6ICJodHRwczovL3dlYmhvb2suc2l0ZS8zNmMxMzNhZC0yMTU3LTQ5MjAtOWVmMC02Y2Q2M2QxMDU1MGEiLAogICJtb2JpbGVOdW1iZXIiOiAiOTk5OTk5OTk5OSIsCiAgInBheW1lbnRJbnN0cnVtZW50IjogewogICAgInR5cGUiOiAiUEFZX1BBR0UiCiAgfQp9'
     console.log(base63EncodedPayLoad);
-    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
+    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + process.env.SALT_KEY) + '###' + SALT_INDEX;
     console.log(xVerify);
 
     const options = {
@@ -68,14 +66,14 @@ payController = async (req, res, next) => {
 statusController = (req, res) => {
     const { merchantTransactionId } = req.params;
     if (merchantTransactionId) {
-        const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX
+        const xVerify = sha256(`/pg/v1/status/${process.env.MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX
         const options = {
-            method: 'get',
-            url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
+            method: 'POST',
+            url: `${PHONE_PE_HOST_URL}/pg/v1/status/${process.env.MERCHANT_ID}/${merchantTransactionId}`,
             headers: {
                 accept: 'application/json',
                 'Content-Type': 'application/json',
-                "X-MERCHANT-ID": MERCHANT_ID,
+                "X-MERCHANT-ID": process.env.MERCHANT_ID,
                 'X-VERIFY': xVerify,
             },
 
@@ -88,8 +86,7 @@ statusController = (req, res) => {
 
                 }
                 else if (response.data.code === 'PAYMENT_ERROR') {
-
-
+                    res.send('payment error');
                 }
             })
             .catch(function (error) {
