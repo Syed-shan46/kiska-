@@ -16,7 +16,7 @@ payController = (req, res) => {
         "merchantId": MERCHANT_ID,
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
-        "amount": 3000,
+        "amount": 100,
         "redirectUrl": "https://kiska.in",
         "redirectMode": "POST",
         "callbackUrl": "https://kiska.in",
