@@ -34,7 +34,7 @@ payController = async (req, res, next) => {
     console.log(xVerify);
 
     const options = {
-        method: 'post',
+        method: 'POST',
         url: `${PHONE_PE_HOST_URL}${payEndPoint}`,
         headers: {
             //accept: 'application/json',

@@ -11,13 +11,15 @@
         border-radius: 8px;
         background-color: rgba(255, 255, 255, 0.744);
     }
+
     .summary {
         border-radius: 10px;
     }
 </style>
+
 <body>
     <div class="page-content mt-5">
-         <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+        <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
             <div class="container">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -37,24 +39,24 @@
                     </form> --}}
                     {{!-- {{#each userAddress.addresses }} --}}
                 </div><!-- End .checkout-discount -->
-                <form action="https://kiska.in/pay" method="post">
+                <form action="https://kiska.in/pay" method="POST">
                     <div class="row">
                         <div class="col-lg-9 justify-content-center align-items-center">
                             <div class="row justify-content-center">
                                 <div class="col-lg-6">
                                     {{#if (eq userAddress.addresses.length 0)}}
-                                    <h3 class="card-title">No address added..!</h3><!-- End .card-title -->
+                                    <h3 class="card-title">No address added..!</h3>
                                     <a href="/profile/address" class="btn btn-outline-dark-2 mt-2">
                                         <span>Add Address</span><i class="icon-long-arrow-right"></i>
                                     </a>
                                     {{else}}
-                                    <h3 class="card-title">Select an address</h3><!-- End .card-title -->
+                                    <h3 class="card-title">Select an address</h3>
                                     {{/if}}
 
                                     {{#each userAddress.addresses }}
                                     <div class="card card-dashboard mt-2">
                                         <div class="card p-4">
-                                            <div class="form-check ">
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="addressRadio"
                                                     id="address-{{@index}}" value="{{@index}}">
                                                 <label class="form-check-label ml-4" for="address-{{@index}}">
@@ -67,15 +69,13 @@
                                         </div>
                                     </div>
                                     {{/each}}
-                                </div><!-- End .col-lg-6 onchange="displaySelectedAddress(this.value)" -->
+                                </div>
                             </div>
-                            <!-- End .row <a href="#profilealertmodal"><i class="icon-arrow-up"></i>Remove Address</a> -->
-                            <div class="cart-bottom">
-                            </div><!-- End .cart-bottom -->
-                        </div><!-- End .col-lg-9 -->
+                            <div class="cart-bottom"></div>
+                        </div>
                         <aside class="col-lg-3">
                             <div class="summary">
-                                <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+                                <h3 class="summary-title">Your Order</h3>
 
                                 <table class="table table-summary">
                                     <thead>
@@ -84,7 +84,6 @@
                                             <th>Total</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         {{#if cartItems.length }}
                                         {{#each cartItems }}
@@ -94,9 +93,6 @@
                                         </tr>
                                         {{/each}}
                                         {{/if}}
-
-
-                                        
                                         <tr>
                                             <td>Shipping:</td>
                                             <td>Free shipping</td>
@@ -104,58 +100,44 @@
                                         <tr class="summary-total">
                                             <td>Total:</td>
                                             <td>{{totalAmount}}</td>
-                                        </tr><!-- End .summary-total -->
+                                        </tr>
                                     </tbody>
-                                </table><!-- End .table table-summary -->
+                                </table>
 
                                 <div class="accordion-summary" id="accordion-payment">
-                                    <div class="card">
-
-
-                                    </div><!-- End .card -->
-
-
-                                    <div class="card">
-                                        <div class="card-header" id="heading-3">
-
-                                        </div><!-- End .card-header -->
-                                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
-                                            data-parent="#accordion-payment">
-                                            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .collapse -->
-                                    </div><!-- End .card -->
-
-                                    <div class="card">
-                                        <div class="card-header" id="heading-4">
-                                            <h2 class="card-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse"
-                                                    href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
-                                                    Stripe <small class="float-right paypal-link">What is
-                                                        Stripe?</small>
-                                                </a>
-                                            </h2>
-                                        </div><!-- End .card-header -->
-                                        <div id="collapse-4" class="collapse" aria-labelledby="heading-4"
-                                            data-parent="#accordion-payment">
-                                            <div class="card-body">
-                                                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non,
-                                                semper
-                                                suscipit, posuere a, pede. Donec nec justo eget felis facilisis
-                                                fermentum.
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .collapse -->
-                                    </div><!-- End .card -->
-
-
-
-                                    <button class="btn btn-primary" type="submit">Checkout</a></button>
-                                </div><!-- End .summary -->
-                        </aside><!-- End .col-lg-3 -->
-                    </div><!-- End .row -->
+                                    <!-- Empty card divs, add content or remove if not needed -->
+                                    <div class="card"></div>
+                                    <div class="card-header" id="heading-3"></div>
+                                    <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
+                                        data-parent="#accordion-payment">
+                                        <div class="card-body">
+                                            Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer
+                                            adipiscing elit.
+                                        </div>
+                                    </div>
+                                    <div class="card-header" id="heading-4">
+                                        <h2 class="card-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4"
+                                                aria-expanded="false" aria-controls="collapse-4">
+                                                Stripe <small class="float-right paypal-link">What is Stripe?</small>
+                                            </a>
+                                        </h2>
+                                    </div>
+                                    <div id="collapse-4" class="collapse" aria-labelledby="heading-4"
+                                        data-parent="#accordion-payment">
+                                        <div class="card-body">
+                                            Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper
+                                            suscipit,
+                                            posuere a, pede. Donec nec justo eget felis facilisis fermentum.
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Checkout</button>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
                 </form>
+
             </div><!-- End .container -->
         </div><!-- End .checkout -->
     </div><!-- End .page-content -->
