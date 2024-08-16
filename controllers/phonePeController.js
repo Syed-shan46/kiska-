@@ -38,7 +38,6 @@ payController = async (req, res) => {
         method: 'POST',
         url: `${PHONE_PE_HOST_URL}${payEndPoint}`,
         headers: {
-            //accept: 'application/json',
             'Content-Type': 'application/json',
             'X-VERIFY': xVerify,
         },
@@ -78,7 +77,7 @@ statusController = (req, res) => {
                 "X-MERCHANT-ID": MERCHANT_ID,
                 'X-VERIFY': xVerify,
             },
-
+            timeout: 10000 // 10 seconds
         };
         axios
             .request(options)
@@ -105,7 +104,7 @@ callbackUrl = (req, res) => {
 
     const callbackData = req.body;
 
-    
+
     // Example: Verify payment status, update order status, etc.
     console.log('Callback Data:', callbackData);
 
