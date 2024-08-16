@@ -16,8 +16,9 @@ payController = async (req, res, next) => {
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 3000,
-        "redirectUrl": `http://localhost:3000/redirect-url/${merchantTransactionId}`,
-        "redirectMode": "REDIRECT",
+        "redirectUrl": "https://webhook.site/36c133ad-2157-4920-9ef0-6cd63d10550a",
+        "redirectMode": "POST", 
+        "callbackUrl": "https://webhook.site/36c133ad-2157-4920-9ef0-6cd63d10550a",
         "mobileNumber": "9999999999",
         "paymentInstrument": {
             "type": "PAY_PAGE"
@@ -25,7 +26,8 @@ payController = async (req, res, next) => {
     };
 
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
-    const base63EncodedPayLoad = bufferObj.toString('base64');
+    //const base63EncodedPayLoad = bufferObj.toString('base64');
+    const base63EncodedPayLoad = 'ewogICJtZXJjaGFudElkIjogIlBHVEVTVFBBWVVBVDc3IiwKICAibWVyY2hhbnRUcmFuc2FjdGlvbklkIjogIjNmZzg3MGx6dzlmc240IiwKICAibWVyY2hhbnRVc2VySWQiOiAxMjM1Njc4NCwKICAiYW1vdW50IjogMzAwMCwKICAicmVkaXJlY3RVcmwiOiAiaHR0cHM6Ly93ZWJob29rLnNpdGUvMzZjMTMzYWQtMjE1Ny00OTIwLTllZjAtNmNkNjNkMTA1NTBhIiwKICAicmVkaXJlY3RNb2RlIjogIlBPU1QiLAogICJjYWxsYmFja1VybCI6ICJodHRwczovL3dlYmhvb2suc2l0ZS8zNmMxMzNhZC0yMTU3LTQ5MjAtOWVmMC02Y2Q2M2QxMDU1MGEiLAogICJtb2JpbGVOdW1iZXIiOiAiOTk5OTk5OTk5OSIsCiAgInBheW1lbnRJbnN0cnVtZW50IjogewogICAgInR5cGUiOiAiUEFZX1BBR0UiCiAgfQp9'
     console.log(base63EncodedPayLoad);
     const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
     console.log(xVerify);
