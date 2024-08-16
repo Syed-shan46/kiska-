@@ -8,15 +8,9 @@ const merchantTransactionId = uniqid();
 MERCHANT_ID = 'M221LS4ADJ5UN'
 SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
-const generateMerchantUserId = () => {
-    const timestamp = Date.now();
-    const randomString = uniqid();
-    return `${timestamp}-${randomString}`.substring(0, 15); // Ensure the length is less than 
-};
-
-const userId = generateMerchantUserId();
 
 payController = async (req, res) => {
+    const userId = req.body.userId
 
     console.log("merchant id", merchantTransactionId)
     const payLoad = {
