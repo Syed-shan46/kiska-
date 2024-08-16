@@ -16,8 +16,9 @@ payController = async (req, res, next) => {
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 3000,
-        "redirectUrl": `http://localhost:3000/redirect-url/${merchantTransactionId}`,
-        "redirectMode": "REDIRECT",
+        "redirectUrl": "https://webhook.site/36c133ad-2157-4920-9ef0-6cd63d10550a",
+        "redirectMode": "POST",
+        "callbackUrl": "https://webhook.site/36c133ad-2157-4920-9ef0-6cd63d10550a",
         "mobileNumber": "9999999999",
         "paymentInstrument": {
             "type": "PAY_PAGE"
