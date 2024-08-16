@@ -1,15 +1,15 @@
 const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
-const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
+const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes' //'https://api-preprod.phonepe.com/apis/pg-sandbox'
 const SALT_INDEX = 1
 const payEndPoint = '/pg/v1/pay'
-MERCHANT_ID = 'M221LS4ADJ5UN'
-SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 const merchantTransactionId = uniqid();
 const userId = 12356784;
+MERCHANT_ID = 'M221LS4ADJ5UN'
+SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
-payController = (req, res) => {
+payController = async (req, res) => {
 
     console.log("merchant id", merchantTransactionId)
     const payLoad = {
@@ -17,9 +17,9 @@ payController = (req, res) => {
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 100,
-        "redirectUrl": "https://kiska.in",
+        "redirectUrl": "https://webhook.site/36c133ad-2157-4920-9ef0-6cd63d10550a",
         "redirectMode": "POST",
-        "callbackUrl": "https://kiska.in",
+        "callbackUrl": "https://webhook.site/36c133ad-2157-4920-9ef0-6cd63d10550a",
         "mobileNumber": "9999999999",
         "paymentInstrument": {
             "type": "PAY_PAGE"
@@ -61,6 +61,8 @@ payController = (req, res) => {
             console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
             res.send({ error: 'PhonePe API Error' });
         });
+
+    
 }
 
 statusController = (req, res) => {
@@ -69,7 +71,7 @@ statusController = (req, res) => {
         const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX
         const options = {
             method: 'POST',
-            url: `${PHONE_PE_HOST_URL}/pg/v1/status/${env.MERCHANT_ID}/${merchantTransactionId}`,
+            url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
             headers: {
                 accept: 'application/json',
                 'Content-Type': 'application/json',
