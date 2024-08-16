@@ -26,13 +26,15 @@ payController = async (req, res, next) => {
 
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
     const base63EncodedPayLoad = bufferObj.toString('base64');
+    console.log(base63EncodedPayLoad);
     const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
+    console.log(xVerify);
 
     const options = {
         method: 'post',
         url: `${PHONE_PE_HOST_URL}${payEndPoint}`,
         headers: {
-            accept: 'application/json',
+            //accept: 'application/json',
             'Content-Type': 'application/json',
             'X-VERIFY': xVerify,
         },
