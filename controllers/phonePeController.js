@@ -11,13 +11,14 @@ SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
     const userId = req.body.userId
+    const total = req.body.totalAmount
 
     console.log("merchant id", merchantTransactionId)
     const payLoad = {
         "merchantId": MERCHANT_ID,
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
-        "amount": 100,
+        "amount": total,
         "redirectUrl": `https://kiska.in/redirect-url/${merchantTransactionId}`,
         "redirectMode": "POST",
         "callbackUrl": `https://kiska.in/callback-url`,
