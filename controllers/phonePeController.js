@@ -59,8 +59,6 @@ payController = (req, res) => {
             console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
             res.send({ error: 'PhonePe API Error' });
         });
-
-    res.send('Payment processed');
 }
 
 statusController = (req, res) => {
