@@ -59,13 +59,11 @@ router.get('/refcan', (req, res) => {
 router.get('/tnc', (req, res) => {
     res.render('user/TnConditions')
 })
-
+ 
 router.get('/privacy', (req, res) => {
     res.render('user/pv');
 })
 
-router.get('/payment', (req, res) => {
-    res.render('user/pv');
-});
+router.get('/pay', payController);
 
 router.get('/redirect-url/:merchantTransactionId', statusController);
