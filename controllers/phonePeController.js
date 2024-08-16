@@ -12,6 +12,7 @@ SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 payController = async (req, res) => {
     const userId = req.body.userId
 
+
     console.log("merchant id", merchantTransactionId)
     const payLoad = {
         "merchantId": MERCHANT_ID,
@@ -45,75 +46,66 @@ payController = async (req, res) => {
             request: base63EncodedPayLoad,
         }
     };
+    axios
+        .request(options)
+        .then(function (response) {
+            console.log(response.data);
+            if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
+                const url = response.data.data.instrumentResponse.redirectInfo.url;
+                res.redirect(url);
+            } else {
+                console.error('Unexpected response structure:', response.data);
+                res.send({ error: 'Unexpected response structure' });
+            }
+        })
+        .catch(function (error) {
+            console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
+        });
 
-
-    try {
-        const response = await axios.request(options);
-        console.log(response.data);
-        if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
-            const url = response.data.data.instrumentResponse.redirectInfo.url;
-            res.redirect(url);
-        } else {
-            console.error('Unexpected response structure:', response.data);
-            res.send({ error: 'Unexpected response structure' });
-        }
-    } catch (error) {
-        console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
-        res.send({ error: 'An error occurred while processing payment' });
-    }
 
 }
 
-const axios = require('axios');
-const sha256 = require('sha256'); // Ensure you have this package installed
-
-const statusController = async (req, res) => {
+statusController = (req, res) => {
     const { merchantTransactionId } = req.params;
-
     if (merchantTransactionId) {
-        const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX;
-
+        const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX
         const options = {
             method: 'POST',
             url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
             headers: {
-                'accept': 'application/json',
+                accept: 'application/json',
                 'Content-Type': 'application/json',
-                'X-MERCHANT-ID': MERCHANT_ID,
+                "X-MERCHANT-ID": MERCHANT_ID,
                 'X-VERIFY': xVerify,
-            }
+            },
+
         };
+        axios
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
+                if (response.data.code === 'PAYMENT_SUCCESS') {
 
-        try {
-            const response = await axios.request(options);
-            console.log(response.data);
-
-            if (response.data.code === 'PAYMENT_SUCCESS') {
-                // Handle successful payment
-                res.send('Payment successful');
-            } else if (response.data.code === 'PAYMENT_ERROR') {
-                // Handle payment error
-                res.send('Payment error');
-            } else {
-                // Handle unexpected status codes
-                res.send('Unexpected payment status');
-            }
-        } catch (error) {
-            console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
-            res.send('Error checking payment status');
-        }
-    } else {
-        res.send({ error: 'Merchant transaction ID is missing' });
+                }
+                else if (response.data.code === 'PAYMENT_ERROR') {
+                    res.send('payment error');
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+        res.send({ merchantTransactionId });
     }
-};
-
-module.exports = statusController;
-
+    else {
+        res.send({ error: 'Error' });
+    }
+}
 
 callbackUrl = (req, res) => {
+
     const callbackData = req.body;
 
-    // Process the callback data
+    
     // Example: Verify payment status, update order status, etc.
     console.log('Callback Data:', callbackData);
 
