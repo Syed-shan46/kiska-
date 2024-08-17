@@ -1,6 +1,5 @@
 const axios = require('axios');
 const uniqid = require('uniqid');
-const nodemailer = require('nodemailer');
 const sha256 = require('sha256');
 require('dotenv').config();
 const Order = require('../models/order_model');
