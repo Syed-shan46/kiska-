@@ -19,7 +19,7 @@ payController = async (req, res) => {
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 100,
-        "redirectUrl":`https://kiska.in/redirect-url/${merchantTransactionId}`,
+        "redirectUrl":`https://kiska.in`,
         "redirectMode": "REDIRECT",
         "callbackUrl": `https://kiska.in/callback-url`,
         "paymentInstrument": {
@@ -92,18 +92,18 @@ statusController = async (req, res) => {
             const response = await axios.request(options)
             if (response.data.code === 'PAYMENT_SUCCESS') { 
                 // Payment success, generate the order
-                const newOrder = new Order({
-                    userId: req.body.userId,
-                    orderId: merchantTransactionId,
-                    products: req.body.products, // Assuming you have product details in the request
-                    totalAmount: req.body.totalAmount, // Assuming total amount is in the request
-                    orderStatus: 'Processing',
-                    paymentStatus: 'Completed',
-                    address: req.body.address, // Assuming address details are in the request
-                    orderDate: new Date()
-                });
+                // const newOrder = new Order({
+                //     userId: req.body.userId,
+                //     orderId: merchantTransactionId,
+                //     products: req.body.products, // Assuming you have product details in the request
+                //     totalAmount: req.body.totalAmount, // Assuming total amount is in the request
+                //     orderStatus: 'Processing',
+                //     paymentStatus: 'Completed',
+                //     address: req.body.address, // Assuming address details are in the request
+                //     orderDate: new Date()
+                // });
 
-                const savedOrder = await newOrder.save();
+                // const savedOrder = await newOrder.save();
 
                 // Send email to admin with order details
                 // const mailOptions = {
