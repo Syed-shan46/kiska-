@@ -28,8 +28,8 @@ payController = async (req, res) => {
     };
 
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
-    const base63EncodedPayLoad = bufferObj.toString('base64')
-    console.log(base63EncodedPayLoad)
+    const base63EncodedPayLoad = bufferObj.toString('base64');
+    console.log(base63EncodedPayLoad);
     const xVerify = sha256(base63EncodedPayLoad + payEndPoint + process.env.SALT_KEY) + '###' + SALT_INDEX;
     console.log(xVerify);
 
@@ -65,14 +65,6 @@ payController = async (req, res) => {
 
 
 }
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.ADMIN_EMAIL,
-        pass: process.env.ADMIN_EMAIL_PASSWORD, 
-    }
-});
 
 statusController = (req, res) => {
     const { merchantTransactionId } = req.params;
