@@ -4,7 +4,6 @@ const sha256 = require('sha256');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1
 const payEndPoint = '/pg/v1/pay'
-
 const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
@@ -66,35 +65,41 @@ payController = async (req, res) => {
 
 }
 
-statusController = async (req, res) => { 
-    try {
-        const { merchantTransactionId } = req.params;
-        if (merchantTransactionId) {
-            const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX;
-            const options = {
-                method: 'POST',
-                url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
-                headers: {
-                    'Content-Type': 'application/json',
-                    "X-MERCHANT-ID": MERCHANT_ID,
-                    'X-VERIFY': xVerify,
-                },
-            };
+statusController = (req, res) => {
+    const { merchantTransactionId } = req.params;
+    
+    if (merchantTransactionId) {
+        const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX;
+        const options = {
+            method: 'POST',
+            url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
+            headers: {
+                'Accept': 'application/json', // Specify that we expect JSON response
+                'Content-Type': 'application/json',
+                'X-MERCHANT-ID': MERCHANT_ID,
+                'X-VERIFY': xVerify,
+            },
+        };
 
-            const response = await axios.request(options);
-            if (response.data.code === 'PAYMENT_SUCCESS') {
-                res.send('Payment Success');
-            } else if (response.data.code === 'PAYMENT_ERROR') {
-                res.send('Payment Error')
-            } else {
-                res.status(500).send({ error: 'Unexpected status code' });
-            }
-        } else {
-            res.status(400).send({ error: 'Missing merchantTransactionId' });
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send({ error: 'Server Error' });
+        axios
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
+                if (response.data.code === 'PAYMENT_SUCCESS') {
+                    // Handle payment success
+                    res.send('Payment successful');
+                } else if (response.data.code === 'PAYMENT_ERROR') {
+                    res.send('Payment error');
+                } else {
+                    res.send('Unknown status');
+                }
+            })
+            .catch(function (error) {
+                console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
+                res.status(500).send({ error: 'Internal server error' });
+            });
+    } else {
+        res.status(400).send({ error: 'Missing merchantTransactionId' });
     }
 };
 
