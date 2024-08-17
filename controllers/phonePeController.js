@@ -66,7 +66,7 @@ payController = async (req, res) => {
 
 }
 
-statusController = async (req, res) => {
+statusController = async (req, res) => { 
     try {
         const { merchantTransactionId } = req.params;
         if (merchantTransactionId) {
@@ -85,7 +85,7 @@ statusController = async (req, res) => {
             if (response.data.code === 'PAYMENT_SUCCESS') {
                 res.send('Payment Success');
             } else if (response.data.code === 'PAYMENT_ERROR') {
-                res.send('Payment Error');
+                res.send('Payment Error')
             } else {
                 res.status(500).send({ error: 'Unexpected status code' });
             }
