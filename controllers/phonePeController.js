@@ -2,10 +2,13 @@ const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
 require('dotenv').config();
-const Order = require('../models/order_model');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1
 const payEndPoint = '/pg/v1/pay'
+
+const MERCHANT_ID = 'M221LS4ADJ5UN'
+
+const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 
 
@@ -15,7 +18,7 @@ payController = async (req, res) => {
 
     console.log("merchant id", merchantTransactionId)
     const payLoad = {
-        "merchantId": process.env.MERCHANT_ID,
+        "merchantId": MERCHANT_ID,
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 100,
@@ -30,7 +33,7 @@ payController = async (req, res) => {
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
     const base63EncodedPayLoad = bufferObj.toString('base64');
     console.log(base63EncodedPayLoad);
-    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + process.env.SALT_KEY) + '###' + SALT_INDEX;
+    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
     console.log(xVerify);
 
     const options = {
@@ -70,14 +73,14 @@ statusController = (req, res) => {
     const { merchantTransactionId } = req.params;
     
     if (merchantTransactionId) {
-        const xVerify = sha256(`/pg/v1/status/${process.env.MERCHANT_ID}/${merchantTransactionId}` + process.env.SALT_KEY) + '###' + SALT_INDEX;
+        const xVerify = sha256(`/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + '###' + SALT_INDEX;
         const options = {
             method: 'POST',
-            url: `${PHONE_PE_HOST_URL}/pg/v1/status/${process.env.MERCHANT_ID}/${merchantTransactionId}`,
+            url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
             headers: {
                 'Accept': 'application/json', // Specify that we expect JSON response
                 'Content-Type': 'application/json',
-                'X-MERCHANT-ID': process.env.MERCHANT_ID,
+                'X-MERCHANT-ID': MERCHANT_ID,
                 'X-VERIFY': xVerify,
             },
         };
