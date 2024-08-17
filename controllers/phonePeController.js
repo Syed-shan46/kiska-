@@ -1,7 +1,6 @@
 const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
-require('dotenv').config();
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1
 const payEndPoint = '/pg/v1/pay'
