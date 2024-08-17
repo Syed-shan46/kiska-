@@ -90,7 +90,7 @@ statusController = async (req, res) => {
                 },
             };
 
-            const response = await axios.request(options);
+            const response = await axios.request(options)
             if (response.data.code === 'PAYMENT_SUCCESS') {
                 // Payment success, generate the order
                 const newOrder = new Order({
