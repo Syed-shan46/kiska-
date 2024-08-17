@@ -28,8 +28,8 @@ payController = async (req, res) => {
     };
 
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
-    const base63EncodedPayLoad = bufferObj.toString('base64');
-    console.log(base63EncodedPayLoad);
+    const base63EncodedPayLoad = bufferObj.toString('base64')
+    console.log(base63EncodedPayLoad)
     const xVerify = sha256(base63EncodedPayLoad + payEndPoint + process.env.SALT_KEY) + '###' + SALT_INDEX;
     console.log(xVerify);
 
