@@ -5,8 +5,8 @@ const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1
 const payEndPoint = '/pg/v1/pay'
 const merchantTransactionId = uniqid();
-MERCHANT_ID = 'M221LS4ADJ5UN'
-SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
+const MERCHANT_ID = 'M221LS4ADJ5UN'
+const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 
 payController = async (req, res) => {
@@ -29,7 +29,6 @@ payController = async (req, res) => {
 
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
     const base63EncodedPayLoad = bufferObj.toString('base64');
-    //const base63EncodedPayLoad = 'ewogICJtZXJjaGFudElkIjogIlBHVEVTVFBBWVVBVDc3IiwKICAibWVyY2hhbnRUcmFuc2FjdGlvbklkIjogIjNmZzg3MGx6dzlmc240IiwKICAibWVyY2hhbnRVc2VySWQiOiAxMjM1Njc4NCwKICAiYW1vdW50IjogMzAwMCwKICAicmVkaXJlY3RVcmwiOiAiaHR0cHM6Ly93ZWJob29rLnNpdGUvMzZjMTMzYWQtMjE1Ny00OTIwLTllZjAtNmNkNjNkMTA1NTBhIiwKICAicmVkaXJlY3RNb2RlIjogIlBPU1QiLAogICJjYWxsYmFja1VybCI6ICJodHRwczovL3dlYmhvb2suc2l0ZS8zNmMxMzNhZC0yMTU3LTQ5MjAtOWVmMC02Y2Q2M2QxMDU1MGEiLAogICJtb2JpbGVOdW1iZXIiOiAiOTk5OTk5OTk5OSIsCiAgInBheW1lbnRJbnN0cnVtZW50IjogewogICAgInR5cGUiOiAiUEFZX1BBR0UiCiAgfQp9'
     console.log(base63EncodedPayLoad);
     const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
     console.log(xVerify);
@@ -46,7 +45,7 @@ payController = async (req, res) => {
         }
     };
     axios
-        .request(options)
+        .request(options) 
         .then(function (response) {
             console.log(response.data);
             if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
@@ -59,6 +58,7 @@ payController = async (req, res) => {
         })
         .catch(function (error) {
             console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
+            res.send(error);
         });
 
 
@@ -72,19 +72,36 @@ statusController = (req, res) => {
             method: 'POST',
             url: `${PHONE_PE_HOST_URL}/pg/v1/status/${MERCHANT_ID}/${merchantTransactionId}`,
             headers: {
-                accept: 'application/json',
+                //accept: 'application/json',
                 'Content-Type': 'application/json',
                 "X-MERCHANT-ID": MERCHANT_ID,
                 'X-VERIFY': xVerify,
             },
-            timeout: 10000 // 10 seconds
+
         };
         axios
             .request(options)
             .then(function (response) {
                 console.log(response.data);
                 if (response.data.code === 'PAYMENT_SUCCESS') {
-
+                    const statusResponse = {
+                        "success": true,
+                        "code": "PAYMENT_SUCCESS",
+                        "message": "Your request has been successfully completed.",
+                        "data": {
+                            "merchantId": "PGTESTPAYUAT",
+                            "merchantTransactionId": "MT7850590068188104",
+                            "transactionId": "T2111221437456190170379",
+                            "amount": 100,
+                            "state": "COMPLETED",
+                            "responseCode": "SUCCESS",
+                            "paymentInstrument": {
+                                "type": "UPI",
+                                "utr": "206378866112"
+                            }
+                        }
+                    }
+                    res.send('Payment Success');
                 }
                 else if (response.data.code === 'PAYMENT_ERROR') {
                     res.send('payment error');
