@@ -36,7 +36,9 @@ router.get('/cart/checkout', checkoutPage);
 
 /// Stripe Payment
 router.post('/create-payment', getCardPayment);
-router.get('/success', successPage);
+router.get('/success', (req,res)=> {
+    res.render('user/success');
+});
 
 /// Profile
 router.get('/profile', getAddress);
