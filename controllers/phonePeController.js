@@ -66,13 +66,13 @@ payController = async (req, res) => {
 
 }
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.ADMIN_EMAIL,
-        pass: process.env.ADMIN_EMAIL_PASSWORD, 
-    }
-});
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         user: process.env.ADMIN_EMAIL,
+//         pass: process.env.ADMIN_EMAIL_PASSWORD, 
+//     }
+// });
 
 statusController = async (req, res) => {
     try {
@@ -90,30 +90,30 @@ statusController = async (req, res) => {
             };
 
             const response = await axios.request(options)
-            if (response.data.code === 'PAYMENT_SUCCESS') {
+            if (response.data.code === 'PAYMENT_SUCCESS') { 
                 // Payment success, generate the order
-                // const newOrder = new Order({
-                //     userId: req.body.userId,
-                //     orderId: merchantTransactionId,
-                //     products: req.body.products, // Assuming you have product details in the request
-                //     totalAmount: req.body.totalAmount, // Assuming total amount is in the request
-                //     orderStatus: 'Processing',
-                //     paymentStatus: 'Completed',
-                //     address: req.body.address, // Assuming address details are in the request
-                //     orderDate: new Date()
-                // });
+                const newOrder = new Order({
+                    userId: req.body.userId,
+                    orderId: merchantTransactionId,
+                    products: req.body.products, // Assuming you have product details in the request
+                    totalAmount: req.body.totalAmount, // Assuming total amount is in the request
+                    orderStatus: 'Processing',
+                    paymentStatus: 'Completed',
+                    address: req.body.address, // Assuming address details are in the request
+                    orderDate: new Date()
+                });
 
-                // const savedOrder = await newOrder.save();
+                const savedOrder = await newOrder.save();
 
                 // Send email to admin with order details
-                const mailOptions = {
-                    from: process.env.ADMIN_EMAIL,
-                    to: process.env.ADMIN_EMAIL, // Admin email address
-                    subject: 'New Order Received',
-                    text: `A new order has been placed.\n\nOrder ID: ${savedOrder.orderId}\nTotal Amount: ${savedOrder.totalAmount}\nOrder Date: ${savedOrder.orderDate}\n\nPlease check the admin panel for more details.`,
-                };
+                // const mailOptions = {
+                //     from: process.env.ADMIN_EMAIL,
+                //     to: process.env.ADMIN_EMAIL, // Admin email address
+                //     subject: 'New Order Received',
+                //     text: `A new order has been placed.\n\nOrder ID: ${savedOrder.orderId}\nTotal Amount: ${savedOrder.totalAmount}\nOrder Date: ${savedOrder.orderDate}\n\nPlease check the admin panel for more details.`,
+                // };
 
-                await transporter.sendMail(mailOptions);
+                // await transporter.sendMail(mailOptions);
 
                 res.send('Payment Success and Order Created');
             } else if (response.data.code === 'PAYMENT_ERROR') {
