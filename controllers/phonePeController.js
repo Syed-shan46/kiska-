@@ -43,7 +43,7 @@ payController = async (req, res) => {
         method: 'POST',
         url: `${PHONE_PE_HOST_URL}${payEndPoint}`,
         headers: {
-            'Accept': 'application/json',
+            //'Accept': 'application/json',
             'Content-Type': 'application/json',
             'X-VERIFY': xVerify,
         },
