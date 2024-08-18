@@ -34,7 +34,7 @@
                                     <label for="">Category</label>
                                     <select id="category" class="form-control" name="category" required>
                                         {{#each categories}}
-                                        <option value="{{this._id}}" {{#if (eq this._id
+                                        <option value="{{this.categoryName}}" {{#if (eq this._id
                                             ../product.category)}}selected{{/if}}>{{this.categoryName}}</option>
                                         {{/each}}
                                     </select>
