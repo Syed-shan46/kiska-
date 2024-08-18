@@ -6,8 +6,6 @@ const SALT_INDEX = 1;
 const payEndPoint = '/pg/v1/pay';
 
 
-
-
 payController = async (req, res) => {
     const userId = req.body.userId
     const merchantTransactionId = uniqid();
