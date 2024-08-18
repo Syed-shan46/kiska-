@@ -10,7 +10,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
-const { payController, statusController, callbackUrl } = require('../controllers/phonePeController');
+const { payController,  callbackUrl } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -70,6 +70,4 @@ router.get('/privacy', (req, res) => {
 
 router.post('/pay', payController);
 
-router.get('/redirect-url/:merchantTransactionId', statusController);
-
-router.post('/callback-url', callbackUrl);
+router.post('/callback-url', callbackUrl); 

@@ -80,4 +80,4 @@ callbackUrl = (req, res) => {
 }
 
 
-module.exports = { payController, statusController, callbackUrl }
+module.exports = { payController, callbackUrl }
