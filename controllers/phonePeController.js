@@ -4,6 +4,8 @@ const sha256 = require('sha256');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1;
 const payEndPoint = '/pg/v1/pay';
+MERCHANT_ID = 'M221LS4ADJ5UN'
+SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 require('dotenv').config();
 
 payController = async (req, res) => {
@@ -12,7 +14,7 @@ payController = async (req, res) => {
 
     console.log("merchant id", merchantTransactionId)
     const payLoad = {
-        "merchantId": process.env.MERCHANT_ID,
+        "merchantId": MERCHANT_ID,
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 100,
@@ -27,7 +29,7 @@ payController = async (req, res) => {
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
     const base63EncodedPayLoad = bufferObj.toString('base64');
     console.log(base63EncodedPayLoad);
-    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + process.env.SALT_KEY) + '###' + SALT_INDEX;
+    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
     console.log(xVerify);
 
     const options = {
