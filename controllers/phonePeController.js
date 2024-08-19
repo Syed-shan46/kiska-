@@ -1,12 +1,10 @@
 const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
-const Order = require('../models/order_model');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1;
-require('dotenv').config();
 const payEndPoint = '/pg/v1/pay';
-
+require('dotenv').config();
 
 payController = async (req, res) => {
     const userId = req.body.userId
@@ -46,23 +44,11 @@ payController = async (req, res) => {
         }
     };
     axios
-        .request(options) 
-        .then(async function (response) {
+        .request(options)
+        .then(function (response) {
             console.log(response.data);
             if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
                 const url = response.data.data.instrumentResponse.redirectInfo.url;
-                const orderDetails = {
-                    userId: userId,
-                    orderId: merchantTransactionId,
-                    products: req.body.products,
-                    totalAmount: payLoad.amount / 100,
-                    paymentStatus: 'Paid',
-                    orderStatus: 'Processing',
-                    address: req.body.address,
-                    orderDate: new Date()
-                }
-                const newOrder = new Order(orderDetails);
-                await newOrder.save();
                 res.redirect(url);
             } else {
                 console.error('Unexpected response structure:', response.data);
@@ -76,6 +62,7 @@ payController = async (req, res) => {
 
 
 }
+
 
 
 callbackUrl = (req, res) => {
