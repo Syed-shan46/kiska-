@@ -11,7 +11,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
-const { payController, callbackUrl } = require('../controllers/phonePeController');
+const { payController, callbackUrl, statusController } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -81,3 +81,5 @@ router.get('/check', async (req, res) => {
         res.status(500).send('Error retrieving orders');
     }
 });
+
+router.post('/payment/status', statusController);
