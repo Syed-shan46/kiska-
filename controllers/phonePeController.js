@@ -4,6 +4,7 @@ const sha256 = require('sha256');
 const Order = require('../models/order_model');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1;
+require('dotenv').config();
 const payEndPoint = '/pg/v1/pay';
 
 
