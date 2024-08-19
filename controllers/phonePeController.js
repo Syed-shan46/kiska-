@@ -5,7 +5,7 @@ const Order = require('../models/order_model');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1;
 const payEndPoint = '/pg/v1/pay';
-const statusEndPoint = '/v3/transaction/status';
+const statusEndPoint = '/pg/v1/status';
 const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
@@ -66,6 +66,7 @@ payController = async (req, res) => {
 
 const statusController = async (req, res) => {
     const { transactionId } = req.query;
+    const merchantId = MERCHANT_ID;
 
     const statusPayload = {
         merchantId: MERCHANT_ID,
@@ -77,12 +78,13 @@ const statusController = async (req, res) => {
     const xVerify = sha256(base63EncodedStatusPayload + statusEndPoint + SALT_KEY) + '###' + SALT_INDEX;
 
     const options = {
-        method: 'POST',
-        url: `${PHONE_PE_HOST_URL}${statusEndPoint}`,
+        method: 'GET',
+        url: `${PHONE_PE_HOST_URL}${statusEndPoint}/${merchantId}/${merchantTransactionId}`,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'X-VERIFY': xVerify,
+            'X-MERCHANT-ID': `${merchantId}`
         },
         timeout: 5000,
         data: {
