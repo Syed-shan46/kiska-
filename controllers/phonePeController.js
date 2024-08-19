@@ -68,13 +68,13 @@ const statusController = async (req, res) => {
     const { transactionId } = req.query;
 
     const statusPayload = {
-        merchantId: process.env.MERCHANT_ID,
+        merchantId: MERCHANT_ID,
         merchantTransactionId: transactionId
     };
 
     const bufferObj = Buffer.from(JSON.stringify(statusPayload), 'utf8');
     const base63EncodedStatusPayload = bufferObj.toString('base64');
-    const xVerify = sha256(base63EncodedStatusPayload + statusEndPoint + process.env.SALT_KEY) + '###' + SALT_INDEX;
+    const xVerify = sha256(base63EncodedStatusPayload + statusEndPoint + SALT_KEY) + '###' + SALT_INDEX;
 
     const options = {
         method: 'POST',
