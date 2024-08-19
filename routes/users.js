@@ -82,4 +82,5 @@ router.get('/check', async (req, res) => {
     }
 });
 
-router.post('/payment/status', statusController);
+router.get('/redirect-url/:merchantTransactionId', statusController);
+
