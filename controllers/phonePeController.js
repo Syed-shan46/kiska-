@@ -109,25 +109,23 @@ const statusController = async (req, res) => {
     }
 };
 
-orderCheckController = async (req, res) => {
+const orderCheckController = async (req, res) => {
     const { orderId } = req.query;
 
     if (!orderId) {
-        return res.status(400).send('Order ID is required');
+        return res.send({ error: 'Order ID is required' });
     }
 
     try {
-        const order = await Order.findById(orderId).populate('products.productId'); // Assuming products have productId references
-        if (!order) {
-            return res.status(404).send('Order not found');
+        const order = await Order.findById(orderId);
+        if (order) {
+            res.render('order-check', { order }); // Adjust as per your template engine
+        } else {
+            res.status(404).send({ error: 'Order not found' });
         }
-
-        // Render the order-check view and pass the order data
-        res.render('order-check', { order });
     } catch (error) {
-        console.error('Error fetching order:', error);
-        res.status(500).send('Server error');
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
-}
+};
 
 module.exports = { payController,  statusController, orderCheckController }
