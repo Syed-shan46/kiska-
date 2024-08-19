@@ -71,7 +71,7 @@ statusController = (req, res) => {
         const xVerify = sha256(`${statusEndPoint}/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + "###" + SALT_INDEX
 
         const options = {
-            method: 'get',
+            method: 'GET',
             url: `${PHONE_PE_HOST_URL}${statusEndPoint}/${MERCHANT_ID}/${merchantTransactionId}`,
             headers: {
                 accept: 'application/json',
@@ -84,11 +84,10 @@ statusController = (req, res) => {
         axios
             .request(options)
             .then(function (response) {
-                if(response.data.code === 'PAYMENT_SUCCESS'){
-
+                if (response.data.code === 'PAYMENT_SUCCESS') {
+                    res.redirect('/success');
                 }
-                else if(response.data.code == 'PAYMENT_ERROR'){
-
+                else if (response.data.code == 'PAYMENT_ERROR') {
                 }
                 res.send(response.data)
                 console.log(response.data);
@@ -117,4 +116,4 @@ callbackUrl = (req, res) => {
 }
 
 
-module.exports = { payController, callbackUrl, statusController}
+module.exports = { payController, callbackUrl, statusController }
