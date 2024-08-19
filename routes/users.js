@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const Order = require('../models/order_model');
 
 const { viewUserProduct } = require('../controllers/admin/viewController');
 const { handleRegister, handleLogin, handleLogout, registerPage } = require('../controllers/authController');
@@ -10,7 +11,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
-const { payController,  callbackUrl } = require('../controllers/phonePeController');
+const { payController, callbackUrl } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -36,7 +37,7 @@ router.get('/cart/checkout', checkoutPage);
 
 /// Stripe Payment
 router.post('/create-payment', getCardPayment);
-router.get('/success', (req,res)=> {
+router.get('/success', (req, res) => {
     res.render('user/success');
 });
 
@@ -70,4 +71,13 @@ router.get('/privacy', (req, res) => {
 
 router.post('/pay', payController);
 
-router.post('/callback-url', callbackUrl); 
+router.post('/callback-url', callbackUrl);
+
+router.get('/check', async (req, res) => {
+    try {
+        const orders = await Order.find({});
+        res.json(orders); // This will return the orders as a JSON response
+    } catch (error) {
+        res.status(500).send('Error retrieving orders');
+    }
+});
