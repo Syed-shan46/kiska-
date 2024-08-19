@@ -11,7 +11,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
-const { payController, statusController, orderCheck } = require('../controllers/phonePeController');
+const { payController, statusController, orderCheckController } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -71,10 +71,8 @@ router.get('/privacy', (req, res) => {
 
 router.post('/pay', payController);
 
+router.get('/order-check/:transactionId', statusController);
 
-
-router.get('/order-check', statusController);
-
-router.get('/order-check', orderCheck);
+router.get('/order-check', orderCheckController);
 
 

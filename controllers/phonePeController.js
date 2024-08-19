@@ -9,7 +9,7 @@ const statusEndPoint = '/pg/v1/status';
 const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
-payController = async (req, res) => {
+payController = async (req, res) => { 
     const userId = req.body.userId
     const merchantTransactionId = uniqid();
 
@@ -64,76 +64,52 @@ payController = async (req, res) => {
         });
 }
 
-statusController = async (req, res) => {
-    const { merchantTransactionId } = req.query;
+const statusController = async (req, res) => {
+    const { transactionId } = req.query;
 
-    if (merchantTransactionId) {
-        const statusPayload = {
-            merchantId: MERCHANT_ID,
-            merchantTransactionId: merchantTransactionId
-        };
-
-        const bufferObj = Buffer.from(JSON.stringify(statusPayload), 'utf8');
-        const base63EncodedStatusPayload = bufferObj.toString('base64');
-        const xVerify = sha256(base63EncodedStatusPayload + statusEndPoint + SALT_KEY) + '###' + SALT_INDEX;
-
-        const options = {
-            method: 'POST',
-            url: `${PHONE_PE_HOST_URL}${statusEndPoint}`,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-VERIFY': xVerify,
-            },
-            timeout: 5000,
-            data: {
-                request: base63EncodedStatusPayload,
-            }
-        };
-
-        try {
-            const response = await axios.request(options);
-            console.log('Status Response:', response.data);
-
-            if (response.data.code === 'PAYMENT_SUCCESS') {
-                const paymentData = response.data.data;
-
-                // Create the order if the payment is successful
-                const orderDetails = {
-                    userId: req.user._id, // Ensure user is authenticated
-                    orderId: paymentData.merchantTransactionId,
-                    products: req.body.products, // Adjust as needed
-                    totalAmount: paymentData.amount / 100, // Adjust for currency
-                    paymentStatus: 'Paid',
-                    orderStatus: 'Processing',
-                    address: req.body.address, // Adjust as needed
-                    orderDate: new Date()
-                };
-
-                try {
-                    const newOrder = new Order(orderDetails);
-                    await newOrder.save();
-                    // Redirect to the order-check page with the order ID
-                    res.redirect(`/order-check?orderId=${newOrder._id}`);
-                } catch (dbError) {
-                    console.error('Database Error:', dbError);
-                    res.status(500).json({ success: false, message: 'Database Error', details: dbError.message });
-                }
-            } else if (response.data.code === 'PAYMENT_ERROR') {
-                res.redirect('/payment-failed');
-            } else {
-                res.redirect('/payment-pending');
-            }
-        } catch (error) {
-            console.error('Error in statusController:', error);
-            res.status(500).json({ success: false, message: 'Internal Server Error' });
-        }
-    } else {
-        res.send({ error: 'Transaction ID is required' });
+    if (!transactionId) {
+        return res.send({ error: 'Transaction ID is required' });
     }
-}
 
-orderCheck = async (req, res) => {
+    const xVerify = sha256(`${statusEndPoint}/${MERCHANT_ID}/${transactionId}` + SALT_KEY) + "###" + SALT_INDEX;
+
+    const options = {
+        method: 'GET',
+        url: `${PHONE_PE_HOST_URL}${statusEndPoint}/${MERCHANT_ID}/${transactionId}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-VERIFY": xVerify,
+        },
+    };
+
+    try {
+        const response = await axios.request(options);
+        if (response.data.code === 'PAYMENT_SUCCESS') {
+            const orderDetails = {
+                userId: req.user._id,
+                orderId: transactionId,
+                products: req.body.products, // Ensure this data is passed correctly
+                totalAmount: response.data.data.amount / 100,
+                paymentStatus: 'Paid',
+                orderStatus: 'Processing',
+                address: req.body.address,
+                orderDate: new Date()
+            };
+
+            const newOrder = new Order(orderDetails);
+            await newOrder.save();
+
+            res.redirect(`/order-check?orderId=${newOrder._id}`);
+        } else {
+            res.redirect('/payment-failed');
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+};
+
+orderCheckController = async (req, res) => {
     const { orderId } = req.query;
 
     if (!orderId) {
@@ -154,4 +130,4 @@ orderCheck = async (req, res) => {
     }
 }
 
-module.exports = { payController,  statusController, orderCheck }
+module.exports = { payController,  statusController, orderCheckController }
