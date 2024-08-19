@@ -76,7 +76,7 @@ router.get('/order-check/:transactionId', statusController);
 router.get('/order-check', orderCheckController);
 
 
-app.get('/check', async (req, res) => {
+router.get('/check', async (req, res) => {
     try {
       const orders = await Order.find(); // Fetch all orders
       res.json(orders);
