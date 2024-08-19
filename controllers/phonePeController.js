@@ -102,7 +102,7 @@ const statusController = async (req, res) => {
 
             res.redirect(`/order-check?orderId=${newOrder._id}`);
         } else {
-            res.redirect('/payment-failed');
+            res.redirect('/payment-failed'); 
         }
     } catch (error) {
         res.status(500).json({ success: false, message: 'Internal Server Error' });

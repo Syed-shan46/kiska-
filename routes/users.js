@@ -71,7 +71,7 @@ router.get('/privacy', (req, res) => {
 
 router.post('/pay', payController);
 
-router.get('/order-check/:transactionId', statusController);
+router.post('/order-check/:transactionId', statusController);
 
 router.get('/order-check', orderCheckController);
 
