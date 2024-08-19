@@ -74,7 +74,7 @@ const statusController = async (req, res) => {
     const xVerify = sha256(`${statusEndPoint}/${MERCHANT_ID}/${transactionId}` + SALT_KEY) + "###" + SALT_INDEX;
 
     const options = {
-        method: 'GET',
+        method: 'POST',
         url: `${PHONE_PE_HOST_URL}${statusEndPoint}/${MERCHANT_ID}/${transactionId}`,
         headers: {
             'Accept': 'application/json',
