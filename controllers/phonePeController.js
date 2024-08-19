@@ -19,9 +19,9 @@ payController = async (req, res) => {
         "merchantTransactionId": merchantTransactionId,
         "merchantUserId": userId,
         "amount": 100,
-        "redirectUrl": `https://kiska.in/redirect-url/${merchantTransactionId}`,
+        "redirectUrl": `https://kiska.in/order-check?transactionId=${merchantTransactionId}`,
         "redirectMode": "REDIRECT",
-        "callbackUrl": `https://kiska.in/success`,
+        "callbackUrl": `https://kiska.in/order-check?transactionId=${merchantTransactionId}`,
         "paymentInstrument": {
             "type": "PAY_PAGE"
         },
@@ -64,56 +64,94 @@ payController = async (req, res) => {
         });
 }
 
+statusController = async (req, res) => {
+    const { merchantTransactionId } = req.params;
 
-statusController = (req, res) => {
-    const { merchantTransactionId } = req.params
     if (merchantTransactionId) {
-        const xVerify = sha256(`${statusEndPoint}/${MERCHANT_ID}/${merchantTransactionId}` + SALT_KEY) + "###" + SALT_INDEX
+        const statusPayload = {
+            merchantId: MERCHANT_ID,
+            merchantTransactionId: merchantTransactionId
+        };
+
+        const bufferObj = Buffer.from(JSON.stringify(statusPayload), 'utf8');
+        const base63EncodedStatusPayload = bufferObj.toString('base64');
+        const xVerify = sha256(base63EncodedStatusPayload + statusEndPoint + SALT_KEY) + '###' + SALT_INDEX;
 
         const options = {
-            method: 'GET',
-            url: `${PHONE_PE_HOST_URL}${statusEndPoint}/${MERCHANT_ID}/${merchantTransactionId}`,
+            method: 'POST',
+            url: `${PHONE_PE_HOST_URL}${statusEndPoint}`,
             headers: {
-                accept: 'application/json',
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                "X-VERIFY": xVerify,
-                'X-MERCHANT-ID': merchantTransactionId,
+                'X-VERIFY': xVerify,
             },
-
+            timeout: 5000,
+            data: {
+                request: base63EncodedStatusPayload,
+            }
         };
-        axios
-            .request(options)
-            .then(function (response) {
-                if (response.data.code === 'PAYMENT_SUCCESS') {
-                    res.redirect('/success');
+
+        try {
+            const response = await axios.request(options);
+            console.log('Status Response:', response.data);
+
+            if (response.data.code === 'PAYMENT_SUCCESS') {
+                const paymentData = response.data.data;
+
+                // Create the order if the payment is successful
+                const orderDetails = {
+                    userId: req.user._id, // Ensure user is authenticated
+                    orderId: paymentData.merchantTransactionId,
+                    products: req.body.products, // Adjust as needed
+                    totalAmount: paymentData.amount / 100, // Adjust for currency
+                    paymentStatus: 'Paid',
+                    orderStatus: 'Processing',
+                    address: req.body.address, // Adjust as needed
+                    orderDate: new Date()
+                };
+
+                try {
+                    const newOrder = new Order(orderDetails);
+                    await newOrder.save();
+                    // Redirect to the order-check page with the order ID
+                    res.redirect(`/order-check?orderId=${newOrder._id}`);
+                } catch (dbError) {
+                    console.error('Database Error:', dbError);
+                    res.status(500).json({ success: false, message: 'Database Error', details: dbError.message });
                 }
-                else if (response.data.code == 'PAYMENT_ERROR') {
-                }
-                res.send(response.data)
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-        //res.send({ merchantTransactionId })
-    }
-    else {
-        res.send({ error: 'Error' });
+            } else if (response.data.code === 'PAYMENT_ERROR') {
+                res.redirect('/payment-failed');
+            } else {
+                res.redirect('/payment-pending');
+            }
+        } catch (error) {
+            console.error('Error in statusController:', error);
+            res.status(500).json({ success: false, message: 'Internal Server Error' });
+        }
+    } else {
+        res.send({ error: 'Transaction ID is required' });
     }
 }
 
+orderCheck = async (req, res) => {
+    const { orderId } = req.query;
 
-callbackUrl = (req, res) => {
+    if (!orderId) {
+        return res.status(400).send('Order ID is required');
+    }
 
-    const callbackData = req.body;
+    try {
+        const order = await Order.findById(orderId).populate('products.productId'); // Assuming products have productId references
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
 
-
-    // Example: Verify payment status, update order status, etc.
-    console.log('Callback Data:', callbackData);
-
-    // Respond to PhonePe
-    res.send('Callback received');
+        // Render the order-check view and pass the order data
+        res.render('order-check', { order });
+    } catch (error) {
+        console.error('Error fetching order:', error);
+        res.status(500).send('Server error');
+    }
 }
 
-
-module.exports = { payController, callbackUrl, statusController }
+module.exports = { payController,  statusController, orderCheck }

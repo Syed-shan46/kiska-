@@ -11,7 +11,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
-const { payController, callbackUrl, statusController } = require('../controllers/phonePeController');
+const { payController, statusController, orderCheck } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -71,16 +71,10 @@ router.get('/privacy', (req, res) => {
 
 router.post('/pay', payController);
 
-router.post('/callback-url', callbackUrl);
 
-router.get('/check', async (req, res) => {
-    try {
-        const orders = await Order.find({});
-        res.render('user/order-check', { orders }); // Render the orders view and pass the orders data
-    } catch (error) {
-        res.status(500).send('Error retrieving orders');
-    }
-});
 
-router.get('/redirect-url/:merchantTransactionId', statusController);
+router.get('/order-check', statusController);
+
+router.get('/order-check', orderCheck);
+
 

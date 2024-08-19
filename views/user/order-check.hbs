@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order-check</title>
 </head>
+
 <body>
     <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders</title>
-</head>
-<body>
-    <div class="mt-5 pt-5"></div>
-    <div class="mt-5 pt-5"></div>
-    <h1>Orders List</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Order ID</th>
-                <th>User ID</th>
-                <th>Total Amount</th>
-                <th>Order Status</th>
-                <th>Payment Status</th>
-                <th>Order Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each orders}}
-            <tr>
-                <td>{{this.orderId}}</td>
-                <td>{{this.userId}}</td>
-                <td>{{this.totalAmount}}</td>
-                <td>{{this.orderStatus}}</td>
-                <td>{{this.paymentStatus}}</td>
-                <td>{{this.orderDate}}</td>
-            </tr>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Orders</title>
+    </head>
+
+    <body>
+        <div class="mt-5 pt-5"></div>
+        <div class="mt-5 pt-5"></div>
+        <h1>Order Confirmation</h1>
+
+        <p>Order ID: {{order.orderId}}</p>
+        <p>Total Amount: ₹{{order.totalAmount}}</p>
+        <p>Order Status: {{order.orderStatus}}</p>
+        <p>Payment Status: {{order.paymentStatus}}</p>
+        <p>Order Date: {{order.orderDate}}</p>
+
+        <h2>Products:</h2>
+        <ul>
+            {{#each order.products}}
+            <li>{{this.productId.name}} - Quantity: {{this.quantity}}</li>
             {{/each}}
-        </tbody>
-    </table>
+        </ul>
+
+        <h2>Shipping Address:</h2>
+        <p>{{order.address}}</p>
+
+        <p>Thank you for your order!</p>
+    </body>
+
+    </html>
 </body>
-</html>
-</body>
+
 </html>
