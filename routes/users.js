@@ -76,7 +76,7 @@ router.post('/callback-url', callbackUrl);
 router.get('/check', async (req, res) => {
     try {
         const orders = await Order.find({});
-        res.json(orders); // This will return the orders as a JSON response
+        res.render('user/order-check', { orders }); // Render the orders view and pass the orders data
     } catch (error) {
         res.status(500).send('Error retrieving orders');
     }

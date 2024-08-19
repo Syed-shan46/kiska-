@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order-check</title>
+</head>
+<body>
+    <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+</head>
+<body>
+    <div class="mt-5 pt-5"></div>
+    <div class="mt-5 pt-5"></div>
+    <h1>Orders List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User ID</th>
+                <th>Total Amount</th>
+                <th>Order Status</th>
+                <th>Payment Status</th>
+                <th>Order Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each orders}}
+            <tr>
+                <td>{{this.orderId}}</td>
+                <td>{{this.userId}}</td>
+                <td>{{this.totalAmount}}</td>
+                <td>{{this.orderStatus}}</td>
+                <td>{{this.paymentStatus}}</td>
+                <td>{{this.orderDate}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>
+</body>
+</html>
