@@ -108,11 +108,16 @@ const statusController = async (req, res) => {
                 orderDate: new Date()
             };
 
-            const newOrder = new Order(orderDetails);
-            await newOrder.save();
+            try {
+                const newOrder = new Order(orderDetails);
+                await newOrder.save();
 
-            // Redirect the user to the order confirmation page
-            res.redirect('/order-confirmation?orderId=' + newOrder._id);
+                // Redirect the user to the order confirmation page
+                res.redirect('/order-confirmation?orderId=' + newOrder._id);
+            } catch (dbError) {
+                console.error('Database Error:', dbError);
+                res.status(500).json({ success: false, message: 'Database Error', details: dbError.message });
+            }
         } else {
             // Handle payment failure
             res.redirect('/payment-failed');
