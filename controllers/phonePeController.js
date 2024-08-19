@@ -1,6 +1,7 @@
 const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
+const Order = require('../models/order_model');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1;
 const payEndPoint = '/pg/v1/pay';
@@ -47,10 +48,25 @@ payController = async (req, res) => {
     };
     axios
         .request(options)
-        .then(function (response) {
+        .then(async function (response) {
             console.log(response.data);
             if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
                 const url = response.data.data.instrumentResponse.redirectInfo.url;
+
+                // Create and save the order in the database
+                const orderDetails = {
+                    userId: userId,
+                    orderId: merchantTransactionId,
+                    products: req.body.products, // Assuming products are passed in the request body
+                    totalAmount: payLoad.amount / 100, // Convert amount from paise to rupees
+                    paymentStatus: 'Paid',
+                    orderStatus: 'Processing',
+                    address: req.body.address, // Assuming address is passed in the request body
+                    orderDate: new Date()
+                };
+
+                const newOrder = new Order(orderDetails);
+                await newOrder.save();
                 res.redirect(url);
             } else {
                 console.error('Unexpected response structure:', response.data);
