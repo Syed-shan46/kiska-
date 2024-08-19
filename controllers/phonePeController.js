@@ -65,7 +65,7 @@ payController = async (req, res) => {
 }
 
 statusController = async (req, res) => {
-    const { merchantTransactionId } = req.params;
+    const { merchantTransactionId } = req.query;
 
     if (merchantTransactionId) {
         const statusPayload = {
