@@ -82,4 +82,4 @@ router.get('/check', async (req, res) => {
     }
 });
 
-router.post('/payment/status', statusController);
+router.get('/payment/status', statusController);
