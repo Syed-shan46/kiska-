@@ -68,17 +68,18 @@ checkStatus = async (req, res) => {
     const { merchantTransactionId } = req.params;
 
     if (merchantTransactionId) {
-        let statusUrl = `${PHONE_PE_HOST_URL}${statusEndPoint}/${MERCHANT_ID}` + merchantTransactionId;
-        let string = `${statusEndPoint}/${MERCHANT_ID}` + merchantTransactionId + SALT_KEY;
+        let statusUrl = `${PHONE_PE_HOST_URL}${statusEndPoint}/${MERCHANT_ID}/${merchantTransactionId}`;
+        let string = `${statusEndPoint}/${MERCHANT_ID}/${merchantTransactionId}${SALT_KEY}`;
         let sha256_val = sha256(string);
         let xVerifyCheckSum = sha256_val + '###' + SALT_INDEX;
 
         axios.get(statusUrl, {
             headers: {
+                accept: 'application/json',
                 'Content-Type': 'application/json',
                 'X-VERIFY': xVerifyCheckSum,
-                'X-MERCHANT-ID': merchantTransactionId,
-                accept: 'application/json'
+                'X-MERCHANT-ID': MERCHANT_ID,
+
             }
         })
             .then(function (response) {
@@ -102,4 +103,4 @@ checkStatus = async (req, res) => {
 
 
 
-module.exports = { payController,checkStatus }
+module.exports = { payController, checkStatus }
