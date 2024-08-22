@@ -9,7 +9,7 @@ const statusEndPoint = '/pg/v1/status';
 const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
-payController = async (req, res) => { 
+payController = async (req, res) => {
     const userId = req.body.userId
     const merchantTransactionId = uniqid();
 
@@ -74,7 +74,7 @@ const statusController = async (req, res) => {
     const xVerify = sha256(`${statusEndPoint}/${MERCHANT_ID}/${transactionId}` + SALT_KEY) + "###" + SALT_INDEX;
 
     const options = {
-        method: 'POST',
+        method: 'GET',
         url: `${PHONE_PE_HOST_URL}${statusEndPoint}/${MERCHANT_ID}/${transactionId}`,
         headers: {
             'Accept': 'application/json',
@@ -102,7 +102,7 @@ const statusController = async (req, res) => {
 
             res.redirect(`/order-check?orderId=${newOrder._id}`);
         } else {
-            res.redirect('/payment-failed'); 
+            res.redirect('/payment-failed');
         }
     } catch (error) {
         res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -128,4 +128,4 @@ const orderCheckController = async (req, res) => {
     }
 };
 
-module.exports = { payController,  statusController, orderCheckController }
+module.exports = { payController, statusController, orderCheckController }

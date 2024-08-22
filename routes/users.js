@@ -73,7 +73,7 @@ router.post('/pay', payController);
 
 router.post('/order-check/:transactionId', statusController);
 
-router.get('/order-check', orderCheckController);
+router.get('/order-check/:transactionId', orderCheckController);
 
 
 router.get('/check', async (req, res) => {
