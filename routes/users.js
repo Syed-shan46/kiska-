@@ -11,7 +11,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
-const { payController, statusController, orderCheckController } = require('../controllers/phonePeController');
+const { payController, checkStatus } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -71,17 +71,14 @@ router.get('/privacy', (req, res) => {
 
 router.post('/pay', payController);
 
-router.post('/order-check/:transactionId', statusController);
-
-router.get('/order-check/:transactionId', orderCheckController);
-
+router.get('/pay/validate/:merchantTransactionId', checkStatus);
 
 router.get('/check', async (req, res) => {
     try {
-      const orders = await Order.find(); // Fetch all orders
-      res.json(orders);
+        const orders = await Order.find(); // Fetch all orders
+        res.json(orders);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch orders' });
+        res.status(500).json({ error: 'Failed to fetch orders' });
     }
-  });
+});
 
