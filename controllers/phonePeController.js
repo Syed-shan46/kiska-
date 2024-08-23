@@ -13,7 +13,7 @@ payController = async (req, res) => {
     const { userId } = req.body;
     //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
     const merchantTransactionId = uniqid();
-    const orderId = merchantTransactionId; // Use the transaction ID as the order ID
+    const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
 
     const newOrder = new Order({
         userId: userId,
