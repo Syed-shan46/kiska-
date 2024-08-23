@@ -11,6 +11,10 @@ const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
     const userId = req.body.userId
+
+    // Save this information in session or temporary storage for later use
+    req.session.checkoutData = { userId };
+
     const merchantTransactionId = uniqid();
 
     console.log("merchant id", merchantTransactionId)
@@ -74,7 +78,7 @@ checkStatus = async (req, res) => {
         let xVerifyCheckSum = sha256_val + '###' + SALT_INDEX;
 
         axios.get(statusUrl, {
-            headers: {
+            headers: { 
                 accept: 'application/json',
                 'Content-Type': 'application/json',
                 'X-VERIFY': xVerifyCheckSum,
@@ -85,7 +89,7 @@ checkStatus = async (req, res) => {
             .then(async function (response) {
                 console.log('response->', response.data);
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
-                    const { userId, products, totalAmount, address } = req.body; // Assuming these are coming in the request body
+                    const userId = req.session.checkoutData; // Assuming these are coming in the request body
 
                     // Create a new order
                     const newOrder = new Order(
