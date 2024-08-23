@@ -10,14 +10,25 @@ const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
-    const { userId } = req.body
-
-    // Save this information in session or temporary storage for later use
-    req.session.checkoutData = { userId };
+    const { userId, products, totalAmount, address } = req.body; // Get the necessary data from the request body
 
     const merchantTransactionId = uniqid();
+    const orderId = merchantTransactionId; // Use the transaction ID as the order ID
 
-    console.log("merchant id", merchantTransactionId)
+    const newOrder = new Order({
+        userId: userId,
+        orderId: orderId,
+        products: products,
+        totalAmount: totalAmount,
+        orderStatus: "Pending", // Initial order status
+        paymentStatus: "Pending", // Initial payment status
+        address: address,
+        orderDate: new Date().toISOString(),
+    });
+
+    // Save the new order to the database
+    await newOrder.save();
+
     const payLoad = {
         "merchantId": MERCHANT_ID,
         "merchantTransactionId": merchantTransactionId,
@@ -33,7 +44,7 @@ payController = async (req, res) => {
 
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
     const base63EncodedPayLoad = bufferObj.toString('base64');
-    
+
     const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
 
     const options = {
@@ -86,50 +97,19 @@ checkStatus = async (req, res) => {
             }
         })
             .then(async function (response) {
-                console.log('response->', response.data);
+                console.log('response->', response.data); 
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
-                    const { userId } = req.session.checkoutData; // Assuming these are coming in the request body
 
-                    // Create a new order
-                    const newOrder = new Order(
-                        {
-                            "userId": userId,  // Example ObjectId of a user
-                            "orderId": "ORD12345678",  // Unique identifier for the order
-                            "products": [
-                                {
-                                    "productId": "64f5e6b98b5f9c0012345679",  // Example ObjectId of a product
-                                    "quantity": 2
-                                },
-                                {
-                                    "productId": "64f5e6b98b5f9c001234567a",  // Example ObjectId of another product
-                                    "quantity": 1
-                                }
-                            ],
-                            "totalAmount": 150.75,  // Total amount for the order
-                            "orderStatus": "Pending",  // Initial status of the order
-                            "paymentStatus": "Paid",  // Status of the payment
-                            "address": [
-                                {
-                                    "name": "John Doe",
-                                    "house": "1234",
-                                    "street": "Main Street",
-                                    "city": "New York",
-                                    "state": "NY",
-                                    "zipCode": "10001",
-                                    "phone": 1234567890
-                                }
-                            ],
-                            "orderDate": "2024-09-23T12:00:00Z"  // ISO date string representing the date the order was placed
-                        }
+                    // Payment is successful, update the order's payment status
+                    await Order.findOneAndUpdate(
+                        { orderId: merchantTransactionId }, // Find the order by its ID
+                        { paymentStatus: "Paid" }, // Update the payment status to "Paid"
+                        { new: true } // Return the updated document
                     );
-
-                    // Save the order to the database
-                    await newOrder.save();
 
                     // Send a success response
                     res.status(200).json({
-                        message: 'Order created successfully!',
-                        order: newOrder,
+                        message: 'Payment successful and order updated!',
                         paymentDetails: response.data,
                     });
 
