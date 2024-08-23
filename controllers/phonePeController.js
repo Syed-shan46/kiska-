@@ -90,7 +90,7 @@ checkStatus = async (req, res) => {
                     // Create a new order
                     const newOrder = new Order(
                         {
-                            "userId": "64f5e6b98b5f9c0012345678",  // Example ObjectId of a user
+                            "userId": userId,  // Example ObjectId of a user
                             "orderId": "ORD12345678",  // Unique identifier for the order
                             "products": [
                               {
@@ -116,7 +116,7 @@ checkStatus = async (req, res) => {
                                 "phone": 1234567890
                               }
                             ],
-                            "orderDate": "2024-08-23T12:00:00Z"  // ISO date string representing the date the order was placed
+                            "orderDate": "2024-09-23T12:00:00Z"  // ISO date string representing the date the order was placed
                           }
                     );
 
