@@ -10,7 +10,7 @@ const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
-    const userId = req.body.userId
+    const { userId } = req.body.userId
 
     // Save this information in session or temporary storage for later use
     req.session.checkoutData = { userId };
@@ -78,7 +78,7 @@ checkStatus = async (req, res) => {
         let xVerifyCheckSum = sha256_val + '###' + SALT_INDEX;
 
         axios.get(statusUrl, {
-            headers: { 
+            headers: {
                 accept: 'application/json',
                 'Content-Type': 'application/json',
                 'X-VERIFY': xVerifyCheckSum,
@@ -89,7 +89,7 @@ checkStatus = async (req, res) => {
             .then(async function (response) {
                 console.log('response->', response.data);
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
-                    const userId = req.session.checkoutData; // Assuming these are coming in the request body
+                    const { userId } = req.session.checkoutData; // Assuming these are coming in the request body
 
                     // Create a new order
                     const newOrder = new Order(
@@ -97,31 +97,31 @@ checkStatus = async (req, res) => {
                             "userId": userId,  // Example ObjectId of a user
                             "orderId": "ORD12345678",  // Unique identifier for the order
                             "products": [
-                              {
-                                "productId": "64f5e6b98b5f9c0012345679",  // Example ObjectId of a product
-                                "quantity": 2
-                              },
-                              {
-                                "productId": "64f5e6b98b5f9c001234567a",  // Example ObjectId of another product
-                                "quantity": 1
-                              }
+                                {
+                                    "productId": "64f5e6b98b5f9c0012345679",  // Example ObjectId of a product
+                                    "quantity": 2
+                                },
+                                {
+                                    "productId": "64f5e6b98b5f9c001234567a",  // Example ObjectId of another product
+                                    "quantity": 1
+                                }
                             ],
                             "totalAmount": 150.75,  // Total amount for the order
                             "orderStatus": "Pending",  // Initial status of the order
                             "paymentStatus": "Paid",  // Status of the payment
                             "address": [
-                              {
-                                "name": "John Doe",
-                                "house": "1234",
-                                "street": "Main Street",
-                                "city": "New York",
-                                "state": "NY",
-                                "zipCode": "10001",
-                                "phone": 1234567890
-                              }
+                                {
+                                    "name": "John Doe",
+                                    "house": "1234",
+                                    "street": "Main Street",
+                                    "city": "New York",
+                                    "state": "NY",
+                                    "zipCode": "10001",
+                                    "phone": 1234567890
+                                }
                             ],
                             "orderDate": "2024-09-23T12:00:00Z"  // ISO date string representing the date the order was placed
-                          }
+                        }
                     );
 
                     // Save the order to the database
