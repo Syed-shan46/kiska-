@@ -10,7 +10,7 @@ const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
-    const { userId } = req.body.userId
+    const { userId } = req.body
 
     // Save this information in session or temporary storage for later use
     req.session.checkoutData = { userId };
@@ -33,9 +33,8 @@ payController = async (req, res) => {
 
     const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
     const base63EncodedPayLoad = bufferObj.toString('base64');
-    console.log(base63EncodedPayLoad);
+    
     const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
-    console.log(xVerify);
 
     const options = {
         method: 'POST',
