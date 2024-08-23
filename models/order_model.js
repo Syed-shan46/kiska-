@@ -6,11 +6,11 @@ const orderSchema = new Schema({
     orderId: { type: String, required: true },
     products: [
         {
-            productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
-            quantity: { type: Number, required: true }
+            productId: { type: Schema.Types.ObjectId, ref: 'Product',},
+            quantity: { type: Number,  }
         }
     ],
-    totalAmount: { type: Number, required: true },
+    totalAmount: { type: Number,  },
     orderStatus: { type: String, required: true },
     paymentStatus: { type: String, required: true },
     address: [
