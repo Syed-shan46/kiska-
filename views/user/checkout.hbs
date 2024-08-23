@@ -90,6 +90,7 @@
                                         {{#each cartItems }}
                                         <tr>
                                             <td><a href="#">{{this.product.name}}</a></td>
+                                            <input type="hidden" value="{{this.product._id}}">
                                             <td>{{this.eachTotal}}</td>
                                         </tr>
                                         {{/each}}

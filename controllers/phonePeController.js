@@ -10,25 +10,25 @@ const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
-    const { userId } = req.body; // Get the necessary data from the request body
-    //const products = req.products
-
+    const { userId } = req.body;
+    const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
     const merchantTransactionId = uniqid();
-    // const orderId = merchantTransactionId; // Use the transaction ID as the order ID
+    const orderId = merchantTransactionId; // Use the transaction ID as the order ID
 
-    // const newOrder = new Order({
-    //     userId: userId,
-    //     orderId: orderId,
-    //     products: 'Shoe',
-    //     totalAmount: 100,
-    //     products: products,
-    //     orderStatus: "Pending", // Initial order status
-    //     paymentStatus: "Pending", // Initial payment status
-    //     orderDate: new Date().toISOString(),
-    // });
+    const newOrder = new Order({
+        userId: userId,
+        orderId: orderId,
+        products: products,
+        totalAmount: totalAmount,
+        products: products,
+        address: address,
+        orderStatus: "Pending", // Initial order status
+        paymentStatus: "Pending", // Initial payment status
+        orderDate: new Date().toISOString(),
+    });
 
-    // // Save the new order to the database
-    // await newOrder.save();
+    // Save the new order to the database
+    await newOrder.save();
 
     const payLoad = {
         "merchantId": MERCHANT_ID,
