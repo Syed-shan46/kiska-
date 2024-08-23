@@ -10,21 +10,50 @@ const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
-    const userId  = req.body;
+    const userId = req.body;
+    const totalAmount = req.body;
     //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
     const merchantTransactionId = uniqid();
-    //const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
+    const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
 
-    // const newOrder = new Order({
-    //     userId: userId,
-    //     orderId: orderId,
-    //     orderStatus: "Pending", // Initial order status
-    //     paymentStatus: "Pending", // Initial payment status
-    //     orderDate: new Date().toISOString(),
-    // });
+    const newOrder = new Order(
+        {
+            "userId": userId,
+            "orderId": orderId,
+            "products": [
+                {
+                    "productId": "64f5e6b98b5f9c0012345679",
+                    "quantity": 2,
+                    "_id": "66c82165ad2afa8d5b17efe2"
+                },
+                {
+                    "productId": "64f5e6b98b5f9c001234567a",
+                    "quantity": 1,
+                    "_id": "66c82165ad2afa8d5b17efe3"
+                }
+            ],
+            "totalAmount": totalAmount,
+            "orderStatus": "Pending",
+            "paymentStatus": "Pending",
+            "address": [
+                {
+                    "name": "John Doe",
+                    "house": "1234",
+                    "street": "Main Street",
+                    "city": "New York",
+                    "state": "NY",
+                    "zipCode": "10001",
+                    "phone": 1234567890,
+                    "_id": "66c82165ad2afa8d5b17efe4"
+                }
+            ],
+            "orderDate": "2024-08-23T12:00:00.000Z",
+            "__v": 0
+        }
+    );
 
-    // Save the new order to the database
-    //await newOrder.save();
+    //Save the new order to the database
+    await newOrder.save();
 
     const payLoad = {
         "merchantId": MERCHANT_ID,
