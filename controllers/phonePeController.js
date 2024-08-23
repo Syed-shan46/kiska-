@@ -10,98 +10,102 @@ const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
-    const userId = req.body;
-    const totalAmount = req.body;
-    //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
-    const merchantTransactionId = uniqid();
-    const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
+    try {
+        const userId = req.body;
+        const totalAmount = req.body;
+        //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
+        const merchantTransactionId = uniqid();
+        const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
 
-    const newOrder = new Order(
-        {
-            "userId": userId,
-            "orderId": orderId,
-            "products": [
-                {
-                    "productId": "64f5e6b98b5f9c0012345679",
-                    "quantity": 2,
-                    "_id": "66c82165ad2afa8d5b17efe2"
-                },
-                {
-                    "productId": "64f5e6b98b5f9c001234567a",
-                    "quantity": 1,
-                    "_id": "66c82165ad2afa8d5b17efe3"
-                }
-            ],
-            "totalAmount": totalAmount,
-            "orderStatus": "Pending",
-            "paymentStatus": "Pending",
-            "address": [
-                {
-                    "name": "John Doe",
-                    "house": "1234",
-                    "street": "Main Street",
-                    "city": "New York",
-                    "state": "NY",
-                    "zipCode": "10001",
-                    "phone": 1234567890,
-                    "_id": "66c82165ad2afa8d5b17efe4"
-                }
-            ],
-            "orderDate": "2024-08-23T12:00:00.000Z",
-            "__v": 0
-        }
-    );
-
-    //Save the new order to the database
-    await newOrder.save();
-
-    const payLoad = {
-        "merchantId": MERCHANT_ID,
-        "merchantTransactionId": merchantTransactionId,
-        "merchantUserId": userId,
-        "amount": 100,
-        "redirectUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
-        "redirectMode": "REDIRECT",
-        "callbackUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
-        "paymentInstrument": {
-            "type": "PAY_PAGE"
-        },
-    };
-
-    const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
-    const base63EncodedPayLoad = bufferObj.toString('base64');
-
-    const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
-
-    const options = {
-        method: 'POST',
-        url: `${PHONE_PE_HOST_URL}${payEndPoint}`,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-VERIFY': xVerify,
-        },
-        timeout: 10000,
-        data: {
-            request: base63EncodedPayLoad,
-        }
-    };
-    axios
-        .request(options)
-        .then(function (response) {
-            console.log(response.data);
-            if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
-                const url = response.data.data.instrumentResponse.redirectInfo.url;
-                res.redirect(url);
-            } else {
-                console.error('Unexpected response structure:', response.data);
-                res.send({ error: 'Unexpected response structure' });
+        const newOrder = new Order(
+            {
+                "userId": userId,
+                "orderId": orderId,
+                "products": [
+                    {
+                        "productId": "64f5e6b98b5f9c0012345679",
+                        "quantity": 2,
+                        "_id": "66c82165ad2afa8d5b17efe2"
+                    },
+                    {
+                        "productId": "64f5e6b98b5f9c001234567a",
+                        "quantity": 1,
+                        "_id": "66c82165ad2afa8d5b17efe3"
+                    }
+                ],
+                "totalAmount": totalAmount,
+                "orderStatus": "Pending",
+                "paymentStatus": "Pending",
+                "address": [
+                    {
+                        "name": "John Doe",
+                        "house": "1234",
+                        "street": "Main Street",
+                        "city": "New York",
+                        "state": "NY",
+                        "zipCode": "10001",
+                        "phone": 1234567890,
+                        "_id": "66c82165ad2afa8d5b17efe4"
+                    }
+                ],
+                "orderDate": "2024-08-23T12:00:00.000Z",
+                "__v": 0
             }
-        })
-        .catch(function (error) {
-            console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
-            res.send(error);
-        });
+        );
+
+        //Save the new order to the database
+        await newOrder.save();
+
+        const payLoad = {
+            "merchantId": MERCHANT_ID,
+            "merchantTransactionId": merchantTransactionId,
+            "merchantUserId": userId,
+            "amount": 100,
+            "redirectUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
+            "redirectMode": "REDIRECT",
+            "callbackUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
+            "paymentInstrument": {
+                "type": "PAY_PAGE"
+            },
+        };
+
+        const bufferObj = Buffer.from(JSON.stringify(payLoad), 'utf8');
+        const base63EncodedPayLoad = bufferObj.toString('base64');
+
+        const xVerify = sha256(base63EncodedPayLoad + payEndPoint + SALT_KEY) + '###' + SALT_INDEX;
+
+        const options = {
+            method: 'POST',
+            url: `${PHONE_PE_HOST_URL}${payEndPoint}`,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-VERIFY': xVerify,
+            },
+            data: {
+                request: base63EncodedPayLoad,
+            }
+        };
+        axios
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
+                if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
+                    const url = response.data.data.instrumentResponse.redirectInfo.url;
+                    res.redirect(url);
+                } else {
+                    console.error('Unexpected response structure:', response.data);
+                    res.send({ error: 'Unexpected response structure' });
+                }
+            })
+            .catch(function (error) {
+                console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
+                res.send(error);
+            });
+    } catch (error) {
+        console.error('Error creating order:', error);
+        res.status(500).json({ error: 'An error occurred while creating the order' });
+    }
 }
 
 checkStatus = async (req, res) => {
