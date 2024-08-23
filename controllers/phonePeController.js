@@ -98,7 +98,7 @@ checkStatus = async (req, res) => {
             }
         })
             .then(async function (response) {
-                console.log('response->', response.data);
+                console.log('response->', response.data)
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
 
                     // Payment is successful, update the order's payment status
