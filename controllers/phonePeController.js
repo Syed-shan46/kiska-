@@ -82,10 +82,33 @@ checkStatus = async (req, res) => {
 
             }
         })
-            .then(function (response) {
+            .then(async function (response) {
                 console.log('response->', response.data);
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
-                    res.send(response.data);
+                    const { userId, products, totalAmount, address } = req.body; // Assuming these are coming in the request body
+
+                    // Create a new order
+                    const newOrder = new Order({
+                        userId,
+                        orderId: merchantTransactionId, // Using merchantTransactionId as orderId for example
+                        products,
+                        totalAmount,
+                        orderStatus: 'Pending', // Assuming the order starts with a 'Pending' status
+                        paymentStatus: 'Paid', // Since payment is successful
+                        address,
+                        orderDate: new Date(),
+                    });
+
+                    // Save the order to the database
+                    await newOrder.save();
+
+                    // Send a success response
+                    res.status(200).json({
+                        message: 'Order created successfully!',
+                        order: newOrder,
+                        paymentDetails: response.data,
+                    });
+
                 }
                 else {
                     res.send(response.data);
@@ -97,7 +120,7 @@ checkStatus = async (req, res) => {
 
     }
     else {
-        res.send('You have an Error');
+        res.status(400).json({ message: 'Missing merchant transaction ID' });
     }
 }
 
