@@ -13,18 +13,18 @@ payController = async (req, res) => {
     const userId  = req.body;
     //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
     const merchantTransactionId = uniqid();
-    const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
+    //const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
 
-    const newOrder = new Order({
-        userId: userId,
-        orderId: orderId,
-        orderStatus: "Pending", // Initial order status
-        paymentStatus: "Pending", // Initial payment status
-        orderDate: new Date().toISOString(),
-    });
+    // const newOrder = new Order({
+    //     userId: userId,
+    //     orderId: orderId,
+    //     orderStatus: "Pending", // Initial order status
+    //     paymentStatus: "Pending", // Initial payment status
+    //     orderDate: new Date().toISOString(),
+    // });
 
     // Save the new order to the database
-    await newOrder.save();
+    //await newOrder.save();
 
     const payLoad = {
         "merchantId": MERCHANT_ID,
