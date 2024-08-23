@@ -88,16 +88,29 @@ checkStatus = async (req, res) => {
                     const { userId, products, totalAmount, address } = req.body; // Assuming these are coming in the request body
 
                     // Create a new order
-                    const newOrder = new Order({
-                        userId,
-                        orderId: merchantTransactionId, // Using merchantTransactionId as orderId for example
-                        products,
-                        totalAmount,
-                        orderStatus: 'Pending', // Assuming the order starts with a 'Pending' status
-                        paymentStatus: 'Paid', // Since payment is successful
-                        address,
-                        orderDate: new Date(),
-                    });
+                    const newOrder = new Order(
+                        {
+                            "userId": "66b891da1388e51c8e2a15c7",  // Example ObjectId for user
+                            "products": [
+                              {
+                                "productId": "60c72b2f9b1e8e1d4c8b1234",
+                                "quantity": 2
+                              }
+                            ],
+                            "totalAmount": 100.50,
+                            "address": [
+                              {
+                                "name": "John Doe",
+                                "house": "123",
+                                "street": "Main Street",
+                                "city": "New York",
+                                "state": "NY",
+                                "zipCode": "10001",
+                                "phone": "1234567890"
+                              }
+                            ]
+                          }
+                    );
 
                     // Save the order to the database
                     await newOrder.save();
