@@ -10,7 +10,8 @@ const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
-    const { userId, products, totalAmount, address } = req.body; // Get the necessary data from the request body
+    const userId = req.body; // Get the necessary data from the request body
+    const products = req.products
 
     const merchantTransactionId = uniqid();
     const orderId = merchantTransactionId; // Use the transaction ID as the order ID
@@ -18,11 +19,11 @@ payController = async (req, res) => {
     const newOrder = new Order({
         userId: userId,
         orderId: orderId,
+        products: 'Shoe',
+        totalAmount: 100,
         products: products,
-        totalAmount: totalAmount,
         orderStatus: "Pending", // Initial order status
         paymentStatus: "Pending", // Initial payment status
-        address: address,
         orderDate: new Date().toISOString(),
     });
 
@@ -97,7 +98,7 @@ checkStatus = async (req, res) => {
             }
         })
             .then(async function (response) {
-                console.log('response->', response.data); 
+                console.log('response->', response.data);
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
 
                     // Payment is successful, update the order's payment status
