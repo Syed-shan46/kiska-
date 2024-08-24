@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Payment Method</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .containerr {
+      max-width: 600px;
+      margin: 50px auto;
+      
+      border-radius: 8px;
+     
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .payment-methods {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .payment-methods li {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .payment-methods input[type="radio"] {
+      display: none;
+    }
+    .payment-methods label {
+      flex-grow: 1;
+      margin-left: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f0f0f0;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      position: relative;
+    }
+    .payment-methods input[type="radio"]:checked + label {
+      border: 2px solid #39f;
+    }
+    .payment-methods label:hover {
+      background-color: #e0e0e0;
+    }
+    .round-checkbox {
+      width: 20px;
+      height: 20px;
+      background-color: #f0f0f0;
+      border: 2px solid #ddd;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      position: relative;
+    }
+    .round-checkbox:after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-color: #39f;
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      display: none;
+      transition: background-color 0.3s ease;
+    }
+    .payment-methods input[type="radio"]:checked + label .round-checkbox:after {
+      display: block;
+    }
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      margin-top: 20px;
+      background-color: #39f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+      background-color: #39f;
+    }
+  </style>
+</head>
+<body>
+    <div class="mt-5 pt-2"></div>
+  <div class="containerr">
+    <h4>Select Payment Method</h4>
+    <div class="mt-3"></div>
+    <form action="/pay" method="POST">
+      <ul class="payment-methods">
+        <li>
+          <input type="radio" id="phonepe" name="paymentMethod" value="phonepe" checked>
+          
+          <label for="phonepe">
+            <img src="/assets/images/phonepe.png" width="40" height="40" alt="">
+            PhonePe
+            <span class="round-checkbox"></span>
+          </label>
+        </li>
+        
+      </ul>
+      <button type="submit" class="submit-btn">Proceed to Pay</button>
+    </form>
+  </div>
+</body>
+</html>

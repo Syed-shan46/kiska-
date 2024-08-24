@@ -34,6 +34,9 @@ router.post('/remove', cartRemove);
 /// View single item
 router.get('/product/:id', viewSingleItem);
 router.get('/cart/checkout', checkoutPage);
+router.get('/cart/checkout/method', (req,res)=> {
+    res.render('user/method');
+});
 
 /// Stripe Payment
 router.post('/create-payment', getCardPayment);
@@ -68,6 +71,8 @@ router.get('/tnc', (req, res) => {
 router.get('/privacy', (req, res) => {
     res.render('user/pv');
 })
+
+
 
 router.post('/pay', payController);
 
