@@ -5,6 +5,7 @@ const uniqid = require('uniqid');
 
 const checkoutPage = async (req, res) => {
     const userId = req.session.userId;
+    
     const cartItems = await CartItem.find({ user: userId }).populate('product');
     const userAddress = await User.findById(req.session.userId).populate('addresses');
     let totalAmount = 0;

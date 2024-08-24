@@ -14,7 +14,7 @@ payController = async (req, res) => {
         const userId = req.body;
 
         //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
-        const { merchantTransactionId } = req.query;
+        const merchantTransactionId = uniqid();
         
 
         const payLoad = {
