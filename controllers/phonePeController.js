@@ -135,7 +135,7 @@ checkStatus = async (req, res) => {
                         { new: true } // Return the updated document
                     );
 
-                    await updatedOrder.save();
+                    
 
                     res.status(200).json({
                         message: 'Payment successful and order updated!',
