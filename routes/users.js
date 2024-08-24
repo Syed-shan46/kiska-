@@ -9,7 +9,7 @@ const { getCardPayment, successPage } = require('../controllers/stripeController
 const { getCart, addToCart, cartIncrease, cartDecrease, cartRemove } = require('../controllers/cartController');
 const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
-const { checkoutPage } = require('../controllers/checkoutController');
+const { checkoutPage, PendingOrder } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
 const { payController, checkStatus } = require('../controllers/phonePeController');
 
@@ -26,15 +26,17 @@ router.post('/logout', handleLogout);
 /// Cart Functions
 router.get('/cart', getCart);
 router.post('/cart/add', addToCart);
-router.post('/cart/increase', cartIncrease)
-router.post('/cart/decrease', cartDecrease)
+router.post('/cart/increase', cartIncrease);
+router.post('/cart/decrease', cartDecrease);
 router.post('/cart/remove', cartRemove);
 router.post('/remove', cartRemove);
+
 
 /// View single item
 router.get('/product/:id', viewSingleItem);
 router.get('/cart/checkout', checkoutPage);
-router.get('/cart/checkout/method', (req,res)=> {
+router.post('/pendingOrder', PendingOrder);
+router.get('/cart/checkout/method', (req, res) => {
     res.render('user/method');
 });
 
@@ -60,9 +62,7 @@ router.get('/category-2columns', category2Columns);
 /// refund 
 router.get('/refcan', (req, res) => {
     res.render('user/refund-cancel');
-})
-
-
+});
 
 router.get('/tnc', (req, res) => {
     res.render('user/TnConditions')
@@ -71,8 +71,6 @@ router.get('/tnc', (req, res) => {
 router.get('/privacy', (req, res) => {
     res.render('user/pv');
 })
-
-
 
 router.post('/pay', payController);
 

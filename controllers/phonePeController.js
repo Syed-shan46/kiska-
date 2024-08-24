@@ -1,9 +1,9 @@
 const axios = require('axios');
 const uniqid = require('uniqid');
 const sha256 = require('sha256');
-const Order = require('../models/order_model');
 const PHONE_PE_HOST_URL = 'https://api.phonepe.com/apis/hermes'
 const SALT_INDEX = 1;
+const Order = require('../models/order_model');
 const payEndPoint = '/pg/v1/pay';
 const statusEndPoint = '/pg/v1/status';
 const MERCHANT_ID = 'M221LS4ADJ5UN'
@@ -12,7 +12,7 @@ const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 payController = async (req, res) => {
     try {
         const userId = req.body;
-        const totalAmount = req.body;
+
         //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
         const merchantTransactionId = uniqid();
         //const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
@@ -128,18 +128,17 @@ checkStatus = async (req, res) => {
             .then(async function (response) {
                 console.log('response->', response.data)
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
+                    // Update the order's payment status to "Paid"
+                    const updatedOrder = await Order.findOneAndUpdate(
+                        { orderId: merchantTransactionId }, // Find the order by its ID
+                        { paymentStatus: "Paid" }, // Update the payment status to "Paid"
+                        { new: true } // Return the updated document
+                    );
 
-                    // Payment is successful, update the order's payment status
-                    // await Order.findOneAndUpdate(
-                    //     { orderId: merchantTransactionId }, // Find the order by its ID
-                    //     { paymentStatus: "Paid" }, // Update the payment status to "Paid"
-                    //     { new: true } // Return the updated document
-                    // );
-
-                    // Send a success response
                     res.status(200).json({
                         message: 'Payment successful and order updated!',
                         paymentDetails: response.data,
+                        order: updatedOrder
                     });
 
                 }

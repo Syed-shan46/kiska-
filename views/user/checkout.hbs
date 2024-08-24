@@ -40,7 +40,7 @@
                     </form> --}}
                     {{!-- {{#each userAddress.addresses }} --}}
                 </div><!-- End .checkout-discount -->
-                <form action="" method="POST">
+                <form action="/pendingOrder" method="POST">
                     <div class="row">
                         <div class="col-lg-9 justify-content-center align-items-center">
                             <div class="row justify-content-center">
@@ -90,7 +90,11 @@
                                         {{#each cartItems }}
                                         <tr>
                                             <td><a href="#">{{this.product.name}}</a></td>
-                                            <input type="hidden" value="{{this.product._id}}">
+                                            <!-- Add hidden inputs to pass product details -->
+                                            <input type="hidden" name="products[{{@index}}][productId]"
+                                                value="{{this.product._id}}">
+                                            <input type="hidden" name="products[{{@index}}][quantity]"
+                                                value="{{this.quantity}}">
                                             <td>{{this.eachTotal}}</td>
                                         </tr>
                                         {{/each}}
@@ -106,19 +110,16 @@
                                     </tbody>
                                 </table>
 
-                                <div class="accordion-summary" id="accordion-payment">
-                                    <!-- Empty card divs, add content or remove if not needed -->
-                                    <div class="card"></div>
-                                    <div class="card-header" id="heading-3"></div>
+                                <input type="hidden" name="totalAmount" value="{{totalAmount}}">
+                                <!-- Pass the user ID -->
+                                <input type="hidden" name="userId" value="{{userId}}">
 
-
-                                    <input type="text" value="{{userId}}">
-                                    <button class="btn btn-primary" type="submit">Checkout</button>
-                                </div>
+                                <button class="btn btn-primary" type="submit">Checkout</button>
                             </div>
                         </aside>
                     </div>
                 </form>
+
 
             </div><!-- End .container -->
         </div><!-- End .checkout -->
@@ -134,7 +135,7 @@
                             <h5>We'll be Back Soon!</h5>
                             <p>Our website is currently undergoing scheduled maintenance. We apologize for the
                                 inconvenience and appreciate your patience.</p>
-                            
+
                             <p>If you need immediate assistance, please contact us at </p>
                             <a class="btn btn-success" style="background: #31f25d; border-color:#31f25d"
                                 href="https://wa.me/+919747758555">Whatsapp<i class="fa-brands fa-whatsapp"></i></a>
