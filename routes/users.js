@@ -35,7 +35,7 @@ router.post('/remove', cartRemove);
 /// View single item
 router.get('/product/:id', viewSingleItem);
 router.get('/cart/checkout', checkoutPage);
-router.post('/pendingOrder', PendingOrder);
+router.post('checkout/pendingOrder', PendingOrder);
 router.get('/cart/checkout/method', (req, res) => {
     res.render('user/method');
 });
