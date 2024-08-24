@@ -24,6 +24,7 @@ const PendingOrder = async (req, res) => {
     try {
         const userId = req.session.userId;
         const orderId = uniqid();
+        const merchantTransactionId = orderId;
 
         // Extract data from the request body
         const { products, totalAmount, addressRadio } = req.body;
@@ -44,7 +45,7 @@ const PendingOrder = async (req, res) => {
         const newOrder = new Order({
             userId: userId,
             orderId: orderId,
-            merchantTransactionId: orderId,
+            merchantTransactionId: merchantTransactionId,
             products: products.map(p => ({
                 productId: p.productId,
                 quantity: p.quantity
