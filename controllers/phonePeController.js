@@ -125,15 +125,17 @@ checkStatus = async (req, res) => {
 
             }
         })
-            .then(async function (response) {
+            .then(async function (response) { 
                 console.log('response->', response.data)
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
                     // Update the order's payment status to "Paid"
                     const updatedOrder = await Order.findOneAndUpdate(
-                        { orderId: merchantTransactionId }, // Find the order by its ID
+                        { merchantTransactionId: merchantTransactionId }, // Find the order by its ID
                         { paymentStatus: "Paid"}, // Update the payment status to "Paid"
                         { new: true } // Return the updated document
                     );
+
+                    await updatedOrder.save();
 
                     res.status(200).json({
                         message: 'Payment successful and order updated!',
