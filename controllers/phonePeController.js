@@ -9,26 +9,22 @@ const statusEndPoint = '/pg/v1/status';
 const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
-const payController = async (req, res) => {
+payController = async (req, res) => {
     try {
-        const { transactionId } = req.query; // Retrieve transaction ID from query parameters
-        if (!transactionId) {
-            throw new Error('Transaction ID is missing');
-        }
+        const userId = req.body;
 
-        const order = await Order.findOne({ orderId: transactionId }); // Find order by transactionId
-        if (!order) {
-            throw new Error('Order not found');
-        }
+        //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
+        const merchantTransactionId = uniqid();
+        //const orderId = '66aba1b4dccc4c7e57efcbab'; // Use the transaction ID as the order ID
 
         const payLoad = {
             "merchantId": MERCHANT_ID,
-            "merchantTransactionId": order.orderId,
-            "merchantUserId": order.userId.toString(),
-            "amount": order.totalAmount,
-            "redirectUrl": `https://kiska.in/pay/validate/${order.orderId}`,
+            "merchantTransactionId": merchantTransactionId,
+            "merchantUserId": userId,
+            "amount": 100,
+            "redirectUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
             "redirectMode": "REDIRECT",
-            "callbackUrl": `https://kiska.in/pay/validate/${order.orderId}`,
+            "callbackUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
             "paymentInstrument": {
                 "type": "PAY_PAGE"
             },
@@ -51,10 +47,10 @@ const payController = async (req, res) => {
                 request: base63EncodedPayLoad,
             }
         };
-
         axios
             .request(options)
             .then(function (response) {
+                console.log(response.data);
                 if (response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
                     const url = response.data.data.instrumentResponse.redirectInfo.url;
                     res.redirect(url);
@@ -67,15 +63,51 @@ const payController = async (req, res) => {
                 console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
                 res.send(error);
             });
+        // const newOrder = new Order(
+        //     {
+        //         "userId": userId,
+        //         "orderId": orderId,
+        //         "products": [
+        //             {
+        //                 "productId": "64f5e6b98b5f9c0012345679",
+        //                 "quantity": 2,
+        //                 "_id": "66c82165ad2afa8d5b17efe2"
+        //             },
+        //             {
+        //                 "productId": "64f5e6b98b5f9c001234567a",
+        //                 "quantity": 1,
+        //                 "_id": "66c82165ad2afa8d5b17efe3"
+        //             }
+        //         ],
+        //         "totalAmount": totalAmount,
+        //         "orderStatus": "Pending",
+        //         "paymentStatus": "Pending",
+        //         "address": [
+        //             {
+        //                 "name": "John Doe",
+        //                 "house": "1234",
+        //                 "street": "Main Street",
+        //                 "city": "New York",
+        //                 "state": "NY",
+        //                 "zipCode": "10001",
+        //                 "phone": 1234567890,
+        //                 "_id": "66c82165ad2afa8d5b17efe4"
+        //             }
+        //         ],
+        //         "orderDate": "2024-08-23T12:00:00.000Z",
+        //         "__v": 0
+        //     }
+        // );
 
+        // //Save the new order to the database
+        // await newOrder.save();
     } catch (error) {
-        console.error('Error initiating payment:', error);
-        res.status(500).json({ error: 'An error occurred while initiating payment' });
+        console.error('Error creating order:', error);
+        res.status(500).json({ error: 'An error occurred while creating the order' });
     }
-};
+}
 
-
-const checkStatus = async (req, res) => {
+checkStatus = async (req, res) => {
     const { merchantTransactionId } = req.params;
 
     if (merchantTransactionId) {
@@ -90,37 +122,40 @@ const checkStatus = async (req, res) => {
                 'Content-Type': 'application/json',
                 'X-VERIFY': xVerifyCheckSum,
                 'X-MERCHANT-ID': MERCHANT_ID,
+
             }
         })
             .then(async function (response) {
+                console.log('response->', response.data)
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
-                    // Update order payment status to 'Paid'
+                    // Update the order's payment status to "Paid"
                     const updatedOrder = await Order.findOneAndUpdate(
-                        { orderId: merchantTransactionId },
-                        { paymentStatus: "Paid" },
-                        { new: true }
+                        { orderId: merchantTransactionId }, // Find the order by its ID
+                        { paymentStatus: "Paid"}, // Update the payment status to "Paid"
+                        { new: true } // Return the updated document
                     );
-
-                    await updatedOrder.save();
-
 
                     res.status(200).json({
                         message: 'Payment successful and order updated!',
                         paymentDetails: response.data,
+                        order: updatedOrder
                     });
 
-                } else {
+                }
+                else {
                     res.send(response.data);
                 }
             })
             .catch(function (error) {
                 res.send(error);
-            });
+            })
 
-    } else {
+    }
+    else {
         res.status(400).json({ message: 'Missing merchant transaction ID' });
     }
-};
+}
+
 
 
 module.exports = { payController, checkStatus }
