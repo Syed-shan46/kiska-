@@ -139,7 +139,7 @@ checkStatus = async (req, res) => {
 
                     res.status(200).json({
                         message: 'Payment successful and order updated!',
-                        paymentDetails: response.data,
+                        
                         order: updatedOrder
                     });
 
