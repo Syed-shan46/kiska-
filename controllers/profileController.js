@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const Products = require('../models/product_model');
 const mongoose = require('mongoose');
-const { Address } = require('../models/address_model');
+const  Address  = require('../models/address_model');
 const Order = require('../models/order_model');
 
 
@@ -36,7 +36,8 @@ const postAddress = async (req, res) => {
             return res.status(400).json({ message: 'No logged user found' })
         }
     } catch (error) {
-        return res.status(400).json({ message: 'something went wrong' });
+        return res.status(400).json({ message: 'something went wrong', error: error.message });
+
     }
 }
 
@@ -47,7 +48,7 @@ const getAddress = async (req, res) => {
             const userData = await User.findById(req.session.userId).populate('addresses');
             const orders = await Order.find({ userId: userId })
                 .populate('products.productId')
-                .populate('addressId') 
+                .populate('addressId')
                 .exec();
             res.render('user/profile', { userData, isLoggedIn: !!req.session.userId, orders });
         } else {

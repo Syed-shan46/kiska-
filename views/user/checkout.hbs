@@ -78,7 +78,7 @@
                                             <span>Add Address</span><i class="icon-long-arrow-right"></i>
                                         </a>
                                         {{else}}
-                                        <h3 class="card-title">Select an address</h3>
+                                        
 
                                         <!-- Iterate over each address and display it with a radio button -->
                                         <form action="/cart/checkout" method="POST">
@@ -94,7 +94,9 @@
                                                 <div class="card p-4">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="addressId"
-                                                            id="address-{{_id}}" value="{{_id}}">
+                                                            id="address-{{_id}}" value="{{_id}}" {{#if
+                                                            @first}}checked{{/if}}>
+                                                        <!-- Use 'checked' if it's the first item -->
                                                         <!-- Use address _id here -->
                                                         <label class="form-check-label ml-4" for="address-{{_id}}">
                                                             {{house}}<br>
@@ -104,9 +106,12 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                             {{/each}}
+                                            <a href="/profile/address" class="btn btn-outline-dark-2 mt-2">
+                                                <span>Add Address</span><i class="icon-long-arrow-right"></i>
+                                            </a>
                                             {{/if}}
-                                            <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
                                         </form>
 
                                         {{/if}}
@@ -154,7 +159,7 @@
 
                                 <input type="hidden" name="totalAmount" value="{{totalAmount}}">
                                 <!-- Pass the user ID -->
-                                <input type="text" name="userId" value="{{userId}}">
+                                <input type="hidden" name="userId" value="{{userId}}">
 
                                 <button class="btn btn-primary" type="submit">Checkout</button>
                             </div>
@@ -177,10 +182,10 @@
                             <h5>We'll be Back Soon!</h5>
                             <p>Our website is currently undergoing scheduled maintenance. We apologize for the
                                 inconvenience and appreciate your patience.</p>
-
-                            <p>If you need immediate assistance, please contact us at </p>
+                            <p>If you need immediate assistance, please contact us in </p>
                             <a class="btn btn-success" style="background: #31f25d; border-color:#31f25d"
                                 href="https://wa.me/+919747758555">Whatsapp<i class="fa-brands fa-whatsapp"></i></a>
+
 
 
                             {{!-- <div class="custom-control custom-checkbox">
@@ -190,8 +195,8 @@
                             </div><!-- End .custom-checkbox --> --}}
                         </div>
                     </div>
-                    <div class="col-xl-2-5col col-lg-5">
-                        <img src="assets/images/popup/newsletter/img-1.jpg" class="newsletter-img" alt="newsletter">
+                    <div class="col-xl-2-5col col-lg-5 ">
+                        <img src="/assets/images/popup/newsletter/img-1.jpg" class="newsletter-img" alt="newsletter">
 
                     </div>
                 </div>
