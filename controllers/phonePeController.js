@@ -6,7 +6,8 @@ const SALT_INDEX = 1;
 const Order = require('../models/order_model');
 const payEndPoint = '/pg/v1/pay';
 const statusEndPoint = '/pg/v1/status';
-require('dotenv').config();
+var dotenv = require('dotenv');
+dotenv.config();
 
 const MERCHANT_ID = process.env.MERCHANT_ID;
 const SALT_KEY = process.env.SALT_KEY;
