@@ -39,13 +39,20 @@ router.post('/pendingOrder', PendingOrder);
 router.get('/cart/checkout/method', (req, res) => {
     const userId = req.session.userId;
     const merchantTransactionId = req.query.merchantTransactionId;
-    res.render('user/method', { userId,merchantTransactionId });
+    res.render('user/method', { userId, merchantTransactionId });
 });
+
+
+/// Success route
+router.get('/success', (req, res) => {
+    res.render('user/success');
+})
 
 
 /// Profile
 router.get('/profile', getAddress);
 /// Address 
+
 router.get('/profile/address', addAddress);
 router.post('/post-address', postAddress);
 module.exports = router;

@@ -11,8 +11,8 @@ const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
     try {
-         const userId = req.body;
-         console.log("Phonepe userId :",userId);
+        const userId = req.body;
+        console.log("Phonepe userId :", userId);
 
         //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
         //const merchantTransactionId = uniqid();
@@ -32,7 +32,7 @@ payController = async (req, res) => {
 
         // const merchantTransactionId = order.merchantTransactionId;
         // console.log(merchantTransactionId);
-        
+
 
         const payLoad = {
             "merchantId": MERCHANT_ID,
@@ -80,44 +80,7 @@ payController = async (req, res) => {
                 console.error('Error from PhonePe API:', error.response ? error.response.data : error.message);
                 res.send(error);
             });
-        // const newOrder = new Order(
-        //     {
-        //         "userId": userId,
-        //         "orderId": orderId,
-        //         "products": [
-        //             {
-        //                 "productId": "64f5e6b98b5f9c0012345679",
-        //                 "quantity": 2,
-        //                 "_id": "66c82165ad2afa8d5b17efe2"
-        //             },
-        //             {
-        //                 "productId": "64f5e6b98b5f9c001234567a",
-        //                 "quantity": 1,
-        //                 "_id": "66c82165ad2afa8d5b17efe3"
-        //             }
-        //         ],
-        //         "totalAmount": totalAmount,
-        //         "orderStatus": "Pending",
-        //         "paymentStatus": "Pending",
-        //         "address": [
-        //             {
-        //                 "name": "John Doe",
-        //                 "house": "1234",
-        //                 "street": "Main Street",
-        //                 "city": "New York",
-        //                 "state": "NY",
-        //                 "zipCode": "10001",
-        //                 "phone": 1234567890,
-        //                 "_id": "66c82165ad2afa8d5b17efe4"
-        //             }
-        //         ],
-        //         "orderDate": "2024-08-23T12:00:00.000Z",
-        //         "__v": 0
-        //     }
-        // );
 
-        // //Save the new order to the database
-        // await newOrder.save();
     } catch (error) {
         console.error('Error creating order:', error);
         res.status(500).json({ error: 'An error occurred while creating the order' });
@@ -142,19 +105,17 @@ checkStatus = async (req, res) => {
 
             }
         })
-            .then(async function (response) { 
+            .then(async function (response) {
                 console.log('response->', response.data)
                 if (response.data && response.data.code === 'PAYMENT_SUCCESS') {
                     // Update the order's payment status to "Paid"
                     const updatedOrder = await Order.findOneAndUpdate(
                         { merchantTransactionId: merchantTransactionId }, // Find the order by its ID
-                        { paymentStatus: "Paid"}, // Update the payment status to "Paid"
+                        { paymentStatus: "Paid" }, // Update the payment status to "Paid"
                         { new: true } // Return the updated document
                     );
 
-                    
-                    res.redirect('')
-
+                    res.redirect('/success');
                 }
                 else {
                     res.send(response.data);
