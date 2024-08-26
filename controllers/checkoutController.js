@@ -2,6 +2,7 @@ const CartItem = require('../models/cart_model');
 const User = require('../models/user');
 const Order = require('../models/order_model');
 const uniqid = require('uniqid');
+const Address = require('../models/address_model');
 
 const checkoutPage = async (req, res) => {
     const userId = req.session.userId;
@@ -26,12 +27,18 @@ const PendingOrder = async (req, res) => {
         const orderId = uniqid();
         const merchantTransactionId = orderId;
 
-        const { products, totalAmount, addressRadio } = req.body; // Get the selected address index
+        const { products, totalAmount, addressId } = req.body; // Get the selected address index
 
-         // Fetch user's addresses from the database
-        const user = await User.findById(userId).select('addresses').exec();
-        const selectedAddressIndex = parseInt(addressRadio); // Ensure it's a number
-        const selectedAddress = user.addresses[selectedAddressIndex]; // Get the correct address
+        // Fetch user's addresses from the database
+        if (!addressId) {
+            throw new Error("No address selected.");
+        }
+
+        // Fetch the selected address from the database
+        const selectedAddress = await Address.findById(addressId);
+        if (!selectedAddress) {
+            throw new Error("Selected address not found.");
+        }
 
         // Assuming `userAddress` object is available in the session or fetched from DB
         //const userAddress = req.session.userAddress || await User.findById(userId).select('addresses').exec();
@@ -46,7 +53,7 @@ const PendingOrder = async (req, res) => {
 
         // Create a new order with status "pending"
         const newOrder = new Order({
-            userId: userId,
+            userId: userId, 
             orderId: orderId,
             merchantTransactionId: merchantTransactionId,
             products: products.map(p => ({
@@ -56,10 +63,10 @@ const PendingOrder = async (req, res) => {
             totalAmount,
             orderStatus: 'pending', // Setting order status to pending
             paymentStatus: 'pending', // Setting payment status to pending
-            address: selectedAddress, // Use selected address
+            addressId: addressId, // Use selected address
             orderDate: new Date(), // Setting order date to the current date
         });
-        
+
 
         // Save the new order to the database
         await newOrder.save();
