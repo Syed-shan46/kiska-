@@ -47,7 +47,7 @@ const getAddress = async (req, res) => {
         const userId = req.session.userId;
         if (req.session && req.session.userId) {
             const userData = await User.findById(req.session.userId).populate('addresses');
-            const orders = await Order.find({ userId: userId, paymentStatus: 'paid' })
+            const orders = await Order.find({ userId: userId, paymentStatus: 'Paid' })
                 .populate('products.productId')
                 .sort({ orderDate: -1 })
                 .populate('addressId')
