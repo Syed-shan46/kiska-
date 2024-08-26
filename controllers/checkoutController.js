@@ -26,15 +26,18 @@ const PendingOrder = async (req, res) => {
         const orderId = uniqid();
         const merchantTransactionId = orderId;
 
-        // Extract data from the request body
-        const { products, totalAmount, addressRadio } = req.body;
+        const { products, totalAmount, addressRadio } = req.body; // Get the selected address index
+
+         // Fetch user's addresses from the database
+        const user = await User.findById(userId).select('addresses').exec();
+        const selectedAddressIndex = parseInt(addressRadio); // Ensure it's a number
+        const selectedAddress = user.addresses[selectedAddressIndex]; // Get the correct address
 
         // Assuming `userAddress` object is available in the session or fetched from DB
-        const userAddress = req.session.userAddress || await User.findById(userId).select('addresses').exec();
+        //const userAddress = req.session.userAddress || await User.findById(userId).select('addresses').exec();
 
         // Extract the selected address using the address index (addressRadio)
         //const selectedAddressIndex = parseInt(addressRadio); // Ensure it's a number
-        const selectedAddress = userAddress.addresses[0]; // Get the correct address
 
         if (!selectedAddress) {
             throw new Error("Selected address is invalid or not found.");
@@ -53,7 +56,7 @@ const PendingOrder = async (req, res) => {
             totalAmount,
             orderStatus: 'pending', // Setting order status to pending
             paymentStatus: 'pending', // Setting payment status to pending
-            address: [selectedAddress], // Use selected address
+            address: selectedAddress, // Use selected address
             orderDate: new Date(), // Setting order date to the current date
         });
         

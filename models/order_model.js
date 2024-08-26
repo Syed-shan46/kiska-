@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Address = require('../models/address_model');
 
 const orderSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -10,24 +11,14 @@ const orderSchema = new Schema({
     },
     products: [
         {
-            productId: { type: Schema.Types.ObjectId, ref: 'Product'},
-            quantity: { type: Number,  }
+            productId: { type: Schema.Types.ObjectId, ref: 'Product' },
+            quantity: { type: Number, }
         }
     ],
-    totalAmount: { type: Number,},
+    totalAmount: { type: Number, },
     orderStatus: { type: String, required: true },
     paymentStatus: { type: String, required: true },
-    address: [
-        {
-            name: { type: String },
-            house: { type: String },
-            street: { type: String },
-            city: { type: String },
-            state: { type: String },
-            zipCode: { type: String },
-            phone: { type: Number },
-        }
-    ],
+    address: { type: Address.schema, required: true },
     orderDate: { type: Date, required: true }
 });
 
