@@ -15,7 +15,18 @@ html {
 }
 
 .search-btn {
-    border-radius: 0 !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+/* User mobile menu search styles */
+.mobile-search {}
+
+.srch {
+    border-top-left-radius: 7px !important;
+    border-bottom-left-radius: 7px !important;
 }
 
 .icon-bars {
@@ -36,13 +47,10 @@ html {
     font-weight: 500 !important;
 }
 
-.srch {
-    border-radius: 8px !important;
-}
 
 .whatsapp-float {
     position: fixed;
-   background-color: rgb(17, 203, 17);
+    background-color: rgb(17, 203, 17);
     border-radius: 100%;
     width: 55px;
     height: 55px;
@@ -65,4 +73,15 @@ html {
     width: 50px;
     height: 50px;
     background-color: red;
+}
+
+.header-center {
+    text-align: center;
+    flex: 1;
+}
+
+/* Header dropdown border-radius */
+.cart-dropdown .dropdown-menu,
+.compare-dropdown .dropdown-menu { 
+    border-radius: 10px !important;
 }

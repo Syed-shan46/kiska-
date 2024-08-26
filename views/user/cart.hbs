@@ -14,18 +14,17 @@
             height: 30px;
             display: flex;
             justify-content: center;
-            border: 1px solid red;
-            border-color: rgb(174, 162, 162);
+            border: solid 1px #333;
+            border-radius: 5px;
 
         }
 
         .qty {
             width: 30px;
-            height: 30;
+            height: 30px;
             display: flex;
             justify-content: center;
-            border: 1px solid red;
-            border-color: rgb(174, 162, 162);
+           border: none;
         }
 
         .qty-no {
@@ -48,6 +47,10 @@
             width: 30px;
             height: 30px;
         }
+
+        .fa-plus {
+            border-color: black !important;
+        }
     </style>
 </head>
 
@@ -59,13 +62,13 @@
 
         <main class="main  pt-5">
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
-            <div class="container">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
-                </ol>
-            </div><!-- End .container -->
-        </nav><!-- End .breadcrumb-nav -->
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
             <div class="container page-content">
                 <div class="row mt-md-5 pt-md-5">
                     {{#if cartItems.length }}
@@ -156,13 +159,9 @@
                                     </tr><!-- End .summary-subtotal -->
                                     <tr class="summary-shipping">
                                         <td>Shipping:</td>
-                                        <td>₹40</td>
+                                        <td>Free</td>
                                     </tr>
-                                    <tr class="summary-shipping-estimate">
-                                        <td>Estimate for Your Country<br> <a href="">Change address</a>
-                                        </td>
-                                        <td>&nbsp;</td>
-                                    </tr><!-- End .summary-shipping-estimate -->
+                                    
 
                                     <tr class="summary-total">
                                         <td>Total:</td>
@@ -175,7 +174,7 @@
                                 CHECKOUT</a>
                         </div><!-- End .summary -->
 
-                        <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
+                        <a href="/" class="btn btn-outline-dark btn-block mb-3"><span>CONTINUE
                                 SHOPPING</span><i class="icon-refresh"></i></a>
                     </main><!-- End .col-lg-3 -->
                     {{else}}
@@ -197,41 +196,38 @@
     </main><!-- End .main -->
     </div>
     {{>footer}}
-     <div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
-                <div class="row justify-content-center">
-                    <div class="col-10">
-                        <div class="row no-gutters bg-white newsletter-popup-content">
-                            <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
-                                <div class="banner-content text-center">
-                                    {{!-- <img src="assets/images/popup/newsletter/logo.png" class="logo" alt="logo"
-                                        width="60" height="15"> --}}
-                                    <h5>We'll be Back Soon!</h5>
-                                    <p>Our website is currently undergoing scheduled maintenance. We apologize for the
-                                        inconvenience and appreciate your patience.</p>
-                                    <p>If you need immediate assistance, please contact us in </p>
-                                    <a class="btn btn-success" style="background: #31f25d; border-color:#31f25d"
-                                        href="https://wa.me/+919747758555">Whatsapp<i
-                                            class="fa-brands fa-whatsapp"></i></a>
-                                    
+    <div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="row no-gutters bg-white newsletter-popup-content">
+                    <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
+                        <div class="banner-content text-center">
+                            {{!-- <img src="assets/images/popup/newsletter/logo.png" class="logo" alt="logo" width="60"
+                                height="15"> --}}
+                            <h5>We'll be Back Soon!</h5>
+                            <p>Our website is currently undergoing scheduled maintenance. We apologize for the
+                                inconvenience and appreciate your patience.</p>
+                            <p>If you need immediate assistance, please contact us in </p>
+                            <a class="btn btn-success" style="background: #31f25d; border-color:#31f25d"
+                                href="https://wa.me/+919747758555">Whatsapp<i class="fa-brands fa-whatsapp"></i></a>
 
 
-                                    {{!-- <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="register-policy-2"
-                                            required>
-                                        <label class="custom-control-label" for="register-policy-2">Do not show this
-                                            popup again</label>
-                                    </div><!-- End .custom-checkbox --> --}}
-                                </div>
-                            </div>
-                            <div class="col-xl-2-5col col-lg-5 ">
-                                <img src="assets/images/popup/newsletter/img-1.jpg" class="newsletter-img"
-                                    alt="newsletter">
 
-                            </div>
+                            {{!-- <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="register-policy-2" required>
+                                <label class="custom-control-label" for="register-policy-2">Do not show this
+                                    popup again</label>
+                            </div><!-- End .custom-checkbox --> --}}
                         </div>
+                    </div>
+                    <div class="col-xl-2-5col col-lg-5 ">
+                        <img src="assets/images/popup/newsletter/img-1.jpg" class="newsletter-img" alt="newsletter">
+
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
 </body>
 

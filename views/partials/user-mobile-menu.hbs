@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    .active>.nav-link {
+        color: red;
+        /* Example active state styling */
+    }
+</style>
 
 <body>
     <!-- Mobile Menu -->
@@ -19,34 +25,29 @@
                 <label for="mobile-search" class="sr-only">Search</label>
                 <input type="search" class="form-control srch" name="mobile-search" id="mobile-search"
                     placeholder="Search in..." required>
-                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                <button class="btn btn-primary search-btn" type="submit"><i class="icon-search"></i></button>
             </form>
 
 
 
             <div class="tab-content">
-                    <div class="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel"
-                        aria-labelledby="mobile-menu-link">
-                        <nav class="mobile-nav">
-                            <ul class="mobile-menu">
-                                <li class="active">
-                                    <a href="/">Home</a>   
-                                </li>
-                                <li>
-                                    <a href="/store">Store</a>
-                                    
-                                </li>
-                                <li>
-                                    <a href="product.html" class="sf-with-ul">Orders</a>
-                                    
-                                </li>
-                                <li>
-                                    <a href="#">Profile</a>
-                                    
-                                </li>
-                            </ul>
-                        </nav><!-- End .mobile-nav -->
-                    </div><!-- .End .tab-pane -->
+                <div class="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel"
+                    aria-labelledby="mobile-menu-link">
+                    <nav class="mobile-nav">
+                        <ul class="mobile-menu">
+                            <li class="nav-item">
+                                <a href="/" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/store" class="nav-link">Store</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/profile" class="nav-link">Orders</a>
+                            </li>
+                            
+                        </ul>
+                    </nav><!-- End .mobile-nav -->
+                </div><!-- .End .tab-pane -->
                 <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
                     <nav class="mobile-cats-nav">
                         <ul class="mobile-cats-menu">
@@ -68,7 +69,8 @@
 
             {{#if isLoggedIn }}
             <form action="/logout" class="ml-4" method="post">
-                <button class="btn btn-danger" type="submit">Logout</button>
+                <button class="btn btn-danger" type="submit"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                <button class="btn btn-info" type="submit"><i class="fa-regular fa-user"></i></button>
             </form>
             {{else}}
             <button onclick="window.location.href='/register'" class="btn btn-danger btn-sm ml-4">Login</button>
@@ -80,23 +82,24 @@
             </div><!-- End .social-icons -->
         </div><!-- End .mobile-menu-wrapper -->
     </div><!-- End .mobile-menu-container -->
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-  const menuItems = document.querySelectorAll(".mobile-menu li");
+            const menuItems = document.querySelectorAll(".mobile-menu .nav-link");
 
-  menuItems.forEach((item) => {
-    item.addEventListener("click", function () {
-      // Remove 'active' class from all items
-      menuItems.forEach((el) => el.classList.remove("active"));
+            // Get the current URL path
+            const currentPath = window.location.pathname;
 
-      // Add 'active' class to the clicked item
-      this.classList.add("active");
+            menuItems.forEach((item) => {
+                const itemPath = item.getAttribute("href");
 
-      // Debugging: Log the class list of the clicked item
-      console.log(this.classList);
-    });
-  });
-});
+                // Check if the item href matches the current path
+                if (currentPath === itemPath) {
+                    item.closest('.nav-item').classList.add("active");
+                }
+            });
+        });
+
 
     </script>
 </body>
