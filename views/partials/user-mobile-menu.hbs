@@ -70,8 +70,9 @@
             {{#if isLoggedIn }}
             <form action="/logout" class="ml-4" method="post">
                 <button class="btn btn-danger" type="submit"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
-                <button class="btn btn-info" type="submit"><i class="fa-regular fa-user"></i></button>
+                <a href="/profile" class="btn btn-info" ><i class="fa-regular fa-user"></i></a>
             </form>
+            
             {{else}}
             <button onclick="window.location.href='/register'" class="btn btn-danger btn-sm ml-4">Login</button>
             {{/if}}
