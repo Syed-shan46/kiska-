@@ -14,7 +14,7 @@ const orderSchema = new Schema({
             quantity: { type: Number,  }
         }
     ],
-    totalAmount: { type: Number,  },
+    totalAmount: { type: Number,},
     orderStatus: { type: String, required: true },
     paymentStatus: { type: String, required: true },
     address: [
