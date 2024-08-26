@@ -42,10 +42,13 @@ const postAddress = async (req, res) => {
 
 const getAddress = async (req, res) => {
     try {
-        const userId = req.session.userId; 
+        const userId = req.session.userId;
         if (req.session && req.session.userId) {
             const userData = await User.findById(req.session.userId).populate('addresses');
-            const orders = await Order.find({ userId: userId }).populate('products.productId').exec();
+            const orders = await Order.find({ userId: userId })
+                .populate('products.productId')
+                .populate('addressId') 
+                .exec();
             res.render('user/profile', { userData, isLoggedIn: !!req.session.userId, orders });
         } else {
             res.redirect('/register');

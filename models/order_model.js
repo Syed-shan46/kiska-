@@ -18,7 +18,7 @@ const orderSchema = new Schema({
     totalAmount: { type: Number, },
     orderStatus: { type: String, required: true },
     paymentStatus: { type: String, required: true },
-    address: { type: Address.schema, required: true },
+    addressId: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true }, // Reference to Address
     orderDate: { type: Date, required: true }
 });
 

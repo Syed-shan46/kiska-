@@ -83,15 +83,15 @@
                                                         <div class="col-md-8">
                                                             <h6 class="text-muted">Delivery to</h6>
                                                             <p>
-                                                                {{this.address.name}}
-                                                                {{this.address.house}}
-                                                                {{this.address.city}}<br>
-                                                                {{this.address.street}}
-                                                                {{this.address.state}}<br>
-                                                                {{this.address.zipCode}}
-                                                                {{this.address.phone}}
+                                                                {{this.addressId.name}}
+                                                                {{this.addressId.house}}
+                                                                {{this.addressId.city}}<br>
+                                                                {{this.addressId.street}}
+                                                                {{this.addressId.state}}<br>
+                                                                {{this.addressId.zipCode}}
+                                                                {{this.addressId.phone}}
                                                             </p>
-                                                            <h1>{{this.address.street}}</h1>
+                                                           
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h6 class="text-muted">Payment</h6>
@@ -114,7 +114,7 @@
                                                         <div class="col-lg-2 col-4">
                                                             <p class="title mb-0" style="font-size: 14px;">
                                                                 {{this.productId.name}}</p>
-                                                            <var class="price text-muted">₹250</var>
+                                                            <var class="price text-muted">{{this.productId.price}}</var>
                                                             <var class="text-muted">({{this.quantity}})</var>
                                                         </div>
                                                         <div class="col-lg-2 col-5">
