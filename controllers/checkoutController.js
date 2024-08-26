@@ -5,7 +5,6 @@ const uniqid = require('uniqid');
 
 const checkoutPage = async (req, res) => {
     const userId = req.session.userId;
-    
     const cartItems = await CartItem.find({ user: userId }).populate('product');
     const userAddress = await User.findById(req.session.userId).populate('addresses');
     let totalAmount = 0;
@@ -57,6 +56,7 @@ const PendingOrder = async (req, res) => {
             address: [selectedAddress], // Use selected address
             orderDate: new Date(), // Setting order date to the current date
         });
+        
 
         // Save the new order to the database
         await newOrder.save();

@@ -11,10 +11,27 @@ const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
 
 payController = async (req, res) => {
     try {
-        const userId = req.body;
+         const userId = req.body;
+         console.log("Phonepe userId :",userId);
 
         //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
-        const merchantTransactionId = uniqid();
+        //const merchantTransactionId = uniqid();
+        //const merchantTransactionId = req.body.merchantTransactionId || req.params.merchantTransactionId;
+        const { merchantTransactionId } = req.body || req.params;
+        console.log(merchantTransactionId);
+
+
+        //const { userId } = req.body; // Assuming you have a session with userId
+
+        // // Find the order for the user with pending payment status
+        // const order = await Order.findOne({  paymentStatus: 'pending' });
+
+        // if (!order) {
+        //     return res.status(404).json({ error: 'No pending order found for the user' });
+        // }
+
+        // const merchantTransactionId = order.merchantTransactionId;
+        // console.log(merchantTransactionId);
         
 
         const payLoad = {

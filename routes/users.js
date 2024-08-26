@@ -37,7 +37,10 @@ router.get('/product/:id', viewSingleItem);
 router.get('/cart/checkout', checkoutPage);
 router.post('/pendingOrder', PendingOrder);
 router.get('/cart/checkout/method', (req, res) => {
-    res.render('user/method');
+    const userId = req.session.userId;
+    const merchantTransactionId = req.query.merchantTransactionId; 
+
+    res.render('user/method', { userId,merchantTransactionId });
 });
 
 /// Stripe Payment
