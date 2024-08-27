@@ -7,6 +7,7 @@ const Order = require('../models/order_model');
 const payEndPoint = '/pg/v1/pay';
 const statusEndPoint = '/pg/v1/status';
 require('dotenv').config();
+const { sendOrderConfirmationEmail, sendOrderNotificationToAdmin } = require('../controllers/mailController')
 
 const MERCHANT_ID = 'M221LS4ADJ5UN'
 const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
@@ -115,7 +116,21 @@ checkStatus = async (req, res) => {
                         { merchantTransactionId: merchantTransactionId }, // Find the order by its ID
                         { paymentStatus: "Paid" }, // Update the payment status to "Paid"
                         { new: true } // Return the updated document
-                    );
+                    ).populate('userId')
+
+                    if (updatedOrder) {
+                        // Ensure `userId` contains the email field and send order confirmation email to the user
+                        await sendOrderConfirmationEmail(updatedOrder, updatedOrder.userId.email);
+                        console.log('Order confirmation email sent to user successfully.');
+
+                        // Send order notification email to admin
+                        await sendOrderNotificationToAdmin(updatedOrder);
+                        console.log('Order notification email sent to admin successfully.');
+
+                        res.redirect('/success');
+                    } else {
+                        console.error('Order not found with the provided merchantTransactionId.');
+                    }
 
                     res.redirect('/success');
                 }
