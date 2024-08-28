@@ -3,7 +3,7 @@ EMAIL_USER = 'syedshan093@gmail.com'
 EMAIL_PASS = 'qrfq tctb galv nvkc'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
-ADMIN_EMAIL = 'kiskaonlineshoppy@gmail.com'; 
+ADMIN_EMAIL = 'kiskaonlineshoppy@gmail.com';
 EMAIL_SECURE = 'true'
 
 
@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
 const sendOrderConfirmationEmail = async (order, recipientEmail) => {
     try {
         const mailOptions = {
-            from: `"Kiska" <${EMAIL_USER}>`, // Sender address
+            from: `"Kiska Online" <${EMAIL_USER}>`, // Sender address
             to: order.userId.email, // Recipient's email (user)
             subject: 'Order Confirmation - Your Order with Us', // Subject line
             html: `
@@ -41,20 +41,13 @@ const sendOrderConfirmationEmail = async (order, recipientEmail) => {
               Quantity: ${product.quantity}<br>
               Price: $${product.productId.price}
             </li>
+            <p><b>Total Amount: ${order.totalAmount}<b><p>
           `
             ).join('')}
         </ul>
         <p>We are currently processing your order and will notify you once it has been shipped.</p>
         <p>Thank you for shopping with us!</p>
-         <h2>User Address</h2>
-        <p>
-        ${order.addressId.name}<br>
-          ${order.addressId.street}, ${order.addressId.city}<br>
-          ${order.addressId.state}, ${order.addressId.zipcode}<br>
-          ${order.addressId.phone},
-          ${order.addressId.country}
-        </p>
-        <p>Please process this order promptly.</p>
+         
       `, // HTML body content
         };
 
@@ -84,14 +77,20 @@ const sendOrderNotificationToAdmin = async (order) => {
           ${order.products.map(
                 (product) => `
             <li>
-              Product: ${product.name}<br>
+              Product: ${product.productId.name}<br>
               Quantity: ${product.quantity}<br>
-              Price: $${product.price}
+              Price: $${product.productId.price}
             </li>
           `
             ).join('')}
         </ul>
-        <p>Please process this order promptly.</p> 
+        <h2>User Address</h2>
+        <p>
+        ${order.addressId.name}<br>
+          ${order.addressId.street}, ${order.addressId.city}<br>
+          ${order.addressId.state}, ${order.addressId.zipCode}<br>
+          ${order.addressId.phone},
+        </p>
       `, // HTML body content
         };
 
