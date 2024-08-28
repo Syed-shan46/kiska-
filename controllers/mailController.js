@@ -1,10 +1,10 @@
 const nodemailer = require('nodemailer');
-EMAIL_USER = 'kiskaonlineshoppy@gmail.com'
-EMAIL_PASS = 'Kiskaonline@09321'
+EMAIL_USER = 'syedshan093@gmail.com'
+EMAIL_PASS = 'qrfq tctb galv nvkc'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
-ADMIN_EMAIL = 'syedshan093@gmail.com';
-EMAIL_SECURE = false
+ADMIN_EMAIL = 'syedalavi012@gmail.com';
+EMAIL_SECURE = 'true'
 
 
 
@@ -12,7 +12,7 @@ EMAIL_SECURE = false
 const transporter = nodemailer.createTransport({
     host: EMAIL_HOST, // e.g., 'smtp.gmail.com'
     port: EMAIL_PORT, // e.g., 587 for TLS, 465 for SSL
-    secure: EMAIL_SECURE === 'true', // true for 465, false for other ports
+    secure: EMAIL_SECURE, // true for 465, false for other ports
     auth: {
         user: EMAIL_USER, // Your email address
         pass: EMAIL_PASS, // Your email password or app-specific password
@@ -82,7 +82,7 @@ const sendOrderNotificationToAdmin = async (order) => {
           `
             ).join('')}
         </ul>
-        <p>Please process this order promptly.</p>
+        <p>Please process this order promptly.</p> 
       `, // HTML body content
         };
 
