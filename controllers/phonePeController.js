@@ -116,7 +116,14 @@ checkStatus = async (req, res) => {
                         { merchantTransactionId: merchantTransactionId }, // Find the order by its ID
                         { paymentStatus: "Paid" }, // Update the payment status to "Paid"
                         { new: true } // Return the updated document
-                    ).populate('userId')
+                    ).populate({
+                        path: 'products.productId',
+                        model: 'Product',
+                        select: 'name price',
+                    })
+                        .populate('userId', 'email')
+                        .populate('addressId')
+                        .exec();
 
                     if (updatedOrder) {
                         // Ensure `userId` contains the email field and send order confirmation email to the user
