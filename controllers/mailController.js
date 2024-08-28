@@ -3,7 +3,7 @@ EMAIL_USER = 'syedshan093@gmail.com'
 EMAIL_PASS = 'qrfq tctb galv nvkc'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
-ADMIN_EMAIL = 'syedalavi012@gmail.com';
+ADMIN_EMAIL = 'kiskaonlineshoppy@gmail.com';
 EMAIL_SECURE = 'true'
 
 
