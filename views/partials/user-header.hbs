@@ -1,7 +1,7 @@
 <style>
     .bg-light {
-    background-color:#fff !important;
-}
+        background-color: #fff !important;
+    }
 </style>
 
 <div class="page-wrapper">
@@ -14,6 +14,7 @@
                     <button class="mobile-menu-toggler">
                         <span class="sr-only">Toggle mobile menu</span>
                         <i class="icon-bars"></i>
+                        <i class="fa-solid fa-magnifying-glass ml-4" style="font-size: 18px;font-weight: 600;"></i>
                     </button>
 
 
@@ -39,7 +40,10 @@
                 </div>
 
                 <div class="header-right">
-
+                    <a href="#" class="mr-1" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" data-display="static">
+                        <i class="fa-regular fa-heart cart-btn-header " style="font-size: 20px;color: #333;"></i>
+                    </a>
                     <div class="header-dropdown-link">
                         <div class="dropdown compare-dropdown">
 
@@ -52,11 +56,14 @@
                                     <i class="icon-shopping-cart text-white cart-btn-header"></i>
                                     <span class="cart-count">{{cartCount}}</span>
                                 </a>
+                                <i class="icon-shopping-cart text-white cart-btn-header"></i>
                                 {{else}}
+
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false" data-display="static">
-                                    <i class="icon-user cart-btn-header" style="font-size: 25px;"></i>
+                                    <i class="icon-user cart-btn-header" style="font-size: 25px;color: #333;"></i>
                                 </a>
+
                                 {{/if}}
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <div class="dropdown-cart-products ">
