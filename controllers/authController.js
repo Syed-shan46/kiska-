@@ -1,24 +1,71 @@
 const User = require('../models/user');
 
-const handleRegister = async (req, res) => {
-    const { email, password } = req.body;
+const checkEmailExists = async (email) => {
     try {
-        await User.create({
-            email, password
-        });
-        return res.render('user/authentication');
+        // Query the database for a user with the provided email
+        const user = await User.findOne({ email });
+        return !!user; // Return true if user exists, false otherwise
+    } catch (error) {
+        console.error('Error checking email existence:', error);
+        throw error; // Rethrow the error if needed
+    }
+};
+
+// Helper function to validate email
+const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
+
+const handleRegister = async (req, res) => {
+    const { firstName, email, lastName, city, phone, password, confirmPw, } = req.body;
+
+    // Array to collect error messages
+    const errors = {};
+
+    // Validate Email
+    if (!email || !isValidEmail(email)) {
+        errors.email = 'Please enter a valid email address.';
+    } else if (await checkEmailExists(email)) {
+        errors.email = 'Email is already registered.';
+    }
+
+    // Validate Password
+    if (!password || password.length < 6) {
+        errors.password = 'Password must be at least 6 characters long.';
+    }
+
+    // Validate Confirm Password
+    if (password !== confirmPw) {
+        errors.confirmPw = 'Passwords do not match.';
+    }
+
+    // Validate Phone Number
+    if (!phone || !/^\+?[0-9\s\-()]*$/.test(phone)) {
+        errors.phone = 'Please enter a valid phone number.';
+    }
+
+    // Check for validation errors
+    if (Object.keys(errors).length > 0) {
+        return res.render('user/register', { errors, email, phone, firstName, lastName, city, phone });
+    }
+
+    try {
+        // Create the user if there are no errors
+        await User.create({ firstName, lastName, city, phone, email, password, confirmPw, });
+        return res.redirect('/login')
     } catch (error) {
         console.error(error);
-        return res.render('user/authentication', { error: 'Error during registration' });
+        return res.render('user/register', { error: 'Error during registration' });
     }
-}
+};
 
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email, password });
         if (!user) {
-            return res.render('user/authentication', { error: 'Invalid Username or password' },
+            return res.render('user/login', { error: 'Invalid Username or password' },
             )
         }
         req.session.userId = user._id;

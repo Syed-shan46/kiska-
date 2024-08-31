@@ -18,9 +18,14 @@ const { payController, checkStatus } = require('../controllers/phonePeController
 router.get('/', viewUserProduct);
 
 /// Authentication
-router.get('/register', registerPage)
+router.get('/register', (req, res) => {
+    res.render('user/register')
+})
+router.get('/login', (req, res) => {
+    res.render('user/login');
+})
 router.post('/createuser', handleRegister);
-router.post('/login', handleLogin);
+router.post('/loginUser', handleLogin);
 router.post('/logout', handleLogout);
 
 /// Cart Functions

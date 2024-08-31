@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<style>
+    .card-body {
+        padding: 13px !important;
+    }
+
+    .form-control {
+        border-radius: 10px !important;
+    }
+</style>
+
+<body>
+    <div class="pt-lg-5 mt-lg-5"></div>
+    <div class="pt-5"></div>
+    <div class="card">
+        <article class="card-body">
+
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <header class="mb-3">
+                        <h4 class="card-title">Sign up</h4>
+                    </header>
+
+                    <form action="/createuser" method="post">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label>First name</label>
+                                <input type="text" class="form-control" name="firstName" value="{{firstName}}" required>
+                            </div> <!-- form-group end.// -->
+                            <div class="col form-group">
+                                <label>Last name</label>
+                                <input type="text" class="form-control" name="lastName" value="{{lastName}}" required>
+
+                            </div> <!-- form-group end.// -->
+                        </div> <!-- form-row end.// -->
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="text" class="form-control" name="email" value="{{email}}" required>
+                            {{#if errors.email}}
+                            <small class="text-danger">{{errors.email}}</small>
+                            {{/if}}
+                            <small class="form-text text-muted mt-1">We'll never share your email with anyone
+                                else.</small>
+                        </div> <!-- form-group end.// -->
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>City</label>
+                                <input type="text" class="form-control" name="city" value="{{city}}" required>
+
+                            </div> <!-- form-group end.// -->
+
+                        </div> <!-- form-row.// -->
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Phone *</label>
+                                <input type="text" class="form-control" name="phone" value="{{phone}}" required>
+
+                                {{#if errors.phone}}
+                                <small class="text-danger">{{errors.phone}}</small>
+                                {{/if}}
+                            </div> <!-- form-group end.// -->
+
+                        </div> <!-- form-row.// -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Create password</label>
+                                <input class="form-control" type="password" name="password">
+                                {{#if errors.password}}
+                                <small class="text-danger">{{errors.password}}</small>
+                                {{/if}}
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group col-md-6">
+                                <label>Repeat password</label>
+                                <input class="form-control" type="password" name="confirmPw">
+                                {{#if errors.confirmPw}}
+                                <small class="text-danger">{{errors.confirmPw}}</small>
+                                {{/if}}
+                            </div> <!-- form-group end.// -->
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-primary btn-block"> Register </button>
+                        </div> <!-- form-group// -->
+
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-2">Have an account? <a href="">Log In</a></p>
+        </article> <!-- card-body end .// -->
+    </div> <!-- card.// -->
+</body>
+
+</html>
