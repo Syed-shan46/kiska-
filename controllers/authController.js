@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
+
 
 const checkEmailExists = async (email) => {
     try {
@@ -51,8 +53,11 @@ const handleRegister = async (req, res) => {
     }
 
     try {
+        // Hash the password before saving it to the database
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         // Create the user if there are no errors
-        await User.create({ firstName, lastName, city, phone, email, password, confirmPw, });
+        await User.create({ firstName, lastName, city, phone, email, password: hashedPassword, });
         return res.redirect('/login')
     } catch (error) {
         console.error(error);
@@ -62,17 +67,55 @@ const handleRegister = async (req, res) => {
 
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
+
+    // Array to collect error messages
+    const errors = {};
+
+    // Validate Email
+    if (!email || !isValidEmail(email)) {
+        errors.email = 'Please enter a valid email address.';
+    }
+
+    // Validate Password
+    if (!password) {
+        errors.password = 'Please enter your password.';
+    }
+
+    // Check for validation errors
+    if (Object.keys(errors).length > 0) {
+        return res.render('user/login', { errors, email });
+    }
     try {
-        const user = await User.findOne({ email, password });
+        // Check if user exists
+        const user = await User.findOne({ email });
+
         if (!user) {
-            return res.render('user/login', { error: 'Invalid Username or password' },
-            )
+            errors.email = 'No account found with this email.';
+            return res.render('user/login', { errors, email });
         }
+
+        // Compare passwords
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            errors.password = 'Incorrect password.';
+            return res.render('user/login', { errors, email });
+        }
+
+        // If login is successful, set the session
         req.session.userId = user._id;
-        return res.redirect('/');
+
+        req.session.save(err => {
+            if (err) {
+                console.error('Session save error:', err);
+                return res.render('user/login', { error: 'Error during login' });
+            }
+            // Redirect to the homepage after saving session
+            return res.redirect('/');
+        });
     } catch (error) {
         console.error(error);
-        return res.render('user/authentication', { error: error })
+        return res.render('user/login', { error: 'Error during login' });
     }
 
 }
