@@ -31,7 +31,8 @@
                     <form action="loginUser" method="post">
                         <div class="form-group">
                             <label>Email</label>
-                            <input name="email" class="form-control" value="{{email}}" placeholder="ex. name@gmail.com" type="email">
+                            <input name="email" class="form-control" value="{{email}}" placeholder="ex. name@gmail.com"
+                                type="email">
                             {{#if errors.email}}
                             <small class="text-danger">{{errors.email}}</small>
                             {{/if}}
@@ -44,12 +45,14 @@
                             <small class="text-danger">{{errors.password}}</small>
                             {{/if}}
                         </div> <!-- form-group// -->
-                        <div class="form-group">
+                        <div class="form-group float-right">
                             <a href="#">Forgot password</a>
                         </div> <!-- form-group form-check .// -->
-                        <div class="form-group">
+                        <div class="form-group ">
                             <button type="submit" class="btn btn-primary btn-block"> Login </button>
                         </div> <!-- form-group// -->
+
+                        <a href="/register">Create account</a>
 
                         <p class="text-center my-4">or access via</p>
                         <div class="text-center mb-3">
@@ -57,7 +60,7 @@
                                     class="fab fa-facebook-f"></i> </a>
                             <a href="#" class="btn btn-icon rounded-circle btn-google"> <i class="fab fa-google"></i>
                             </a>
-                            
+
                         </div> <!-- text-center .// -->
                     </form>
                 </div> <!-- card-body.// -->
