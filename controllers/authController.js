@@ -61,64 +61,64 @@ const handleRegister = async (req, res) => {
         return res.redirect('/login')
     } catch (error) {
         console.error(error);
-        return res.render('user/register', { error: 'Error during registration' });
+        return res.render('user/register', { error: 'Error during registration' }); 
     }
 };
 
-// const handleLogin = async (req, res) => {
-//     const { email, password } = req.body;
+const handleLogin = async (req, res) => {
+    const { email, password } = req.body;
 
-//     // Array to collect error messages
-//     const errors = {};
+    // Array to collect error messages
+    const errors = {};
 
-//     // Validate Email
-//     if (!email || !isValidEmail(email)) {
-//         errors.email = 'Please enter a valid email address.';
-//     }
+    // Validate Email
+    if (!email || !isValidEmail(email)) {
+        errors.email = 'Please enter a valid email address.';
+    }
 
-//     // Validate Password
-//     if (!password) {
-//         errors.password = 'Please enter your password.';
-//     }
+    // Validate Password
+    if (!password) {
+        errors.password = 'Please enter your password.';
+    }
 
-//     // Check for validation errors
-//     if (Object.keys(errors).length > 0) {
-//         return res.render('user/login', { errors, email });
-//     }
-//     try {
-//         // Check if user exists
-//         const user = await User.findOne({ email });
+    // Check for validation errors
+    if (Object.keys(errors).length > 0) {
+        return res.render('user/login', { errors, email });
+    }
+    try {
+        // Check if user exists
+        const user = await User.findOne({ email });
 
-//         if (!user) {
-//             errors.email = 'No account found with this email.';
-//             return res.render('user/login', { errors, email });
-//         }
+        if (!user) {
+            errors.email = 'No account found with this email.';
+            return res.render('user/login', { errors, email });
+        }
 
-//         // Compare passwords
-//         const isMatch = await bcrypt.compare(password, user.password);
+        // Compare passwords
+        const isMatch = await bcrypt.compare(password, user.password);
 
-//         if (!isMatch) {
-//             errors.password = 'Incorrect password.';
-//             return res.render('user/login', { errors, email });
-//         }
+        if (!isMatch) {
+            errors.password = 'Incorrect password.';
+            return res.render('user/login', { errors, email });
+        }
 
-//         // If login is successful, set the session
-//         req.session.userId = user._id;
+        // If login is successful, set the session
+        req.session.userId = user._id;
 
-//         req.session.save(err => {
-//             if (err) {
-//                 console.error('Session save error:', err);
-//                 return res.render('user/login', { error: 'Error during login' });
-//             }
-//             // Redirect to the homepage after saving session
-//             return res.redirect('/');
-//         });
-//     } catch (error) {
-//         console.error(error);
-//         return res.render('user/login', { error: 'Error during login' });
-//     }
+        req.session.save(err => {
+            if (err) {
+                console.error('Session save error:', err);
+                return res.render('user/login', { error: 'Error during login' });
+            }
+            // Redirect to the homepage after saving session
+            return res.redirect('/');
+        });
+    } catch (error) {
+        console.error(error);
+        return res.render('user/login', { error: 'Error during login' });
+    }
 
-// }
+}
 
 const handleLogout = async (req, res) => {
     req.session.destroy((err) => {
