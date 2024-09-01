@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const Products = require('../models/product_model');
 const mongoose = require('mongoose');
-const  Address  = require('../models/address_model');
+const Address = require('../models/address_model');
 const Order = require('../models/order_model');
 
 
@@ -45,6 +45,9 @@ const postAddress = async (req, res) => {
 const getAddress = async (req, res) => {
     try {
         const userId = req.session.userId;
+        // Fetch the user's details from the database
+        const user = await User.findById(userId);
+
         if (req.session && req.session.userId) {
             const userData = await User.findById(req.session.userId).populate('addresses');
             const orders = await Order.find({ userId: userId, paymentStatus: 'Paid' })
@@ -52,7 +55,7 @@ const getAddress = async (req, res) => {
                 .sort({ orderDate: -1 })
                 .populate('addressId')
                 .exec();
-            res.render('user/profile', { userData, isLoggedIn: !!req.session.userId, orders });
+            res.render('user/profile', { userData, isLoggedIn: !!req.session.userId, orders, user });
         } else {
             res.redirect('/register');
         }
@@ -62,4 +65,68 @@ const getAddress = async (req, res) => {
     }
 };
 
-module.exports = { postAddress, getAddress };
+const getProfile = async (req, res) => {
+    // Assuming you have user ID stored in session
+    const userId = req.session.userId;
+    // Fetch the user's details from the database
+    const user = await User.findById(userId);
+    res.render('user/update-profile', { user });
+
+}
+
+const updateUserProfile = async (req, res) => {
+    const { firstName, lastName, phone } = req.body;
+    const userId = req.session.userId; // Assuming you have user ID stored in session
+
+    // Array to collect error messages
+    const errors = {};
+    if (!phone) {
+        errors.phone = 'Phone number is required.';
+    } else if (!/^\d{10}$/.test(phone)) {
+        errors.phone = 'Phone number must be exactly 10 digits.';
+    }
+
+    // Check for validation errors
+    if (Object.keys(errors).length > 0) {
+        return res.status(400).json({ success: false, errors });
+    }
+
+
+    // Check for validation errors
+    if (Object.keys(errors).length > 0) {
+        return res.status(400).json({ success: false, errors });
+    }
+    try {
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.json({ success: false, error: 'User not found.' });
+        }
+
+        // Update user details
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.phone = phone;
+
+        // Save the updated user information
+        await user.save();
+
+        // Update the session with new user information
+        req.session.user = {
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
+        };
+
+        // Respond with success
+        res.redirect('/profile')
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        res.status(500).json({ success: false, error: 'Error updating user profile.' });
+    }
+};
+
+
+module.exports = { postAddress, getAddress, updateUserProfile, getProfile };

@@ -20,7 +20,7 @@ const isValidEmail = (email) => {
 };
 
 const handleRegister = async (req, res) => {
-    const { firstName, email, lastName, city, phone, password, confirmPw, } = req.body;
+    const { firstName, email, lastName, city, phone, password, confirmPw, } = req.body; 
 
     // Array to collect error messages
     const errors = {};
@@ -126,7 +126,7 @@ const handleLogout = async (req, res) => {
             return res.redirect('/');
         }
         res.clearCookie('connect.sid');
-        return res.redirect('/register');
+        return res.redirect('/login');
     })
 }
 

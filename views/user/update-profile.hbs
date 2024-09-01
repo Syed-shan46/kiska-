@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+</head>
+<style>
+    .card-body {
+        padding: 13px !important;
+    }
+
+    .form-control {
+        border-radius: 10px !important;
+    }
+</style>
+
+<body>
+
+    <div class="pt-lg-5 mt-lg-5"></div>
+    <div class="pt-5"></div>
+    <div class="card">
+        <article class="card-body">
+
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <header class="mb-3 mt-2">
+                        <h4 class="card-title">Update Profile</h4>
+                    </header>
+
+                    <form id="profileForm" method="post" action="/profile/update">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label>First name</label>
+                                <input type="text" class="form-control" name="firstName" id="firstName"
+                                    value="{{user.firstName}}">
+                                <small class="text-danger" id="error-firstName"></small>
+                            </div> <!-- form-group end.// -->
+
+
+                            <div class="col form-group">
+                                <label>Last name</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName"
+                                    value="{{user.lastName}}">
+                                <small class="text-danger" id="error-lastName"></small>
+                            </div> <!-- form-group end.// -->
+                        </div> <!-- form-row end.// -->
+
+
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Phone</label>
+                                <input type="text" class="form-control" name="phone" id="phone" value="{{user.phone}}">
+                                <small class="text-danger" id="error-phone"></small>
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group col-md-6">
+                                <label>Email</label>
+                                <input type="email" disabled class="form-control" name="email" value="{{user.email}}">
+                                <small class="text-info">Currently not available to change Email</small>
+
+                            </div> <!-- form-group end.// -->
+
+                        </div> <!-- form-row.// -->
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-primary btn-block">Update </button>
+                        </div> <!-- form-group// -->
+
+                    </form>
+                    <div id="responseMessage"></div>
+                </div>
+            </div>
+            <hr>
+
+        </article> <!-- card-body end .// -->
+    </div> <!-- card.// -->
+    <!-- Include jQuery or use vanilla JavaScript for AJAX -->
+
+    <script>
+        document.getElementById('phone').addEventListener('input', function () {
+            const phoneInput = this;
+            const errorElement = document.getElementById('error-phone');
+            const phoneValue = phoneInput.value;
+
+            // Clear previous errors
+            errorElement.textContent = '';
+
+            // Validate phone number length
+
+            if (phoneValue.length < 10) {
+                errorElement.textContent = 'Phone number must be 10 digits long.';
+            } else if (phoneValue.length > 10) {
+                errorElement.textContent = 'Phone number must not be more than 10 digits long.';
+            }
+            
+
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>

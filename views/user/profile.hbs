@@ -22,24 +22,28 @@
         background-clip: border-box;
         border: 1px solid #ebecf0;
     }
+
+    .form-control {
+        border-radius: 10px !important;
+    }
 </style>
 
 <body>
 
-    <div class="">
-
-
+    <div class="mt-lg-5 pt-lg-5">
         <main class="main">
-            <div class="page-content mt-5">
+
+            <div class="page-content mt-5 pt-5">
                 <div class="dashboard">
                     <div class="container-fluid">
                         <div class="row justify-content-center">
                             <aside class="col-md-4 col-lg-3">
                                 <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-                                    
+
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
-                                            role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+                                        <a class="nav-link active" id="tab-orders-link" data-toggle="tab"
+                                            href="#tab-orders" role="tab" aria-controls="tab-orders"
+                                            aria-selected="false">Orders</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
@@ -61,6 +65,8 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active " id="tab-orders" role="tabpanel"
                                         aria-labelledby="tab-orders-link">
+
+                                        {{#if orders}}
                                         {{#each orders}}
                                         <main class="col-md-9">
 
@@ -86,7 +92,7 @@
                                                                 {{this.addressId.zipCode}}
                                                                 {{this.addressId.phone}}
                                                             </p>
-                                                           
+
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h6 class="text-muted">Payment</h6>
@@ -142,6 +148,16 @@
 
                                         </main> <!-- col.// -->
                                         {{/each}}
+                                        {{else}}
+                                        <div class="row justify-content-center mt-lg-5">
+                                            <div class="col-6">
+                                                <p class="">No orders found.</p>
+                                            </div>
+                                            <div class="col-7 ml-lg-5">
+                                                <a href="/" class="btn btn-primary">Continue Shopping</a>
+                                            </div>
+                                        </div>
+                                        {{/if}}
                                     </div><!-- .End .tab-pane -->
 
 
@@ -243,40 +259,39 @@
 
                                     <div class="tab-pane fade" id="tab-account" role="tabpanel"
                                         aria-labelledby="tab-account-link">
-                                        <form action="#">
+                                        <form>
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    <label>First Name *</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <label>First Name</label>
+                                                    <input disabled name="firstName" type="text" value="{{user.firstName}}"
+                                                        class="form-control" required>
                                                 </div><!-- End .col-sm-6 -->
 
                                                 <div class="col-sm-6">
-                                                    <label>Last Name *</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <label>Last Name</label>
+                                                    <input disabled name="lastName" type="text" class="form-control"
+                                                        value="{{user.lastName}}" required>
                                                 </div><!-- End .col-sm-6 -->
                                             </div><!-- End .row -->
 
-                                            <label>Display Name *</label>
+                                            {{!-- <label>Display Name *</label>
                                             <input type="text" class="form-control" required>
                                             <small class="form-text">This will be how your name will be displayed in the
-                                                account section and in reviews</small>
+                                                account section and in reviews</small> --}}
 
-                                            <label>Email address *</label>
-                                            <input type="email" class="form-control" required>
+                                            <label>Email address</label>
+                                            <input disabled name="email" type="email" class="form-control" value="{{user.email}}"
+                                                required>
 
-                                            <label>Current password (leave blank to leave unchanged)</label>
-                                            <input type="password" class="form-control">
+                                            <label>Phone</label>
+                                            <input disabled name="email" type="email" class="form-control" value="{{user.phone}}"
+                                                required>
 
-                                            <label>New password (leave blank to leave unchanged)</label>
-                                            <input type="password" class="form-control">
 
-                                            <label>Confirm new password</label>
-                                            <input type="password" class="form-control mb-2">
-
-                                            <button type="submit" class="btn btn-outline-primary-2">
-                                                <span>SAVE CHANGES</span>
+                                            <a href="profile/update" class="btn btn-outline-primary-2">
+                                                <span>Update Profile</span>
                                                 <i class="icon-long-arrow-right"></i>
-                                            </button>
+                                            </a>
                                         </form>
                                     </div><!-- .End .tab-pane -->
                                 </div>
