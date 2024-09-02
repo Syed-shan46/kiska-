@@ -26,6 +26,10 @@
     .form-control {
         border-radius: 10px !important;
     }
+
+    .card-order {
+        border: none !important;
+    }
 </style>
 
 <body>
@@ -126,7 +130,7 @@
                                                 </div> <!-- card-body .// -->
                                             </article> <!-- card.// -->
 
-                                            <article class="card  mb-3">
+                                            <article class="card  mb-3" style="border: none !important;">
                                                 <div class="card-body">
                                                     <h5 class="card-title mb-4">Recent orders </h5>
                                                     {{#if orders}}
@@ -223,9 +227,9 @@
                                         {{#each orders}}
                                         <main class="col-md-9">
 
-                                            <article class="card mb-4">
+                                            <article class="card mb-4" >
 
-                                                <header class="card-header p-3">
+                                                <header class=" card-header p-3">
                                                     <a href="#" class="float-right"> <i class="fa fa-print"></i>
                                                         Invoice</a>
                                                     <strong class="d-inline-block mr-3">Order ID:
