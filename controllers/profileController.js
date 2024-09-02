@@ -135,7 +135,7 @@ const viewAllAddress = async (req, res) => {
         const userId = req.session.userId;
         if (req.session && req.session.userId) {
             const userAddress = await User.findById(req.session.userId).populate('addresses');
-            res.render('user/view-all-address', {userAddress }); // 'updateAddressForm' is your Handlebars template file
+            res.render('user/view-all-address', { userAddress }); // 'updateAddressForm' is your Handlebars template file
         } else {
             res.status(404).send('User not found');
         }
@@ -144,18 +144,51 @@ const viewAllAddress = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 }
+
 const getUpdateAddress = async (req, res) => {
     try {
-        const userId = req.session.userId;
-        if (req.session && req.session.userId) {
-            const userData = await User.findById(req.session.userId).populate('addresses');
-            res.render('user/update-address', { userData }); // 'updateAddressForm' is your Handlebars template file
-        } else {
-            res.status(404).send('User not found');
+        const addressId = req.params.id;
+        const address = await Address.findById(addressId);
+
+        if (!address) {
+            return res.status(404).json({ message: 'Address not found.' });
         }
+
+        // Render the edit form with address details
+        res.render('user/update-address', { address }); // Adjust the template name as needed
     } catch (error) {
-        console.error('Error fetching user data:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error fetching address for edit:', error);
+        res.status(500).json({ message: 'Error fetching address for edit', error: error.message });
+    }
+}
+
+const postUpdateAddress = async (req, res) => {
+    try {
+        const addressId = req.params.id;
+        const { name, house, street, city, state, zipCode, phone } = req.body;
+
+        const address = await Address.findById(addressId);
+        if (!address) {
+            return res.status(404).json({ message: 'Address not found.' });
+        }
+
+        // Update the address details
+        address.name = name;
+        address.house = house;
+        address.street = street;
+        address.city = city;
+        address.state = state;
+        address.zipCode = zipCode;
+        address.phone = phone;
+
+        // Save the updated address
+        await address.save();
+
+        // Redirect to profile or another page
+        res.redirect('/profile');
+    } catch (error) {
+        console.error('Error updating address:', error);
+        res.status(500).json({ message: 'Error updating address', error: error.message });
     }
 }
 
@@ -166,5 +199,6 @@ module.exports = {
     updateUserProfile,
     getProfile,
     getUpdateAddress,
+    postUpdateAddress,
     viewAllAddress,
 };

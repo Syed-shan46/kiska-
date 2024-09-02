@@ -48,10 +48,10 @@
                                         <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
                                             role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
                                     </li>
-                                    <li class="nav-item">
+                                    {{!-- <li class="nav-item">
                                         <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
                                             role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
                                             role="tab" aria-controls="tab-account" aria-selected="false">Account
@@ -85,7 +85,7 @@
                                                     <p>
                                                         <i class="fa fa-map-marker text-muted"></i> &nbsp; My address:
                                                         <br>
-                                                        {{#if userData.addresses}}
+                                                        {{#if userData.addresses.[0]}}
                                                         {{#each userData.addresses}}
                                                         {{this.city}}, {{this.street}}, Building {{this.building}},
                                                         {{this.house}} &nbsp;
@@ -139,45 +139,49 @@
                                                     <h5 class="card-title mb-4">Recent orders </h5>
 
                                                     <div class="row">
+                                                        {{#if orders }}
+                                                        {{#each orders }}
                                                         <div class="col-md-6">
-                                                            <figure class="itemside  mb-3">
+                                                            <figure class="itemside mb-3">
                                                                 <div class="aside"><img src="images/items/1.jpg"
-                                                                        class="border img-sm"></div>
+                                                                        class="border img-sm">
+                                                                </div>
+                                                                <header class="card-header p-3">
+                                                                    <strong class="d-inline-block mr-3">Order ID:
+                                                                        {{this.orderId}}</strong>
+
+                                                                </header>
                                                                 <figcaption class="info">
                                                                     <time class="text-muted"><i
                                                                             class="fa fa-calendar-alt"></i>
-                                                                        12.09.2019</time>
-                                                                    <p>Great item name goes here </p>
+                                                                        <span>{{this.orderDate}}</span>
+                                                                    </time>
+                                                                    {{#each this.products }}
+                                                                    <p><span>{{this.name}}</span></p>
+                                                                    <div class="col-lg-2 col-3">
+                                                                        <img width="70px"
+                                                                            src="/images/{{this.productId.mainImage}}"
+                                                                            class="img-xs border">
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-4">
+                                                                        <p class="title mb-0" style="font-size: 14px;">
+                                                                            {{this.productId.name}}</p>
+                                                                        <var
+                                                                            class="price text-muted">{{this.productId.price}}</var>
+                                                                        <var
+                                                                            class="text-muted">({{this.quantity}})</var>
+                                                                    </div>
+                                                                    {{/each}}
+
                                                                     <span class="text-warning">Pending</span>
                                                                 </figcaption>
                                                             </figure>
                                                         </div> <!-- col.// -->
-                                                        <div class="col-md-6">
-                                                            <figure class="itemside  mb-3">
-                                                                <div class="aside"><img src="images/items/2.jpg"
-                                                                        class="border img-sm"></div>
-                                                                <figcaption class="info">
-                                                                    <time class="text-muted"><i
-                                                                            class="fa fa-calendar-alt"></i>
-                                                                        12.09.2019</time>
-                                                                    <p>Machine for kitchen to blend </p>
-                                                                    <span class="text-success">Departured</span>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div> <!-- col.// -->
-                                                        <div class="col-md-6">
-                                                            <figure class="itemside mb-3">
-                                                                <div class="aside"><img src="images/items/3.jpg"
-                                                                        class="border img-sm"></div>
-                                                                <figcaption class="info">
-                                                                    <time class="text-muted"><i
-                                                                            class="fa fa-calendar-alt"></i>
-                                                                        12.09.2019</time>
-                                                                    <p>Ladies bag original leather </p>
-                                                                    <span class="text-success">Shipped </span>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div> <!-- col.// -->
+                                                        {{/each}}
+                                                        {{/if}}
+
+
+
                                                     </div> <!-- row.// -->
 
                                                     <a href="#" class="btn btn-outline-primary"> See all orders </a>
@@ -305,7 +309,7 @@
                                         {{/each}}
                                     </div><!-- .End .tab-pane -->
 
-                                    <div class="tab-pane fade" id="tab-address" role="tabpanel"
+                                    {{!-- <div class="tab-pane fade" id="tab-address" role="tabpanel"
                                         aria-labelledby="tab-address-link">
                                         <p>The following addresses will be used on the checkout page by default.</p>
 
@@ -378,7 +382,7 @@
                                                 </div><!-- End .card-dashboard -->
                                             </div><!-- End .col-lg-6 -->
                                         </div><!-- End .row -->
-                                    </div><!-- .End .tab-pane -->
+                                    </div><!-- .End .tab-pane --> --}}
 
                                     <div class="tab-pane fade" id="tab-account" role="tabpanel"
                                         aria-labelledby="tab-account-link">

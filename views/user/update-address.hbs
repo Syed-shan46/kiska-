@@ -11,10 +11,9 @@
     <div class="mt-5 pt-3"></div>
     <div class="container pb-2">
         <header class="">
-            <h4 class="card-title">Update Address</h4>
+            <h4 class="card-title">Edit Address</h4>
         </header>
-        <form action="/updateAddress" method="post">
-            <input type="hidden" name="totalAmount" value="1000">
+        <form action="/profile/address/update/{{address._id}}" method="post">
             <div class="row">
                 <div class="col-lg-9">
                     <input type="hidden" name="userId" value="{{userId}}">
@@ -22,45 +21,45 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label> Name *</label>
-                            <input type="text" class="form-control" value="{{userData.addresses.name}}" name="name">
+                            <input type="text" class="form-control" value="{{address.name}}" name="name">
                         </div><!-- End .col-sm-6 -->
                     </div><!-- End .row -->
 
                     <label>house *</label>
-                    <input type="text" class="form-control" value="{{userData.addresses.state}}" name="house">
+                    <input type="text" class="form-control" value="{{address.house}}" name="house">
 
                     <label>Street address *</label>
-                    <input type="text" class="form-control" placeholder="House number and Street name" name="street"
-                        required>
+                    <input type="text" class="form-control" value="{{address.street}}"
+                        placeholder="House number and Street name" name="street">
 
                     <div class="row">
                         <div class="col-sm-6">
                             <label>Town / City *</label>
-                            <input type="text" class="form-control" name="city" required>
+                            <input type="text" class="form-control" name="city" value="{{address.city}}">
                         </div><!-- End .col-sm-6 -->
                     </div><!-- End .row -->
 
                     <div class="row">
                         <div class="col-sm-6">
                             <label>state *</label>
-                            <input type="text" class="form-control" name="state" required>
+                            <input type="text" class="form-control" name="state" value="{{address.state}}">
                         </div><!-- End .col-sm-6 -->
                     </div><!-- End .row -->
 
                     <div class="row">
                         <div class="col-sm-6">
                             <label>Postcode / ZIP *</label>
-                            <input type="text" class="form-control" name="zipCode" required>
+                            <input type="text" class="form-control" name="zipCode" value="{{address.zipCode}}">
                         </div><!-- End .col-sm-6 -->
 
                         <div class="col-sm-6">
                             <label>Phone *</label>
-                            <input type="tel" class="form-control" name="phone" required>
+                            <input type="tel" class="form-control" name="phone" value="{{address.phone}}">
                         </div><!-- End .col-sm-6 -->
                     </div><!-- End .row -->
 
-                    <button type="submit" class="btn btn-primary">
-                        Submit
+                    <button type=" submit" class="btn btn-primary">
+                        Update
                     </button>
 
 
