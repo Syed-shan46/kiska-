@@ -39,7 +39,7 @@ router.post('/remove', cartRemove);
 
 /// View single item
 router.get('/product/:id', viewSingleItem);
-router.get('/cart/checkout', checkoutPage);
+router.get('/cart/checkout', checkoutPage); 
 router.post('/pendingOrder', PendingOrder);
 router.get('/cart/checkout/method', (req, res) => {
     const userId = req.session.userId;

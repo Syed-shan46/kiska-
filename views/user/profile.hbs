@@ -120,7 +120,7 @@
                                                             </div>
                                                         </figure>
 
-                                                    </article>
+                                                    </article> 
 
 
                                                 </div> <!-- card-body .// -->
@@ -129,7 +129,8 @@
                                             <article class="card  mb-3">
                                                 <div class="card-body">
                                                     <h5 class="card-title mb-4">Recent orders </h5>
-
+                                                    {{#if orders}}
+                                                    {{#each orders}}
                                                     <article class="card mb-4">
 
                                                         <header class="card-header p-3">
@@ -204,6 +205,9 @@
                                                         {{!-- ending here --}}
 
                                                     </article> <!-- card order-item .// -->
+                                                    {{/if}}
+                                                    {{/each}}
+
 
                                                     <a href="#" class="btn btn-outline-primary"> See all orders </a>
                                                 </div> <!-- card-body .// -->
