@@ -50,6 +50,8 @@ const getAddress = async (req, res) => {
         // Gets the total number of orders
         const totalOrders = await Order.countDocuments({ userId: userId });
 
+        
+
         if (req.session && req.session.userId) {
             const userData = await User.findById(req.session.userId).populate('addresses');
             const orders = await Order.find({ userId: userId, paymentStatus: 'Paid' })

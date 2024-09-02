@@ -19,5 +19,13 @@ module.exports = {
     },
     lt: function (a, b) {
         return a < b;
+    },
+
+    formatOrderDate: function (dateString) {
+        // Create a Date object
+        const dateObj = new Date(dateString);
+        // Convert date to desired format: "Sun Sep 01 2024 18:49:46"
+        return dateObj.toDateString() + ' ' + dateObj.toTimeString().split(' ')[0];
     }
+
 };

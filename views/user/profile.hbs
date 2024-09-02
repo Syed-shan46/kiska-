@@ -76,7 +76,10 @@
                                                     <figure class="icontext">
 
                                                         <div class="text">
-                                                            <strong>{{user.firstName}} {{user.lastName}}</strong> <br>
+                                                            <i class="fa fa-user text-muted"></i> &nbsp; My
+                                                            Account
+                                                            <br>
+                                                            {{user.firstName}} {{user.lastName}} <br>
                                                             {{user.email}} <br>{{user.phone}}<br>
                                                             <a href="/profile/update">Edit</a>
                                                         </div>
@@ -116,18 +119,7 @@
                                                                 <span>Wishlists</span>
                                                             </div>
                                                         </figure>
-                                                        <figure class="card bg">
-                                                            <div class="p-3">
-                                                                <h5 class="card-title">12</h5>
-                                                                <span>Awaiting delivery</span>
-                                                            </div>
-                                                        </figure>
-                                                        <figure class="card bg">
-                                                            <div class="p-3">
-                                                                <h5 class="card-title">50</h5>
-                                                                <span>Delivered items</span>
-                                                            </div>
-                                                        </figure>
+
                                                     </article>
 
 
@@ -138,51 +130,80 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title mb-4">Recent orders </h5>
 
-                                                    <div class="row">
-                                                        {{#if orders }}
-                                                        {{#each orders }}
-                                                        <div class="col-md-6">
-                                                            <figure class="itemside mb-3">
-                                                                <div class="aside"><img src="images/items/1.jpg"
-                                                                        class="border img-sm">
+                                                    <article class="card mb-4">
+
+                                                        <header class="card-header p-3">
+                                                            <a href="#" class="float-right"> <i class="fa fa-print"></i>
+                                                                Invoice</a>
+                                                            <strong class="d-inline-block mr-3">Order ID:
+                                                                {{this.orderId}}</strong>
+                                                            <span>{{this.orderDate}}</span>
+                                                        </header>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <h6 class="text-muted">Delivery to</h6>
+                                                                    <p>
+                                                                        {{this.addressId.name}}
+                                                                        {{this.addressId.house}}
+                                                                        {{this.addressId.city}}<br>
+                                                                        {{this.addressId.street}}
+                                                                        {{this.addressId.state}}<br>
+                                                                        {{this.addressId.zipCode}}
+                                                                        {{this.addressId.phone}}
+                                                                    </p>
+
                                                                 </div>
-                                                                <header class="card-header p-3">
-                                                                    <strong class="d-inline-block mr-3">Order ID:
-                                                                        {{this.orderId}}</strong>
+                                                                <div class="col-md-4">
+                                                                    <h6 class="text-muted">Payment</h6>
+                                                                    Shipping fee: 0 <br>
+                                                                    <span class="b">Total: ${{this.totalAmount}} </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div> <!-- row.// -->
+                                                        </div> <!-- card-body .// -->
 
-                                                                </header>
-                                                                <figcaption class="info">
-                                                                    <time class="text-muted"><i
-                                                                            class="fa fa-calendar-alt"></i>
-                                                                        <span>{{this.orderDate}}</span>
-                                                                    </time>
-                                                                    {{#each this.products }}
-                                                                    <p><span>{{this.name}}</span></p>
-                                                                    <div class="col-lg-2 col-3">
-                                                                        <img width="70px"
-                                                                            src="/images/{{this.productId.mainImage}}"
-                                                                            class="img-xs border">
-                                                                    </div>
-                                                                    <div class="col-lg-2 col-4">
-                                                                        <p class="title mb-0" style="font-size: 14px;">
-                                                                            {{this.productId.name}}</p>
-                                                                        <var
-                                                                            class="price text-muted">{{this.productId.price}}</var>
-                                                                        <var
-                                                                            class="text-muted">({{this.quantity}})</var>
-                                                                    </div>
-                                                                    {{/each}}
+                                                        {{#each this.products}}
 
-                                                                    <span class="text-warning">Pending</span>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div> <!-- col.// -->
+
+                                                        <div class="container">
+                                                            <div class="row pb-3">
+                                                                <div class="col-lg-2 col-3">
+                                                                    <img width="70px"
+                                                                        src="/images/{{this.productId.mainImage}}"
+                                                                        class="img-xs border">
+                                                                </div>
+                                                                <div class="col-lg-2 col-4">
+                                                                    <p class="title mb-0" style="font-size: 14px;">
+                                                                        {{this.productId.name}}</p>
+                                                                    <var
+                                                                        class="price text-muted">{{this.productId.price}}</var>
+                                                                    <var class="text-muted">({{this.quantity}})</var>
+                                                                </div>
+                                                                <div class="col-lg-2 col-5">
+                                                                    <a href="#" class="btn btn-outline-primary">Track
+                                                                        order</a>
+                                                                    <br>
+                                                                    <div class="dropdown d-inline-block mt-1">
+                                                                        <a href="#" data-toggle="dropdown"
+                                                                            class="dropdown-toggle btn btn-outline-secondary">More</a>
+                                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                                            <a href="#" class="dropdown-item">Return</a>
+                                                                            <a href="#" class="dropdown-item">Cancel
+                                                                                order</a>
+                                                                        </div>
+                                                                    </div> <!-- dropdown.// -->
+                                                                </div>
+                                                                <div class="col-lg-2 col-5">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         {{/each}}
-                                                        {{/if}}
 
+                                                        {{!-- ending here --}}
 
-
-                                                    </div> <!-- row.// -->
+                                                    </article> <!-- card order-item .// -->
 
                                                     <a href="#" class="btn btn-outline-primary"> See all orders </a>
                                                 </div> <!-- card-body .// -->
