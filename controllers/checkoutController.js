@@ -8,6 +8,9 @@ const checkoutPage = async (req, res) => {
     const userId = req.session.userId;
     const cartItems = await CartItem.find({ user: userId }).populate('product');
     const userAddress = await User.findById(req.session.userId).populate('addresses');
+    // Fetch actual address details using the address IDs
+    const addresses = await Address.find({ userAddress });
+    console.log('Fetched addresses:', userAddress);
     let totalAmount = 0;
     cartItems.forEach(item => {
         totalAmount += item.product.price * item.quantity
@@ -26,34 +29,40 @@ const PendingOrder = async (req, res) => {
         const userId = req.session.userId;
         const orderId = uniqid();
         const merchantTransactionId = orderId;
+        const user = await User.findById(req.session.userId);
 
-        const { products, totalAmount, addressId } = req.body; // Get the selected address index
 
-        // Fetch user's addresses from the database
-        if (!addressId) {
-            throw new Error("No address selected.");
-        }
+        const { products, totalAmount, addressId, name, house, street, city, state, zipCode, phone } = req.body; // Get the selected address index
 
-        // Fetch the selected address from the database
-        const selectedAddress = await Address.findById(addressId);
-        if (!selectedAddress) {
-            throw new Error("Selected address not found.");
-        }
-
-        // Assuming `userAddress` object is available in the session or fetched from DB
-        //const userAddress = req.session.userAddress || await User.findById(userId).select('addresses').exec();
-
-        // Extract the selected address using the address index (addressRadio)
-        //const selectedAddressIndex = parseInt(addressRadio); // Ensure it's a number
-
-        if (!selectedAddress) {
-            throw new Error("Selected address is invalid or not found.");
+        // Check if an address is selected or new address is provided
+        let selectedAddress;
+        if (addressId) {
+            // Use the selected address
+            selectedAddress = await Address.findById(addressId);
+            if (!selectedAddress) {
+                throw new Error("Selected address not found.");
+            }
+        } else {
+            // Create and save a new address
+            const newAddress = new Address({
+                userId: userId,
+                name,
+                house,
+                street,
+                city,
+                state,
+                zipCode,
+                phone
+            });
+            selectedAddress = await newAddress.save();
+            user.addresses.push(selectedAddress);
+            await user.save();
         }
 
 
         // Create a new order with status "pending"
         const newOrder = new Order({
-            userId: userId, 
+            userId: userId,
             orderId: orderId,
             merchantTransactionId: merchantTransactionId,
             products: products.map(p => ({
@@ -63,7 +72,7 @@ const PendingOrder = async (req, res) => {
             totalAmount,
             orderStatus: 'pending', // Setting order status to pending
             paymentStatus: 'pending', // Setting payment status to pending
-            addressId: addressId, // Use selected address
+            addressId: selectedAddress._id, // Use selected address
             orderDate: new Date(), // Setting order date to the current date
         });
 

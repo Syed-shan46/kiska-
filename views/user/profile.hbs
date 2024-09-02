@@ -39,11 +39,14 @@
                         <div class="row justify-content-center">
                             <aside class="col-md-4 col-lg-3">
                                 <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="tab-orders-link" data-toggle="tab"
-                                            href="#tab-orders" role="tab" aria-controls="tab-orders"
-                                            aria-selected="false">Orders</a>
+                                        <a class="nav-link active" id="tab-overView-link" data-toggle="tab"
+                                            href="#tab-overView" role="tab" aria-controls="tab-overView"
+                                            aria-selected="false">Account Overview</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
+                                            role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
@@ -63,7 +66,128 @@
 
                             <div class="col-md-8 col-lg-9">
                                 <div class="tab-content">
-                                    <div class="tab-pane fade show active " id="tab-orders" role="tabpanel"
+                                    <div class="tab-pane fade show active " id="tab-overView" role="tabpanel"
+                                        aria-labelledby="tab-overView-link">
+                                        <main class="col-md-9">
+
+                                            <article class="card mb-3">
+                                                <div class="card-body">
+
+                                                    <figure class="icontext">
+
+                                                        <div class="text">
+                                                            <strong>{{user.firstName}} {{user.lastName}}</strong> <br>
+                                                            {{user.email}} <br>{{user.phone}}<br>
+                                                            <a href="/profile/update">Edit</a>
+                                                        </div>
+                                                    </figure>
+                                                    <hr>
+                                                    <p>
+                                                        <i class="fa fa-map-marker text-muted"></i> &nbsp; My address:
+                                                        <br>
+                                                        {{#if userData.addresses}}
+                                                        {{#each userData.addresses}}
+                                                        {{this.city}}, {{this.street}}, Building {{this.building}},
+                                                        {{this.house}} &nbsp;
+                                                        <br>
+                                                        <a href="/profile/viewAllAddress" class="btn-link">View all
+                                                            Address</a>
+                                                        <br>
+                                                        {{/each}}
+                                                        {{else}}
+                                                    <h4>No address added</h4>
+                                                    <a href="/profile/address" class="btn-link"> Add address</a>
+                                                    {{/if}}
+
+                                                    </p>
+
+
+
+                                                    <article class="card-group">
+                                                        <figure class="card bg">
+                                                            <div class="p-3">
+                                                                <h5 class="card-title">{{totalOrders}}</h5>
+                                                                <span>Orders</span>
+                                                            </div>
+                                                        </figure>
+                                                        <figure class="card bg">
+                                                            <div class="p-3">
+                                                                <h5 class="card-title">5</h5>
+                                                                <span>Wishlists</span>
+                                                            </div>
+                                                        </figure>
+                                                        <figure class="card bg">
+                                                            <div class="p-3">
+                                                                <h5 class="card-title">12</h5>
+                                                                <span>Awaiting delivery</span>
+                                                            </div>
+                                                        </figure>
+                                                        <figure class="card bg">
+                                                            <div class="p-3">
+                                                                <h5 class="card-title">50</h5>
+                                                                <span>Delivered items</span>
+                                                            </div>
+                                                        </figure>
+                                                    </article>
+
+
+                                                </div> <!-- card-body .// -->
+                                            </article> <!-- card.// -->
+
+                                            <article class="card  mb-3">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-4">Recent orders </h5>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <figure class="itemside  mb-3">
+                                                                <div class="aside"><img src="images/items/1.jpg"
+                                                                        class="border img-sm"></div>
+                                                                <figcaption class="info">
+                                                                    <time class="text-muted"><i
+                                                                            class="fa fa-calendar-alt"></i>
+                                                                        12.09.2019</time>
+                                                                    <p>Great item name goes here </p>
+                                                                    <span class="text-warning">Pending</span>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </div> <!-- col.// -->
+                                                        <div class="col-md-6">
+                                                            <figure class="itemside  mb-3">
+                                                                <div class="aside"><img src="images/items/2.jpg"
+                                                                        class="border img-sm"></div>
+                                                                <figcaption class="info">
+                                                                    <time class="text-muted"><i
+                                                                            class="fa fa-calendar-alt"></i>
+                                                                        12.09.2019</time>
+                                                                    <p>Machine for kitchen to blend </p>
+                                                                    <span class="text-success">Departured</span>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </div> <!-- col.// -->
+                                                        <div class="col-md-6">
+                                                            <figure class="itemside mb-3">
+                                                                <div class="aside"><img src="images/items/3.jpg"
+                                                                        class="border img-sm"></div>
+                                                                <figcaption class="info">
+                                                                    <time class="text-muted"><i
+                                                                            class="fa fa-calendar-alt"></i>
+                                                                        12.09.2019</time>
+                                                                    <p>Ladies bag original leather </p>
+                                                                    <span class="text-success">Shipped </span>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </div> <!-- col.// -->
+                                                    </div> <!-- row.// -->
+
+                                                    <a href="#" class="btn btn-outline-primary"> See all orders </a>
+                                                </div> <!-- card-body .// -->
+                                            </article> <!-- card.// -->
+
+                                        </main> <!-- col.// -->
+                                    </div>
+
+                                    <div class="tab-pane fade " id="tab-orders" role="tabpanel"
                                         aria-labelledby="tab-orders-link">
 
                                         {{#if orders}}
@@ -161,7 +285,6 @@
                                     </div><!-- .End .tab-pane -->
 
 
-
                                     <div class="tab-pane fade" id="tab-downloads" role="tabpanel"
                                         aria-labelledby="tab-downloads-link">
                                         <h1>Your Orders</h1>
@@ -171,7 +294,8 @@
                                             <ul>
                                                 {{#each items}}
                                                 <li>
-                                                    Product: {{this.product.name}}, Quantity: {{this.quantity}}, Price:
+                                                    Product: {{this.product.name}}, Quantity: {{this.quantity}},
+                                                    Price:
                                                     ${{this.price}}
                                                 </li>
                                                 {{/each}}
@@ -180,8 +304,6 @@
                                         </div>
                                         {{/each}}
                                     </div><!-- .End .tab-pane -->
-
-
 
                                     <div class="tab-pane fade" id="tab-address" role="tabpanel"
                                         aria-labelledby="tab-address-link">
@@ -218,7 +340,8 @@
                                                             <div class="col-lg-6">
                                                                 <div class="card card-dashboard">
                                                                     <div class="card-body">
-                                                                        <h3 class="card-title">Address {{@index}} :</h3>
+                                                                        <h3 class="card-title">Address {{@index}} :
+                                                                        </h3>
                                                                         <!-- End .card-title -->
 
                                                                         <p>
@@ -263,8 +386,8 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <label>First Name</label>
-                                                    <input disabled name="firstName" type="text" value="{{user.firstName}}"
-                                                        class="form-control" required>
+                                                    <input disabled name="firstName" type="text"
+                                                        value="{{user.firstName}}" class="form-control" required>
                                                 </div><!-- End .col-sm-6 -->
 
                                                 <div class="col-sm-6">
@@ -276,16 +399,17 @@
 
                                             {{!-- <label>Display Name *</label>
                                             <input type="text" class="form-control" required>
-                                            <small class="form-text">This will be how your name will be displayed in the
+                                            <small class="form-text">This will be how your name will be displayed in
+                                                the
                                                 account section and in reviews</small> --}}
 
                                             <label>Email address</label>
-                                            <input disabled name="email" type="email" class="form-control" value="{{user.email}}"
-                                                required>
+                                            <input disabled name="email" type="email" class="form-control"
+                                                value="{{user.email}}" required>
 
                                             <label>Phone</label>
-                                            <input disabled name="email" type="email" class="form-control" value="{{user.phone}}"
-                                                required>
+                                            <input disabled name="email" type="email" class="form-control"
+                                                value="{{user.phone}}" required>
 
 
                                             <a href="profile/update" class="btn btn-outline-primary-2">

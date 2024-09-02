@@ -47,6 +47,8 @@ const getAddress = async (req, res) => {
         const userId = req.session.userId;
         // Fetch the user's details from the database
         const user = await User.findById(userId);
+        // Gets the total number of orders
+        const totalOrders = await Order.countDocuments({ userId: userId });
 
         if (req.session && req.session.userId) {
             const userData = await User.findById(req.session.userId).populate('addresses');
@@ -55,7 +57,7 @@ const getAddress = async (req, res) => {
                 .sort({ orderDate: -1 })
                 .populate('addressId')
                 .exec();
-            res.render('user/profile', { userData, isLoggedIn: !!req.session.userId, orders, user });
+            res.render('user/profile', { userData, isLoggedIn: !!req.session.userId, orders, user, totalOrders });
         } else {
             res.redirect('/register');
         }
@@ -128,5 +130,41 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
+const viewAllAddress = async (req, res) => {
+    try {
+        const userId = req.session.userId;
+        if (req.session && req.session.userId) {
+            const userAddress = await User.findById(req.session.userId).populate('addresses');
+            res.render('user/view-all-address', {userAddress }); // 'updateAddressForm' is your Handlebars template file
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+const getUpdateAddress = async (req, res) => {
+    try {
+        const userId = req.session.userId;
+        if (req.session && req.session.userId) {
+            const userData = await User.findById(req.session.userId).populate('addresses');
+            res.render('user/update-address', { userData }); // 'updateAddressForm' is your Handlebars template file
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
 
-module.exports = { postAddress, getAddress, updateUserProfile, getProfile };
+
+module.exports = {
+    postAddress,
+    getAddress,
+    updateUserProfile,
+    getProfile,
+    getUpdateAddress,
+    viewAllAddress,
+};

@@ -4,7 +4,7 @@ const Order = require('../models/order_model');
 
 const { viewUserProduct } = require('../controllers/admin/viewController');
 const { handleRegister, handleLogin, handleLogout, registerPage } = require('../controllers/authController');
-const { postAddress, getAddress, updateUserProfile, getProfile } = require('../controllers/profileController');
+const { postAddress, getAddress, updateUserProfile, getProfile, getUpdateAddress, viewAllAddress } = require('../controllers/profileController');
 //const { getCardPayment, successPage } = require('../controllers/stripeController');
 const { getCart, addToCart, cartIncrease, cartDecrease, cartRemove } = require('../controllers/cartController');
 const { viewSingleItem } = require('../controllers/productController');
@@ -59,6 +59,8 @@ router.get('/profile', getAddress);
 /// Address 
 
 router.get('/profile/address', addAddress);
+router.get('/profile/getUpdateAddress', getUpdateAddress);
+router.get('/profile/viewAllAddress',viewAllAddress);
 router.post('/post-address', postAddress);
 router.get('/profile/update', getProfile)
 router.post('/profile/update', updateUserProfile);
