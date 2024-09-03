@@ -7,148 +7,367 @@
     <title>Profile</title>
 </head>
 <style>
-    .card {
-        padding: 12p;
-        position: relative;
-        display: -webkit-box;
-        display: -ms-flexbox;
+    .nav-container {
         display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        word-wrap: break-word;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 1px solid #ebecf0;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        padding: 20px;
+        padding-left: 50px;
+        padding-right: 50px;
+        width: 100%;
+        border: none !important;
+        /* Adjust width according to your layout */
+    }
+
+    .nav-tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-right: 30px;
+        /* Adds extra space at the right end */
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scrolling for touch devices */
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+        display: none;
+        /* Hide scrollbar for Chrome, Safari, Opera */
+    }
+
+    .nav-tabs {
+        -ms-overflow-style: none;
+        /* Hide scrollbar for Internet Explorer 10+ */
+    }
+
+    .dummy-item {
+        flex: 0 0 30px;
+        /* Width of the extra space */
+        list-style: none;
+        /* Removes bullet point if applicable */
+    }
+
+    .scroll-btn {
+
+        /* Light background for visibility */
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none !important;
+    }
+
+    .scroll-btn.left {
+        left: 15px;
+    }
+
+    .scroll-btn.right {
+        right: 15px;
+    }
+
+
+    .profile .profile-card img {
+        max-width: 120px;
+    }
+
+    .profile .profile-card h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c384e;
+        margin: 10px 0 0 0;
+    }
+
+    .profile .profile-card h3 {
+        font-size: 18px;
+    }
+
+    .profile .profile-card .social-links a {
+        font-size: 20px;
+        display: inline-block;
+        color: rgba(1, 41, 112, 0.5);
+        line-height: 0;
+        margin-right: 10px;
+        transition: 0.3s;
+    }
+
+    .profile .profile-card .social-links a:hover {
+        color: #012970;
+    }
+
+    .profile .profile-overview .row {
+        margin-bottom: 20px;
+        font-size: 15px;
+    }
+
+    .profile .profile-overview .card-title {
+        color: #012970;
+    }
+
+    .profile .profile-overview .label {
+        font-weight: 600;
+        color: rgba(1, 41, 112, 0.6);
+    }
+
+    .profile .profile-edit label {
+        font-weight: 600;
+        color: rgba(1, 41, 112, 0.6);
+    }
+
+    .profile .profile-edit img {
+        max-width: 120px;
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 16px;
+        /* Adjust font size as needed */
+        font-weight: 500;
+        /* Medium weight for better clarity */
+        color: #333;
+        /* Set a solid color for clarity */
+        text-shadow: none !important;
+        /* Ensure no text shadow */
+        -webkit-font-smoothing: antialiased;
+        /* Enhance font rendering on webkit-based browsers */
+        -moz-osx-font-smoothing: grayscale;
+        /* Enhance font rendering on Firefox */
+    }
+
+
+    .nav.nav-tabs .nav-item.show .nav-link,
+    .nav.nav-tabs .nav-item .nav-link.active {
+        background: #333;
+        border-radius: 10px;
+
+    }
+
+    .nav-tabs {
+        border: none !important;
+        /* Remove any border on the nav-tabs container */
+    }
+
+
+
+    .nav.nav-tabs {
+        border-bottom-right-radius: 0rem !important;
+    }
+
+    .nav-tabs .nav-link.active {
+        border-bottom: none !important;
+        /* Remove the bottom border on the active tab */
+    }
+
+    .nav.nav-tabs .nav-item.show .nav-link,
+    .nav.nav-tabs .nav-item .nav-link.active {
+        color: #fff;
+    }
+
+    .card-body {
+        padding: 0px !important;
     }
 
     .form-control {
-        border-radius: 10px !important;
+        border-radius: 10px;
     }
-
-    .card-order {
-        border: none !important;
-    }
+    
 </style>
 
 <body>
 
-    <div class="mt-lg-5 pt-lg-5">
-        <main class="main">
 
-            <div class="page-content mt-5 pt-5">
-                <div class="dashboard">
-                    <div class="container-fluid">
-                        <div class="row justify-content-center">
-                            <aside class="col-md-4 col-lg-3">
-                                <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="tab-overView-link" data-toggle="tab"
-                                            href="#tab-overView" role="tab" aria-controls="tab-overView"
-                                            aria-selected="false">Account Overview</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
-                                            role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
-                                    </li>
-                                    {{!-- <li class="nav-item">
-                                        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
-                                            role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
-                                    </li> --}}
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
-                                            role="tab" aria-controls="tab-account" aria-selected="false">Account
-                                            Details</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Sign Out</a>
-                                    </li>
-                                </ul>
-                            </aside><!-- End .col-lg-3 -->
+    <div class="pt-lg-5"></div>
+    <div class="mt-5 pt-lg-5"></div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-8 col-sm-10">
+            <main id="main" class="main">
 
 
-                            <div class="col-md-8 col-lg-9">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active " id="tab-overView" role="tabpanel"
-                                        aria-labelledby="tab-overView-link">
-                                        <main class="col-md-9">
 
-                                            <article class="card mb-3">
-                                                <div class="card-body">
+                <section class="section profile">
+                    <div class="row">
 
-                                                    <figure class="icontext">
+                        <div class="nav-container mt-3">
+                            <!-- Left scroll button -->
+                            <button class="scroll-btn left d-lg-none" onclick="scrollLeft()">&#10094;</button>
 
-                                                        <div class="text">
-                                                            <i class="fa fa-user text-muted"></i> &nbsp; My
-                                                            Account
-                                                            <br>
-                                                            {{user.firstName}} {{user.lastName}} <br>
-                                                            {{user.email}} <br>{{user.phone}}<br>
-                                                            <a href="/profile/update">Edit</a>
-                                                        </div>
-                                                    </figure>
-                                                    <hr>
-                                                    <p>
-                                                        <i class="fa fa-map-marker text-muted"></i> &nbsp; My address:
-                                                        <br>
-                                                        {{#if userData.addresses.[0]}}
-                                                        {{#each userData.addresses}}
-                                                        {{this.city}}, {{this.street}}, Building {{this.building}},
-                                                        {{this.house}} &nbsp;
-                                                        <br>
-                                                        <a href="/profile/viewAllAddress" class="btn-link">View all
-                                                            Address</a>
-                                                        <br>
-                                                        {{/each}}
-                                                        {{else}}
-                                                    <h4>No address added</h4>
-                                                    <a href="/profile/address" class="btn-link"> Add address</a>
+                            <!-- Navigation tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#profile-overview">Overview</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a style="width: 150px;" class="nav-link" data-toggle="tab"
+                                        href="#profile-edit">Edit
+                                        Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#profile-settings">Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab"
+                                        href="#profile-address">Address</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a style="width: 170px;" class="nav-link" data-toggle="tab"
+                                        href="#profile-change-password">Change Password</a>
+                                </li>
+                            </ul>
+
+                            <button class="scroll-btn right d-lg-none" onclick="scrollRight()">&#10095;</button>
+
+                            <!-- Right scroll button -->
+
+                        </div>
+
+
+                        <div class="col-xl-12">
+
+                            <div class="card">
+                                <div class="card-body ">
+                                    <!-- Bordered Tabs -->
+
+
+                                    <div class="tab-content pt-2">
+
+                                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                                            <h5 class="card-title mb-3">Profile Details</h5>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label ">First Name</div>
+                                                <div class="col-lg-9 col-md-8">{{user.firstName}}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Last Name</div>
+                                                <div class="col-lg-9 col-md-8">{{user.lastName}}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Phone</div>
+                                                <div class="col-lg-9 col-md-8">{{user.phone}}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Email</div>
+                                                <div class="col-lg-9 col-md-8">{{user.email}}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Address</div>
+                                                <div class="col-lg-9 col-md-8">
+                                                    {{#if userData.addresses.[0]}}
+                                                    {{#each userData.addresses}}
+                                                    {{this.city}}, {{this.street}}, Building {{this.building}},
+                                                    {{this.house}} &nbsp;
+                                                    {{/each}}
+                                                    {{else}}
+                                                    <p>No address added</p>
                                                     {{/if}}
-
-                                                    </p>
-
-
-
-                                                    <article class="card-group">
-                                                        <figure class="card bg">
-                                                            <div class="p-3">
-                                                                <h5 class="card-title">{{totalOrders}}</h5>
-                                                                <span>Orders</span>
-                                                            </div>
-                                                        </figure>
-                                                        <figure class="card bg">
-                                                            <div class="p-3">
-                                                                <h5 class="card-title">5</h5>
-                                                                <span>Wishlists</span>
-                                                            </div>
-                                                        </figure>
-
-                                                    </article>
+                                                </div>
+                                            </div>
 
 
-                                                </div> <!-- card-body .// -->
-                                            </article> <!-- card.// -->
 
-                                            <article class="card  mb-3" >
+                                        </div>
+
+                                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                            <!-- Profile Edit Form -->
+
+
+                                            <form id="profileForm" method="post" action="/profile/update">
+                                                <label for="profileImage"
+                                                    class="col-md-4 col-lg-3 col-form-label">Profile
+                                                    Image</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <img src="">
+                                                    <div class="pt-2">
+                                                        <a href="#" class="btn btn-primary btn-sm"
+                                                            title="Upload new profile image"><i
+                                                                class="fa-regular fa-trash-can"></i></a>
+                                                        <a href="#" class="btn btn-danger btn-sm"
+                                                            title="Remove my profile image"><i
+                                                                class="fa-solid fa-upload"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mt-2">
+                                                    <div class="col form-group">
+                                                        <label>First name</label>
+                                                        <input type="text" class="form-control" name="firstName"
+                                                            id="firstName" value="{{user.firstName}}">
+                                                        <small class="text-danger" id="error-firstName"></small>
+                                                    </div> <!-- form-group end.// -->
+
+
+                                                    <div class="col form-group">
+                                                        <label>Last name</label>
+                                                        <input type="text" class="form-control" id="lastName"
+                                                            name="lastName" value="{{user.lastName}}">
+                                                        <small class="text-danger" id="error-lastName"></small>
+                                                    </div> <!-- form-group end.// -->
+                                                </div> <!-- form-row end.// -->
+
+
+
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Phone</label>
+                                                        <input type="text" class="form-control" name="phone" id="phone"
+                                                            value="{{user.phone}}">
+                                                        <small class="text-danger" id="error-phone"></small>
+                                                    </div> <!-- form-group end.// -->
+                                                    <div class="form-group col-md-6">
+                                                        <label>Email</label>
+                                                        <input type="email" disabled class="form-control" name="email"
+                                                            value="{{user.email}}">
+                                                        <small class="text-info">Currently not available to change
+                                                            Email</small>
+
+                                                    </div> <!-- form-group end.// -->
+
+                                                </div> <!-- form-row.// -->
+                                                <div class="form-group mt-3">
+                                                    <button type="submit" class="btn btn-primary btn-block">Update
+                                                    </button>
+                                                </div> <!-- form-group// -->
+
+                                            </form>
+                                            <div id="responseMessage"></div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade pt-3" id="profile-settings">
+
+                                            <!-- Settings Form -->
+                                            <article class="card  mb-3">
                                                 <div class="card-body">
-                                                    <h5 class="card-title mb-4">Recent orders </h5>
-                                                    {{#if orders}}
-                                                    {{#each orders}}
+                                                    
+                                                    
                                                     <article class="card mb-4" style="border: none !important;">
 
                                                         <header class="card-header p-3">
-                                                            <a href="#" class="float-right"> <i class="fa fa-print"></i>
-                                                                Invoice</a>
+                                                            {{!-- <a href="#" class="float-right"> <i class="fa fa-print"></i>
+                                                                Invoice</a> --}}
                                                             <strong class="d-inline-block mr-3">Order ID:
-                                                                {{this.orderId}}</strong>
-                                                            <span>{{this.orderDate}}</span>
+                                                                32432432432432432</strong>
+                                                            <span>25.4.2024</span>
                                                         </header>
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="col-md-8">
                                                                     <h6 class="text-muted">Delivery to</h6>
                                                                     <p>
+                                                                        syed thekkinkad palakkad, <br> 
+                                                                        pallanchathammur, mathur,kerala,333544,99933344
                                                                         {{this.addressId.name}}
                                                                         {{this.addressId.house}}
                                                                         {{this.addressId.city}}<br>
@@ -162,30 +381,30 @@
                                                                 <div class="col-md-4">
                                                                     <h6 class="text-muted">Payment</h6>
                                                                     Shipping fee: 0 <br>
-                                                                    <span class="b">Total: ${{this.totalAmount}} </span>
+                                                                    <span class="b">Total: 3000</span>
                                                                     </p>
                                                                 </div>
                                                             </div> <!-- row.// -->
                                                         </div> <!-- card-body .// -->
 
-                                                        {{#each this.products}}
+                                                        
 
 
                                                         <div class="container">
                                                             <div class="row pb-3">
-                                                                <div class="col-lg-2 col-3">
+                                                                <div class="col-lg-2  col-3">
                                                                     <img width="70px"
                                                                         src="/images/{{this.productId.mainImage}}"
                                                                         class="img-xs border">
                                                                 </div>
-                                                                <div class="col-lg-2 col-4">
+                                                                <div class="col-lg-2 col-8">
                                                                     <p class="title mb-0" style="font-size: 14px;">
-                                                                        {{this.productId.name}}</p>
+                                                                        Cloth dryer</p>
                                                                     <var
-                                                                        class="price text-muted">{{this.productId.price}}</var>
-                                                                    <var class="text-muted">({{this.quantity}})</var>
+                                                                        class="price text-muted">3000</var>
+                                                                    <var class="text-muted">(2)</var>
                                                                 </div>
-                                                                <div class="col-lg-2 col-5">
+                                                                <div class="col-lg-2 col-12">
                                                                     <a href="#" class="btn btn-outline-primary">Track
                                                                         order</a>
                                                                     <br>
@@ -204,266 +423,95 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {{/each}}
 
                                                         {{!-- ending here --}}
 
                                                     </article> <!-- card order-item .// -->
-                                                    {{/each}}
-                                                    {{/if}}
+                                                   
 
 
                                                     <a href="#" class="btn btn-outline-primary"> See all orders </a>
                                                 </div> <!-- card-body .// -->
                                             </article> <!-- card.// -->
+                                        </div>
 
-                                        </main> <!-- col.// -->
-                                    </div>
+                                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                                            
+                                        </div>
 
-                                    <div class="tab-pane fade " id="tab-orders" role="tabpanel"
-                                        aria-labelledby="tab-orders-link">
+                                        <div class="tab-pane fade pt-3" id="profile-change-password">
+                                            <!-- Change Password Form -->
+                                            <form>
 
-                                        {{#if orders}}
-                                        {{#each orders}}
-                                        <main class="col-md-9">
-
-                                            <article class="card mb-4" style="border: none !important;">
-
-                                                <header class=" card-header p-3">
-                                                    <a href="#" class="float-right"> <i class="fa fa-print"></i>
-                                                        Invoice</a>
-                                                    <strong class="d-inline-block mr-3">Order ID:
-                                                        {{this.orderId}}</strong>
-                                                    <span>{{this.orderDate}}</span>
-                                                </header>
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <h6 class="text-muted">Delivery to</h6>
-                                                            <p>
-                                                                {{this.addressId.name}}
-                                                                {{this.addressId.house}}
-                                                                {{this.addressId.city}}<br>
-                                                                {{this.addressId.street}}
-                                                                {{this.addressId.state}}<br>
-                                                                {{this.addressId.zipCode}}
-                                                                {{this.addressId.phone}}
-                                                            </p>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h6 class="text-muted">Payment</h6>
-                                                            Shipping fee: 0 <br>
-                                                            <span class="b">Total: ${{this.totalAmount}} </span>
-                                                            </p>
-                                                        </div>
-                                                    </div> <!-- row.// -->
-                                                </div> <!-- card-body .// -->
-
-                                                {{#each this.products}}
-
-
-                                                <div class="container">
-                                                    <div class="row pb-3">
-                                                        <div class="col-lg-2 col-3">
-                                                            <img width="70px" src="/images/{{this.productId.mainImage}}"
-                                                                class="img-xs border">
-                                                        </div>
-                                                        <div class="col-lg-2 col-4">
-                                                            <p class="title mb-0" style="font-size: 14px;">
-                                                                {{this.productId.name}}</p>
-                                                            <var class="price text-muted">{{this.productId.price}}</var>
-                                                            <var class="text-muted">({{this.quantity}})</var>
-                                                        </div>
-                                                        <div class="col-lg-2 col-5">
-                                                            <a href="#" class="btn btn-outline-primary">Track
-                                                                order</a>
-                                                            <br>
-                                                            <div class="dropdown d-inline-block mt-1">
-                                                                <a href="#" data-toggle="dropdown"
-                                                                    class="dropdown-toggle btn btn-outline-secondary">More</a>
-                                                                <div class="dropdown-menu dropdown-menu-right">
-                                                                    <a href="#" class="dropdown-item">Return</a>
-                                                                    <a href="#" class="dropdown-item">Cancel
-                                                                        order</a>
-                                                                </div>
-                                                            </div> <!-- dropdown.// -->
-                                                        </div>
-                                                        <div class="col-lg-2 col-5">
-
-                                                        </div>
+                                                <div class="row mb-3">
+                                                    <label for="currentPassword"
+                                                        class="col-md-4 col-lg-3 col-form-label">Current
+                                                        Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="password" type="password" class="form-control"
+                                                            id="currentPassword">
                                                     </div>
                                                 </div>
-                                                {{/each}}
 
+                                                <div class="row mb-3">
+                                                    <label for="newPassword"
+                                                        class="col-md-4 col-lg-3 col-form-label">New
+                                                        Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="newpassword" type="password" class="form-control"
+                                                            id="newPassword">
+                                                    </div>
+                                                </div>
 
+                                                <div class="row mb-3">
+                                                    <label for="renewPassword"
+                                                        class="col-md-4 col-lg-3 col-form-label">Re-enter
+                                                        New Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="renewpassword" type="password" class="form-control"
+                                                            id="renewPassword">
+                                                    </div>
+                                                </div>
 
-                                                {{!-- ending here --}}
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">Change
+                                                        Password</button>
+                                                </div>
+                                            </form><!-- End Change Password Form -->
 
-                                            </article> <!-- card order-item .// -->
-
-
-                                        </main> <!-- col.// -->
-                                        {{/each}}
-                                        {{else}}
-                                        <div class="row justify-content-center mt-lg-5">
-                                            <div class="col-6">
-                                                <p class="">No orders found.</p>
-                                            </div>
-                                            <div class="col-7 ml-lg-5">
-                                                <a href="/" class="btn btn-primary">Continue Shopping</a>
-                                            </div>
                                         </div>
-                                        {{/if}}
-                                    </div><!-- .End .tab-pane -->
 
+                                    </div><!-- End Bordered Tabs -->
 
-                                    <div class="tab-pane fade" id="tab-downloads" role="tabpanel"
-                                        aria-labelledby="tab-downloads-link">
-                                        <h1>Your Orders</h1>
-                                        {{#each orders}}
-                                        <div class="order">
-                                            <h2>Order placed on {{createdAt}}</h2>
-                                            <ul>
-                                                {{#each items}}
-                                                <li>
-                                                    Product: {{this.product.name}}, Quantity: {{this.quantity}},
-                                                    Price:
-                                                    ${{this.price}}
-                                                </li>
-                                                {{/each}}
-                                            </ul>
-                                            <p>Total Amount: ${{totalAmount}}</p>
-                                        </div>
-                                        {{/each}}
-                                    </div><!-- .End .tab-pane -->
-
-                                    {{!-- <div class="tab-pane fade" id="tab-address" role="tabpanel"
-                                        aria-labelledby="tab-address-link">
-                                        <p>The following addresses will be used on the checkout page by default.</p>
-
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="card card-dashboard">
-                                                    <div class="card-body">
-                                                        <h3 class="card-title">Billing Address</h3>
-                                                        <!-- End .card-title -->
-
-                                                        <p>User Name:<br>
-                                                            User Company<br>
-                                                            John str<br>
-                                                            New York, NY 10001<br>
-                                                            1-234-987-6543<br>
-                                                            yourmail@mail.com<br>
-                                                            <a href="#">Edit <i class="icon-edit"></i></a>
-                                                        </p>
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .card-dashboard -->
-                                            </div><!-- End .col-lg-6 -->
-
-                                            <div class="col-lg-6">
-                                                <div class="card card-dashboard">
-                                                    <div class="card-body">
-                                                        <h3 class="card-title">Shipping Address</h3>
-                                                        <!-- End .card-title -->
-
-
-                                                        <div class="row">
-                                                            {{#each userData.addresses}}
-                                                            <div class="col-lg-6">
-                                                                <div class="card card-dashboard">
-                                                                    <div class="card-body">
-                                                                        <h3 class="card-title">Address {{@index}} :
-                                                                        </h3>
-                                                                        <!-- End .card-title -->
-
-                                                                        <p>
-
-                                                                            Name: {{this.name}}<br>
-                                                                            House: {{this.house}}<br>
-                                                                            Street: {{this.street}}<br>
-                                                                            Place: {{this.city}}, {{this.state}}<br>
-                                                                            ZipCode: {{this.zipCode}}<br>
-                                                                            Phone: {{this.phone}}<br>
-                                                                        </p>
-
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <button class="btn"
-                                                                                onclick="editAddress('{{{json this}}}', '{{@index}}')">
-                                                                                <i class="icon-edit"
-                                                                                    style="font-size: 20px;"></i>
-                                                                            </button>
-
-                                                                            <button class="btn"
-                                                                                onclick="removeAddress('{{@index}}')">
-                                                                                <i class="icon-close"
-                                                                                    style="font-size: 20px;"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div><!-- End .card-body -->
-                                                                </div><!-- End .card-dashboard -->
-                                                            </div><!-- End .col-lg-6 -->
-                                                            {{/each}}
-
-                                                            <hr>
-                                                        </div>
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .card-dashboard -->
-                                            </div><!-- End .col-lg-6 -->
-                                        </div><!-- End .row -->
-                                    </div><!-- .End .tab-pane --> --}}
-
-                                    <div class="tab-pane fade" id="tab-account" role="tabpanel"
-                                        aria-labelledby="tab-account-link">
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <label>First Name</label>
-                                                    <input disabled name="firstName" type="text"
-                                                        value="{{user.firstName}}" class="form-control" required>
-                                                </div><!-- End .col-sm-6 -->
-
-                                                <div class="col-sm-6">
-                                                    <label>Last Name</label>
-                                                    <input disabled name="lastName" type="text" class="form-control"
-                                                        value="{{user.lastName}}" required>
-                                                </div><!-- End .col-sm-6 -->
-                                            </div><!-- End .row -->
-
-                                            {{!-- <label>Display Name *</label>
-                                            <input type="text" class="form-control" required>
-                                            <small class="form-text">This will be how your name will be displayed in
-                                                the
-                                                account section and in reviews</small> --}}
-
-                                            <label>Email address</label>
-                                            <input disabled name="email" type="email" class="form-control"
-                                                value="{{user.email}}" required>
-
-                                            <label>Phone</label>
-                                            <input disabled name="email" type="email" class="form-control"
-                                                value="{{user.phone}}" required>
-
-
-                                            <a href="profile/update" class="btn btn-outline-primary-2">
-                                                <span>Update Profile</span>
-                                                <i class="icon-long-arrow-right"></i>
-                                            </a>
-                                        </form>
-                                    </div><!-- .End .tab-pane -->
                                 </div>
-                            </div><!-- End .col-lg-9 -->
-                        </div><!-- End .row -->
-                    </div><!-- End .container -->
-                </div><!-- End .dashboard -->
-            </div><!-- End .page-content -->
-        </main><!-- End .main -->
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+            </main><!-- End #main -->
+        </div>
     </div>
+
     <script>
-        Handlebars.registerHelper('json', function (context) {
-            return JSON.stringify(context);
-        });
+        function scrollLeft() {
+            const navTabs = document.querySelector('.nav-tabs');
+            navTabs.scrollBy({
+                left: -200, // Adjust the scroll amount to your preference
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollRight() {
+            const navTabs = document.querySelector('.nav-tabs');
+            navTabs.scrollBy({
+                left: 200, // Adjust the scroll amount to your preference
+                behavior: 'smooth'
+            });
+        }
     </script>
+
 </body>
 
 </html>
