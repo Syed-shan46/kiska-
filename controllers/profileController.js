@@ -203,7 +203,7 @@ const getOrders = async (req, res) => {
             return res.status(404).send('Order not found')
         }
 
-        res.render('user/order-details', { order });
+        res.render('user/order-detail', { order });
     } catch (error) {
         res.status(500).send('Server error');
     }
