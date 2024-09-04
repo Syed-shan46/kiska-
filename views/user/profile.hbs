@@ -177,6 +177,11 @@
     .form-control {
         border-radius: 10px;
     }
+
+    .order-card {
+        border: solid 1px grey;
+        border-radius: 10px;
+    }
 </style>
 
 <body>
@@ -234,192 +239,195 @@
                                     <div class="tab-content pt-2">
 
 
-                                   
 
-                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
 
-                                    <h5 class="card-title mb-3">Profile Details</h5>
+                                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
 
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">First Name</div>
-                                        <div class="col-lg-9 col-md-8">{{user.firstName}}</div>
-                                    </div>
+                                            <h5 class="card-title mb-3">Profile Details</h5>
 
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Last Name</div>
-                                        <div class="col-lg-9 col-md-8">{{user.lastName}}</div>
-                                    </div>
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label ">First Name</div>
+                                                <div class="col-lg-9 col-md-8">{{user.firstName}}</div>
+                                            </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Phone</div>
-                                        <div class="col-lg-9 col-md-8">{{user.phone}}</div>
-                                    </div>
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Last Name</div>
+                                                <div class="col-lg-9 col-md-8">{{user.lastName}}</div>
+                                            </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8">{{user.email}}</div>
-                                    </div>
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Phone</div>
+                                                <div class="col-lg-9 col-md-8">{{user.phone}}</div>
+                                            </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Address</div>
-                                        <div class="col-lg-9 col-md-8">
-                                            {{#if userData.addresses.[0]}}
-                                            {{#each userData.addresses}}
-                                            {{this.city}}, {{this.street}}, Building {{this.building}},
-                                            {{this.house}} &nbsp;
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Email</div>
+                                                <div class="col-lg-9 col-md-8">{{user.email}}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Address</div>
+                                                <div class="col-lg-9 col-md-8">
+                                                    {{#if userData.addresses.[0]}}
+                                                    {{#each userData.addresses}}
+                                                    {{this.city}}, {{this.street}}, Building {{this.building}},
+                                                    {{this.house}} &nbsp;
+                                                    {{/each}}
+                                                    {{else}}
+                                                    <p>No address added</p>
+                                                    {{/if}}
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                            <!-- Profile Edit Form -->
+
+
+                                            <form id="profileForm" method="post" action="/profile/update">
+                                                <label for="profileImage"
+                                                    class="col-md-4 col-lg-3 col-form-label">Profile
+                                                    Image</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <img src="">
+                                                    <div class="pt-2">
+                                                        <a href="#" class="btn btn-primary btn-sm"
+                                                            title="Upload new profile image"><i
+                                                                class="fa-regular fa-trash-can"></i></a>
+                                                        <a href="#" class="btn btn-danger btn-sm"
+                                                            title="Remove my profile image"><i
+                                                                class="fa-solid fa-upload"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mt-2">
+                                                    <div class="col form-group">
+                                                        <label>First name</label>
+                                                        <input type="text" class="form-control" name="firstName"
+                                                            id="firstName" value="{{user.firstName}}">
+                                                        <small class="text-danger" id="error-firstName"></small>
+                                                    </div> <!-- form-group end.// -->
+
+
+                                                    <div class="col form-group">
+                                                        <label>Last name</label>
+                                                        <input type="text" class="form-control" id="lastName"
+                                                            name="lastName" value="{{user.lastName}}">
+                                                        <small class="text-danger" id="error-lastName"></small>
+                                                    </div> <!-- form-group end.// -->
+                                                </div> <!-- form-row end.// -->
+
+
+
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Phone</label>
+                                                        <input type="text" class="form-control" name="phone" id="phone"
+                                                            value="{{user.phone}}">
+                                                        <small class="text-danger" id="error-phone"></small>
+                                                    </div> <!-- form-group end.// -->
+                                                    <div class="form-group col-md-6">
+                                                        <label>Email</label>
+                                                        <input type="email" disabled class="form-control" name="email"
+                                                            value="{{user.email}}">
+                                                        <small class="text-info">Currently not available to change
+                                                            Email</small>
+                                                    </div> <!-- form-group end.// -->
+
+                                                </div> <!-- form-row.// -->
+                                                <div class="form-group mt-3">
+                                                    <button type="submit" class="btn btn-primary btn-block">Update
+                                                    </button>
+                                                </div> <!-- form-group// -->
+
+                                            </form>
+                                            <div id="responseMessage"></div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade pt-3" id="profile-settings">
+                                            {{#if orders}}
+                                            {{#each orders}}
+                                            {{#each this.products}}
+                                            <div class="container">
+                                                <div class="order-card">
+                                                    <div class="row align-items-center justify-content-center">
+                                                        <div class="col-lg-3 col-3">
+                                                            <img src="/images/{{this.productId.mainImage}}" alt="">
+                                                        </div>
+                                                        <div class="col-lg-5 col-5">
+                                                            <p>Ordered on Aug 10</p>
+                                                            <p>{{this.productId.name}}</p>
+                                                        </div>
+                                                        <div class="col-1 col-lg-4">
+                                                            <i class="fa-solid fa-chevron-right"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             {{/each}}
-                                            {{else}}
-                                            <p>No address added</p>
+                                            {{/each}}
                                             {{/if}}
+
+
                                         </div>
-                                    </div>
 
+                                        <div class="tab-pane fade pt-3" id="profile-change-password">
+                                            <!-- Change Password Form -->
+                                            <form>
 
-
-                                </div>
-
-                                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                                    <!-- Profile Edit Form -->
-
-
-                                    <form id="profileForm" method="post" action="/profile/update">
-                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile
-                                            Image</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <img src="">
-                                            <div class="pt-2">
-                                                <a href="#" class="btn btn-primary btn-sm"
-                                                    title="Upload new profile image"><i
-                                                        class="fa-regular fa-trash-can"></i></a>
-                                                <a href="#" class="btn btn-danger btn-sm"
-                                                    title="Remove my profile image"><i
-                                                        class="fa-solid fa-upload"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="form-row mt-2">
-                                            <div class="col form-group">
-                                                <label>First name</label>
-                                                <input type="text" class="form-control" name="firstName" id="firstName"
-                                                    value="{{user.firstName}}">
-                                                <small class="text-danger" id="error-firstName"></small>
-                                            </div> <!-- form-group end.// -->
-
-
-                                            <div class="col form-group">
-                                                <label>Last name</label>
-                                                <input type="text" class="form-control" id="lastName" name="lastName"
-                                                    value="{{user.lastName}}">
-                                                <small class="text-danger" id="error-lastName"></small>
-                                            </div> <!-- form-group end.// -->
-                                        </div> <!-- form-row end.// -->
-
-
-
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label>Phone</label>
-                                                <input type="text" class="form-control" name="phone" id="phone"
-                                                    value="{{user.phone}}">
-                                                <small class="text-danger" id="error-phone"></small>
-                                            </div> <!-- form-group end.// -->
-                                            <div class="form-group col-md-6">
-                                                <label>Email</label>
-                                                <input type="email" disabled class="form-control" name="email"
-                                                    value="{{user.email}}">
-                                                <small class="text-info">Currently not available to change
-                                                    Email</small>
-                                            </div> <!-- form-group end.// -->
-
-                                        </div> <!-- form-row.// -->
-                                        <div class="form-group mt-3">
-                                            <button type="submit" class="btn btn-primary btn-block">Update
-                                            </button>
-                                        </div> <!-- form-group// -->
-
-                                    </form>
-                                    <div id="responseMessage"></div>
-
-                                </div>
-
-                                <div class="tab-pane fade pt-3" id="profile-settings">
-                                    {{#if orders}}
-                                    {{#each orders}}
-                                    {{#each this.products}}
-                                    <div class="container">
-                                        <div class="order-card">
-                                            <div class="row align-items-center justify-content-center">
-                                                <div class="col-lg-3 col-3">
-                                                    <img src="/images/{{this.productId.mainImage}}" alt="">
+                                                <div class="row mb-3">
+                                                    <label for="currentPassword"
+                                                        class="col-md-4 col-lg-3 col-form-label">Current
+                                                        Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="password" type="password" class="form-control"
+                                                            id="currentPassword">
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-5 col-5">
-                                                    <p>Ordered on Aug 10</p>
-                                                    <p>{{this.productId.name}}</p>
+
+                                                <div class="row mb-3">
+                                                    <label for="newPassword"
+                                                        class="col-md-4 col-lg-3 col-form-label">New
+                                                        Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="newpassword" type="password" class="form-control"
+                                                            id="newPassword">
+                                                    </div>
                                                 </div>
-                                                <div class="col-1 col-lg-4">
-                                                    <i class="fa-solid fa-chevron-right"></i>
+
+                                                <div class="row mb-3">
+                                                    <label for="renewPassword"
+                                                        class="col-md-4 col-lg-3 col-form-label">Re-enter
+                                                        New Password</label>
+                                                    <div class="col-md-8 col-lg-9">
+                                                        <input name="renewpassword" type="password" class="form-control"
+                                                            id="renewPassword">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{/each}}
-                                    {{/each}}
-                                    {{/if}}
 
-                                    
-                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">Change
+                                                        Password</button>
+                                                </div>
+                                            </form><!-- End Change Password Form -->
 
-                                <div class="tab-pane fade pt-3" id="profile-change-password">
-                                    <!-- Change Password Form -->
-                                    <form>
-
-                                        <div class="row mb-3">
-                                            <label for="currentPassword"
-                                                class="col-md-4 col-lg-3 col-form-label">Current
-                                                Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control"
-                                                    id="currentPassword">
-                                            </div>
                                         </div>
 
-                                        <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
-                                                Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control"
-                                                    id="newPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter
-                                                New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control"
-                                                    id="renewPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Change
-                                                Password</button>
-                                        </div>
-                                    </form><!-- End Change Password Form -->
+                                    </div><!-- End Bordered Tabs -->
 
                                 </div>
-
-                            </div><!-- End Bordered Tabs -->
+                            </div>
 
                         </div>
                     </div>
+                </section>
 
+            </main><!-- End #main -->
         </div>
-    </div>
-    </section>
-
-    </main><!-- End #main -->
-    </div>
     </div>
 
     <script>
