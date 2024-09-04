@@ -50,7 +50,6 @@ const getAddress = async (req, res) => {
         // Gets the total number of orders
         const totalOrders = await Order.countDocuments({ userId: userId });
 
-
         if (req.session && req.session.userId) {
             const userData = await User.findById(req.session.userId).populate('addresses');
             const orders = await Order.find({ userId: userId, paymentStatus: 'Paid' })
@@ -136,7 +135,7 @@ const viewAllAddress = async (req, res) => {
         const userId = req.session.userId;
         if (req.session && req.session.userId) {
             const userAddress = await User.findById(req.session.userId).populate('addresses');
-            
+
             res.render('user/view-all-address', { userAddress }); // 'updateAddressForm' is your Handlebars template file
         } else {
             res.status(404).send('User not found');
@@ -198,8 +197,11 @@ const getOrders = async (req, res) => {
     const orderId = req.params.id;
 
     try {
-        const orders = await Order.findById(orderId).populate('products.productId');
-        res.render('user/order-detail', { orders });
+        const order = await Order.findById(orderId)
+            .populate('products.productId')
+            .populate('addressId')
+            .populate('userId');
+        res.render('user/order-detail', { order });
     } catch (error) {
         res.status(500).send('Server error');
     }
