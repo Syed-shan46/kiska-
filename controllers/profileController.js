@@ -199,9 +199,7 @@ const getOrders = async (req, res) => {
     try {
         const order = await Order.findById(orderId).populate('products.productId');
 
-        if (!order) {
-            return res.status(404).send('Order not found')
-        }
+        
 
         res.render('user/order-detail', { order });
     } catch (error) {
