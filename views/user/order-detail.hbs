@@ -18,14 +18,13 @@
     <div class="mt-5 pt-5"></div>
     <div class="row justify-content-center">
 
-        {{#if orders }}
-        {{#each orders }}
+        
         <div class="col-lg-9">
             <article class="card mb-4">
                 <div class="container">
                     <header class="card-header mt-1">
                         <a href="#" class="float-right"> <i class="fa fa-print"></i> Print</a>
-                        <strong class="d-inline-block mr-3">Order ID: {{this.orderId}}</strong>
+                        <strong class="d-inline-block mr-3">Order ID: {{order.orderId}}</strong>
                         <br>
                         <span>Order Date: 16 December 2018</span>
                     </header>
@@ -35,24 +34,24 @@
                     <div class="row mt-1">
                         <div class="col-md-8">
                             <h6 class="text-muted">Delivery to</h6>
-                            <p>{{this.addressId.name}} <br>
-                                Phone +91 {{this.addressId.phone}} Email:{{this.userId.email}} <br>
-                                Location:{{this.addressId.house}}, {{this.addressId.street}}, {{this.addressId.city}},
+                            <p>{{order.addressId.name}} <br>
+                                Phone +91 {{order.addressId.phone}} Email:{{order.userId.email}} <br>
+                                Location:{{order.addressId.house}}, {{order.addressId.street}}, {{order.addressId.city}},
                                 <br>
-                                P.O. {{this.addressId.zipCode}}
+                                P.O. {{order.addressId.zipCode}}
                             </p>
                         </div>
                         <div class="col-md-4 mt-2">
                             <h6 class="text-muted">Payment</h6>
 
-                            <p>Subtotal: {{this.TotalAmount}} <br>
+                            <p>Subtotal: {{order.TotalAmount}} <br>
                                 Shipping fee: Free <br>
                                 <span class="b">Total: $456 </span>
                             </p>
                         </div>
                     </div>
                     <div class="mt-2"></div> <!-- row.// -->
-                    {{#each this.products }}
+                    {{#each order.products }}
                     <div class="row  align-items-center">
                         <div class="col-9 col-lg-4">
                             <p style="font-size: 16px;color: black;font-weight: 500;">{{this.productId.name}}</p>
@@ -70,8 +69,7 @@
 
             </article> <!-- card order-item .// -->
         </div>
-        {{/each}}
-        {{/if}}
+       
 
 
     </div>
