@@ -65,7 +65,7 @@ router.get('/profile/viewAllAddress', viewAllAddress);
 router.post('/post-address', postAddress);
 router.get('/profile/update', getProfile)
 router.post('/profile/update', updateUserProfile);
-router.get('/profile/orders/', getOrders);
+router.get('/profile/orders/:id', getOrders);
 module.exports = router;
 
 /// Store

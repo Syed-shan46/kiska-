@@ -136,6 +136,7 @@ const viewAllAddress = async (req, res) => {
         const userId = req.session.userId;
         if (req.session && req.session.userId) {
             const userAddress = await User.findById(req.session.userId).populate('addresses');
+
             res.render('user/view-all-address', { userAddress }); // 'updateAddressForm' is your Handlebars template file
         } else {
             res.status(404).send('User not found');
@@ -195,13 +196,14 @@ const postUpdateAddress = async (req, res) => {
 
 const getOrders = async (req, res) => {
     const orderId = req.params.id;
-
+    const userId = req.session.userId;
     try {
-        const order = await Order.findById(orderId).populate('products.productId');
-
-        
-
-        res.render('user/order-detail', { order });
+        const orders = await Order.find({ userId: userId, paymentStatus: 'Paid' })
+            .populate('products.productId')
+            .sort({ orderDate: -1 })
+            .populate('addressId')
+            .exec();
+        res.render('user/order-detail', { orders });
     } catch (error) {
         res.status(500).send('Server error');
     }
