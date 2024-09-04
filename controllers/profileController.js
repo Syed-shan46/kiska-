@@ -50,7 +50,7 @@ const getAddress = async (req, res) => {
         // Gets the total number of orders
         const totalOrders = await Order.countDocuments({ userId: userId });
 
-    
+
         if (req.session && req.session.userId) {
             const userData = await User.findById(req.session.userId).populate('addresses');
             const orders = await Order.find({ userId: userId, paymentStatus: 'Paid' })
@@ -193,6 +193,22 @@ const postUpdateAddress = async (req, res) => {
     }
 }
 
+const getOrders = async (req, res) => {
+    const orderId = req.params.id;
+
+    try {
+        const order = await Order.findById(orderId).populate('productId');
+
+        if (!order) {
+            return res.status(404).send('Order not found')
+        }
+
+        res.render('user/order-details', { order });
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+}
+
 
 module.exports = {
     postAddress,
@@ -202,4 +218,5 @@ module.exports = {
     getUpdateAddress,
     postUpdateAddress,
     viewAllAddress,
+    getOrders,
 };

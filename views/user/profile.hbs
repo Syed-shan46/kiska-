@@ -351,7 +351,7 @@
                                             {{#if orders}}
                                             {{#each orders}}
                                             {{#each this.products}}
-                                            <div class="container">
+                                            <a href="/profile/orders/{{this.productId._id}}" class="container">
                                                 <div class="order-card">
                                                     <div class="row align-items-center justify-content-center">
                                                         <div class="col-lg-3 col-3">
@@ -366,7 +366,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                             <div class="mt-2"></div>
                                             {{/each}}
                                             {{/each}}
