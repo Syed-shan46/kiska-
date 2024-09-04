@@ -11,6 +11,32 @@
         color: red;
         /* Example active state styling */
     }
+
+    .mobile-menu-container .tab-pane {
+        padding: 10px;
+    }
+
+    .mobile-menu li.open>a,
+    .mobile-menu li.active>a {
+        color: #39f;
+        border-radius: 10px;
+        background: white !important;
+    }
+
+    .mobile-menu li a {
+        font-size: 13px;
+
+    }
+
+    .nav-link {
+        text-transform: none !important;
+    }
+
+    .mobile-menu-container {
+        max-width: 250px !important;
+    }
+
+   
 </style>
 
 <body>
@@ -36,13 +62,14 @@
                     <nav class="mobile-nav">
                         <ul class="mobile-menu">
                             <li class="nav-item">
-                                <a href="/" class="nav-link">Home</a>
+
+                                <a href="/" class="nav-link"><i class="bi bi-house"></i> Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="/store" class="nav-link">Store</a>
+                                <a href="/store" class="nav-link"><i class="bi bi-shop-window"></i> Store</a>
                             </li>
                             <li class="nav-item">
-                                <a href="/profile" class="nav-link">Orders</a>
+                                <a href="/profile" class="nav-link"><i class="bi bi-truck"></i> Orders</a>
                             </li>
 
                         </ul>
