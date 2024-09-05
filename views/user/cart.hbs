@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .card {}
+        .card {
+            background: #3dc1d808 !important;
+            border-radius: 10px;
+        }
+
+        .itemside {
+            border-radius: 10px !important;
+        }
 
         .icon-cart {
 
@@ -14,8 +21,7 @@
             height: 30px;
             display: flex;
             justify-content: center;
-            border: solid 1px #333;
-            border-radius: 5px;
+
 
         }
 
@@ -24,7 +30,8 @@
             height: 30px;
             display: flex;
             justify-content: center;
-           border: none;
+            border: solid 1px grey;
+            border-radius: 5px;
         }
 
         .qty-no {
@@ -50,6 +57,10 @@
 
         .fa-plus {
             border-color: black !important;
+        }
+
+        .summary {
+            background: #3dc1d808 !important;
         }
     </style>
 </head>
@@ -82,16 +93,19 @@
                                         <div class="col-3">
                                             <a href="/product/{{this.product._id}}">
                                                 <div class="itemside">
-                                                    <div class=""><img src="/images/{{this.product.mainImage}}"
-                                                            width="100px" height="100px" class="border img-sm">
+                                                    <div class="">
+                                                        <img src="/images/{{this.product.mainImage}}" width="100px"
+                                                            height="100px" class="border img-sm"
+                                                            style="border-radius: 10px;">
                                                     </div>
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="col">
+                                        <div class=" col">
                                             <span class="text-muted">{{this.product.category}}</span><br>
                                             <a href="#" class="title">{{this.product.name}} </a><br>
-                                            <span class="text-muted">For each: ₹{{this.product.price}}</span>
+                                            <span class="text-muted">For each:
+                                                ₹{{this.product.price}}</span>
                                         </div>
                                     </div>
                                 </div> <!-- col.// -->
@@ -161,7 +175,7 @@
                                         <td>Shipping:</td>
                                         <td>Free</td>
                                     </tr>
-                                    
+
 
                                     <tr class="summary-total">
                                         <td>Total:</td>
