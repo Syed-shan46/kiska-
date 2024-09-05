@@ -134,7 +134,7 @@ checkStatus = async (req, res) => {
                         await sendOrderNotificationToAdmin(updatedOrder);
                         console.log('Order notification email sent to admin successfully.');
 
-                        res.redirect('/success');
+                        res.redirect(`/success/${updatedOrder._id}`);
                     } else {
                         console.error('Order not found with the provided merchantTransactionId.');
                     }
@@ -172,7 +172,7 @@ const getOrderSuccess = async (req, res) => {
         // Render the success page and pass the order details (totalAmount, products, etc.)
         res.render('user/success', {
             order,                 // Pass the entire order object
-            totalAmount: order.TotalAmount, // Total amount of the order
+            totalAmount: order.totalAmount, // Total amount of the order
             products: order.products         // Product details
         });
     } catch (error) {
