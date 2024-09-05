@@ -170,11 +170,7 @@ const getOrderSuccess = async (req, res) => {
         }
 
         // Render the success page and pass the order details (totalAmount, products, etc.)
-        res.render('user/success', {
-            order,                 // Pass the entire order object
-            totalAmount: order.totalAmount, // Total amount of the order
-            products: order.products         // Product details
-        });
+        res.render('user/success', { order });
     } catch (error) {
         res.status(500).send('Server error');
     }

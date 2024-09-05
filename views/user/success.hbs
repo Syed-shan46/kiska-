@@ -64,22 +64,22 @@
                 </div>
             </div>
         </div>
+        {{#each order.products}}
         <div class="row">
             <div class="col">
                 <div class="order-card">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-lg-2 col-3">
-                            <img src="/images/1722321866081-jordan-true-flight-basketball-shoes.jpg" alt="">
+                            <img src="/images/{{this.productId.mainImage}}" alt="">
                         </div>
                         <div class="col-lg-7 col-6">
 
-                            <p style="font-size: 15px;color: black;font-weight: 500;">Hira electric cloth dryer</p>
+                            <p style="font-size: 15px;color: black;font-weight: 500;">{{this.productId.name}}</p>
                         </div>
 
                         <div class="col-2">
-                            <p style="font-size: 17px;color: black;font-weight: 500;">₹2999</p>
+                            <p style="font-size: 17px;color: black;font-weight: 500;">{{this.productId.price}}</p>
                         </div>
-
 
                     </div>
 
@@ -88,10 +88,11 @@
             </div>
 
         </div>
+        {{/each}}
 
         <div class="row mt-1 ml-3">
             <div class="col ">
-                <p class="" style="font-size: 17px;font-weight: 500;">Total: <b> ₹2999</b></p>
+                <p class="" style="font-size: 17px;font-weight: 500;">Total: <b> ₹{{order.totalAmount}}</b></p>
 
             </div>
         </div>
