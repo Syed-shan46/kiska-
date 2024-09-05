@@ -7,17 +7,9 @@
     <title>Success</title>
 </head>
 <style>
-    .success-container {
-        height: 80vh;
-        /* Full viewport height */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
     .success {
-        
-        color: #28a745;
+
+        color: #007bff;
         font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
         font-weight: 900;
         font-size: 40px;
@@ -27,12 +19,11 @@
     .pr {
         color: #404F5E;
         font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-        font-size: 20px;
         margin: 0;
     }
 
     .checkmark {
-        color: #28a745;
+        color: #007bff;
         font-size: 100px;
         line-height: 200px;
         margin-left: -15px;
@@ -41,17 +32,24 @@
     .card {
         margin-top: 40px;
         text-align: center;
-        background: white;
         padding: 60px;
         border-radius: 4px;
-        box-shadow: 0 2px 3px #C8D0D8;
+
         display: inline-block;
         margin: 0 auto;
+    }
+
+    .card:last-child {
+        border-bottom: none !important;
+    }
+
+    .order-card {
+        border-bottom: solid 1px rgba(128, 128, 128, 0.269);
     }
 </style>
 
 <body>
-    <div class="container success-container mt-5 pt-5">
+    <div class="container success-container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card">
@@ -60,10 +58,47 @@
                     </div>
                     <h1 class="success">Success</h1>
                     <p class="pr">We received your purchase request: we'll be in touch shortly!</p>
-                   <a href="/profile"><div class="btn btn-success mt-1">Go to Orders</div></a> 
-                   <a href="/"><div class="btn btn-outline-success mt-1">Continue Shopping</div></a> 
+
+
+
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="order-card">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-2 col-3">
+                            <img src="/images/1722321866081-jordan-true-flight-basketball-shoes.jpg" alt="">
+                        </div>
+                        <div class="col-lg-7 col-6">
+
+                            <p style="font-size: 15px;color: black;font-weight: 500;">Hira electric cloth dryer</p>
+                        </div>
+
+                        <div class="col-2">
+                            <p style="font-size: 17px;color: black;font-weight: 500;">₹2999</p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row mt-1 ml-3">
+            <div class="col ">
+                <p class="" style="font-size: 17px;font-weight: 500;">Total: <b> ₹2999</b></p>
+
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center ">
+            <a href="" class="btn btn-outline-primary mt-3">Continue Shopping</a>
         </div>
     </div>
 </body>

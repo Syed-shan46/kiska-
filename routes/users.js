@@ -11,7 +11,7 @@ const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage, PendingOrder } = require('../controllers/checkoutController');
 const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
-const { payController, checkStatus } = require('../controllers/phonePeController');
+const { payController, checkStatus, getOrderSuccess } = require('../controllers/phonePeController');
 
 
 /* GET users listing. */
@@ -49,9 +49,7 @@ router.get('/cart/checkout/method', (req, res) => {
 
 
 /// Success route
-router.get('/success', (req, res) => {
-    res.render('user/success');
-})
+router.get('/success', getOrderSuccess);
 
 
 /// Profile

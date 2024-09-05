@@ -155,6 +155,32 @@ checkStatus = async (req, res) => {
     }
 }
 
+const getOrderSuccess = async (req, res) => {
+    const orderId = req.params.id;
+
+    try {
+        // Find the order by ID and populate necessary fields
+        const order = await Order.findById(orderId)
+            .populate('products.productId')  // Populates product details
+            .populate('userId')              // Optionally populate user data
+            .populate('addressId');          // Populate the address if needed
+
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+
+        // Render the success page and pass the order details (totalAmount, products, etc.)
+        res.render('user/success', {
+            order,                 // Pass the entire order object
+            totalAmount: order.TotalAmount, // Total amount of the order
+            products: order.products         // Product details
+        });
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+};
 
 
-module.exports = { payController, checkStatus }
+
+
+module.exports = { payController, checkStatus, getOrderSuccess }
