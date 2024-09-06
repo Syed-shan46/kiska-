@@ -83,7 +83,9 @@ const PendingOrder = async (req, res) => {
 
         // Redirect to the payment method selection page after saving the order
         //res.redirect('/cart/checkout/method'); // Replace with your actual route for payment methods
-        res.redirect(`/cart/checkout/method?merchantTransactionId=${merchantTransactionId}`);
+        //res.redirect(`/cart/checkout/method?merchantTransactionId=${merchantTransactionId}`);
+        res.redirect(`/cart/checkout/method?merchantTransactionId=${merchantTransactionId}&totalAmount=${totalAmount}`);
+
     } catch (error) {
         console.error('Error creating order:', error);
         res.status(500).json({ message: 'Error creating order', error: error.message });

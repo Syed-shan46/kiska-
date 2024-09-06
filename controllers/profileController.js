@@ -59,12 +59,13 @@ const getAddress = async (req, res) => {
                 .exec();
             res.render('user/profile', { userData, isLoggedIn: !!req.session.userId, orders, user, totalOrders });
         } else {
-            res.redirect('/register');
+            res.redirect('/login');
         }
     } catch (error) {
         console.error('Error in getProfile:', error);
         res.status(500).json({ message: 'Something went wrong' });
     }
+
 };
 
 const getProfile = async (req, res) => {
@@ -194,6 +195,20 @@ const postUpdateAddress = async (req, res) => {
 }
 
 const getOrders = async (req, res) => {
+    const userId = req.session.userId;
+    if (req.session && req.session.userId) {
+        const orders = await Order.find({ userId: userId, paymentStatus: 'Paid' })
+            .populate('products.productId')
+            .sort({ orderDate: -1 })
+            .populate('addressId')
+            .exec();
+        res.render('user/orders', { orders, isLoggedIn: !!req.session.userId, });
+    } else {
+        res.redirect('/login');
+    }
+}
+
+const getOrderDetails = async (req, res) => {
     const orderId = req.params.id;
 
     try {
@@ -216,5 +231,6 @@ module.exports = {
     getUpdateAddress,
     postUpdateAddress,
     viewAllAddress,
+    getOrderDetails,
     getOrders,
 };

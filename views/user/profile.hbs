@@ -180,7 +180,7 @@
     }
 
     .order-card {
-        border: solid 1px #80808063;
+        background-color: #3dc1d808;
         border-radius: 10px;
         padding: 10px 0;
     }
@@ -191,8 +191,20 @@
 
 
     <div class="pt-lg-5"></div>
-    <div class="mt-5 pt-lg-5"></div>
+    <div class="mt-5 pt-lg-5 "></div>
+    <div class="pt-2"></div>
 
+    <div class="container">
+        <div class="row">
+        <div class="col-6">
+            <a href="" class="btn btn-outline-dark btn-lg btn-block"><i class="bi bi-truck"></i> Orders</a>
+        </div>
+        <div class="col-6">
+            <a href="" class="btn btn-outline-dark btn-lg btn-block"><i class="bi bi-bag"></i> Cart</a>
+
+        </div>
+    </div>
+    </div>
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-8 col-sm-10">
@@ -276,10 +288,14 @@
                                                     {{/if}}
                                                 </div>
                                             </div>
-
-
-
+                                            <form action="/logout" method="post">
+                                                <div class="col-lg-9">
+                                                    <button type="submit"
+                                                        class="btn btn-outline-danger btn-lg btn-block">Logout</a>
+                                                </div>
+                                            </form>
                                         </div>
+
 
                                         <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 

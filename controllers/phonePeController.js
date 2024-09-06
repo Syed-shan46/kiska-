@@ -20,8 +20,10 @@ payController = async (req, res) => {
         //const { products, totalAmount, address } = req.body; // Get the necessary data from the request body
         //const merchantTransactionId = uniqid();
         //const merchantTransactionId = req.body.merchantTransactionId || req.params.merchantTransactionId;
-        const { merchantTransactionId } = req.body || req.params;
-        console.log(merchantTransactionId);
+        const { merchantTransactionId, totalAmount } = req.body || req.params;
+        console.log('total amount:', totalAmount);
+        console.log('merchantTransactionId:', merchantTransactionId);
+
 
 
         //const { userId } = req.body; // Assuming you have a session with userId
@@ -41,7 +43,7 @@ payController = async (req, res) => {
             "merchantId": MERCHANT_ID,
             "merchantTransactionId": merchantTransactionId,
             "merchantUserId": userId,
-            "amount": 100,
+            "amount": totalAmount * 100,
             "redirectUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
             "redirectMode": "REDIRECT",
             "callbackUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
