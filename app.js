@@ -14,7 +14,7 @@ var setIsLoggedIn = require('./middlewares/loggedInMiddleware');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var hbs = require('express-handlebars');
-
+require('dotenv').config();
 var app = express();
 
 
@@ -45,16 +45,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fetchCartData);
 app.use(getCartCount);
-app.use(setIsLoggedIn); 
+app.use(setIsLoggedIn);
 
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);
 
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -65,6 +60,15 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+// In your app.js or routes file
+app.use((req, res, next) => {
+  res.status(404).render('404', { title: 'Page Not Found' });
+});
+
+app.get('/404', (req, res) => {
+  res.status(404).render('404'); // Assuming you're using a template engine like HBS
 });
 
 

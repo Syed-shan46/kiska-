@@ -5,10 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orders</title>
+    <style>
+        .order-card {
+            background-color: #3dc1d808;
+            border-radius: 10px;
+            padding: 10px 0;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="pt-5 mt-5"></div>
+    <div class="pt-4"></div>
     <div class="row">
         <div class="container">
             <div class="tab-pane fade pt-3" id="profile-settings"></div>
@@ -19,7 +26,7 @@
                 <div class="order-card">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-lg-2 col-3">
-                            <img src="/images/{{this.productId.mainImage}}" alt="">
+                            <img style="border-radius: 10px;" src="/images/{{this.productId.mainImage}}" alt="">
                         </div>
                         <div class="col-lg-5 col-7">
                             <p>Ordered on Aug 10</p>
@@ -38,7 +45,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-7 col-6">
                         <img width="200" src="/assets/images/demos/demo-13/no-item-imgs/5928293_2953962.jpg" alt="">
-                        
+
                     </div>
                     <div class="col-md-7 col-6 ml-3">
                         <a href="/" class="btn btn-outline-primary">Purchase Now<i

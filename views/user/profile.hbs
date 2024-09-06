@@ -179,11 +179,7 @@
         border-radius: 10px;
     }
 
-    .order-card {
-        background-color: #3dc1d808;
-        border-radius: 10px;
-        padding: 10px 0;
-    }
+   
 </style>
 
 <body>
@@ -191,19 +187,22 @@
 
 
     <div class="pt-lg-5"></div>
-    <div class="mt-5 pt-lg-5 "></div>
+    <div class="mt-5 pt-lg-5"></div>
     <div class="pt-2"></div>
 
-    <div class="container">
-        <div class="row">
-        <div class="col-6">
-            <a href="" class="btn btn-outline-dark btn-lg btn-block"><i class="bi bi-truck"></i> Orders</a>
-        </div>
-        <div class="col-6">
-            <a href="" class="btn btn-outline-dark btn-lg btn-block"><i class="bi bi-bag"></i> Cart</a>
 
+    
+    <div class="container mt-1">
+        <div class="row">
+            <div class="col-6">
+                <a href="profile/orders" class="btn btn-outline-dark btn-lg btn-block"><i
+                        class="bi bi-truck"></i>Orders</a>
+            </div>
+            <div class="col-6">
+                <a href="" class="btn btn-outline-dark btn-lg btn-block"><i class="bi bi-bag"></i>Cart</a>
+
+            </div>
         </div>
-    </div>
     </div>
 
     <div class="row justify-content-center">
@@ -224,9 +223,6 @@
                                     <a style="width: 150px;" class="nav-link" data-toggle="tab"
                                         href="#profile-edit">Edit
                                         Profile</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#profile-settings">Orders</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -362,46 +358,6 @@
 
                                         </div>
 
-                                        <div class="tab-pane fade pt-3" id="profile-settings">
-                                            {{#if orders}}
-                                            {{#each orders}}
-                                            {{#each this.products}}
-                                            <a href="/profile/orders/{{../_id}}" class="container">
-                                                <div class="order-card">
-                                                    <div class="row align-items-center justify-content-center">
-                                                        <div class="col-lg-2 col-3">
-                                                            <img src="/images/{{this.productId.mainImage}}" alt="">
-                                                        </div>
-                                                        <div class="col-lg-5 col-7">
-                                                            <p>Ordered on Aug 10</p>
-                                                            <p>{{this.productId.name}}</p>
-                                                        </div>
-                                                        <div class="">
-                                                            <i class="fa-solid fa-chevron-right"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            {{/each}}
-                                            {{/each}}
-                                            {{else}}
-                                            <div class="container">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-md-7 col-6">
-                                                        <img width="200"
-                                                            src="assets/images/demos/demo-13/no-item-imgs/5928293_2953962.jpg"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="col-md-7 col-6 ml-3">
-                                                        <a href="/" class="btn btn-outline-primary">Purchase Now<i
-                                                                class="icon-long-arrow-right"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {{/if}}
-
-
-                                        </div>
 
                                         <div class="tab-pane fade pt-3" id="profile-change-password">
                                             <!-- Change Password Form -->

@@ -10,6 +10,10 @@
             padding: 1.25rem !important;
         }
 
+        .card {
+            background-color: #3dc1d808;
+        }
+
         .card-header {}
     </style>
 </head>
@@ -49,7 +53,7 @@
                         <div class="col-md-8">
                             <h6 class="text-muted">Delivery to</h6>
                             <p>{{order.addressId.name}} <br>
-                                Phone +91 {{order.addressId.phone}} 
+                                Phone +91 {{order.addressId.phone}}
                                 <br> Email:{{order.userId.email}} <br>
                                 Location:{{order.addressId.house}}, {{order.addressId.street}},
                                 {{order.addressId.city}},
