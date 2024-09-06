@@ -49,7 +49,8 @@
                         <div class="col-md-8">
                             <h6 class="text-muted">Delivery to</h6>
                             <p>{{order.addressId.name}} <br>
-                                Phone +91 {{order.addressId.phone}} Email:{{order.userId.email}} <br>
+                                Phone +91 {{order.addressId.phone}} 
+                                <br> Email:{{order.userId.email}} <br>
                                 Location:{{order.addressId.house}}, {{order.addressId.street}},
                                 {{order.addressId.city}},
                                 <br>
@@ -59,9 +60,8 @@
                         <div class="col-md-4 mt-2">
                             <h6 class="text-muted">Payment</h6>
 
-                            <p>Subtotal: {{order.TotalAmount}} <br>
-                                Shipping fee: Free <br>
-                                <span class="b">Total: $456 </span>
+                            Shipping fee: Free <br>
+                            <span class="b">Total:{{order.totalAmount}} </span>
                             </p>
                         </div>
                     </div>

@@ -116,33 +116,33 @@
                                         <td><a href="/admin/edit/{{this._id}}" class="btn btn-primary">Edit</a></td>
                                     </tr>
                                     {{/each}}
-                                  
+
 
                                 </tbody>
-                                
+
                             </table>
-                            
+
                         </div>
-                          <div class="pagination mt-2">
-                                        {{#if (gt currentPage 1)}}
-                                        <a href="?page={{dec currentPage}}" class="btn btn-primary">Previous</a>
-                                        {{else}}
-                                        <span class="btn btn-secondary disabled">Previous</span>
-                                        {{/if}}
+                        <div class="pagination mt-2">
+                            {{#if (gt currentPage 1)}}
+                            <a href="?page={{dec currentPage}}" class="btn btn-primary">Previous</a>
+                            {{else}}
+                            <span class="btn btn-secondary disabled">Previous</span>
+                            {{/if}}
 
-                                        {{#each (range totalPages 1)}}
-                                        <a href="?page={{this}}"
-                                            class="btn {{#if (eq this ../currentPage)}}btn-primary{{else}}btn-secondary{{/if}}">
-                                            {{this}}
-                                        </a>
-                                        {{/each}}
+                            {{#each (range totalPages 1)}}
+                            <a href="?page={{this}}"
+                                class="btn {{#if (eq this ../currentPage)}}btn-primary{{else}}btn-secondary{{/if}}">
+                                {{this}}
+                            </a>
+                            {{/each}}
 
-                                        {{#if (lt currentPage totalPages)}}
-                                        <a href="?page={{inc currentPage}}" class="btn btn-primary">Next</a>
-                                        {{else}}
-                                        <span class="btn btn-secondary disabled">Next</span>
-                                        {{/if}}
-                                    </div>
+                            {{#if (lt currentPage totalPages)}}
+                            <a href="?page={{inc currentPage}}" class="btn btn-primary">Next</a>
+                            {{else}}
+                            <span class="btn btn-secondary disabled">Next</span>
+                            {{/if}}
+                        </div>
                     </div>
                 </div>
             </section>

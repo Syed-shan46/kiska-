@@ -45,7 +45,7 @@ const viewUserProduct = async (req, res, next) => {
         // Render the index page with products, login status, and userId
         res.render('index', {
             products,
-           
+
             userData,
             isLoggedIn: !!req.session.userId, // Check if userId exists to determine login status
             userId,

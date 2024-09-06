@@ -10,7 +10,7 @@ const { getCart, addToCart, cartIncrease, cartDecrease, cartRemove } = require('
 const { viewSingleItem } = require('../controllers/productController');
 const { addAddress } = require('../controllers/addressController');
 const { checkoutPage, PendingOrder } = require('../controllers/checkoutController');
-const { storePage, categoryList, categoryColumns, category2Columns } = require('../controllers/storeController');
+const { storePage, categoryList, categoryColumns, category2Columns, productsByCategory, categoriesCount } = require('../controllers/storeController');
 const { payController, checkStatus, getOrderSuccess } = require('../controllers/phonePeController');
 
 
@@ -68,6 +68,7 @@ module.exports = router;
 
 /// Store
 router.get('/store', storePage);
+router.get('/products/category', productsByCategory);
 router.get('/category-list', categoryList);
 router.get('/category-columns', categoryColumns)
 router.get('/category-2columns', category2Columns);
