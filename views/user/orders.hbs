@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+</head>
+
+<body>
+    <div class="pt-5 mt-5"></div>
+    <div class="row">
+        <div class="container">
+            <div class="tab-pane fade pt-3" id="profile-settings"></div>
+            {{#if orders}}
+            {{#each orders}}
+            {{#each this.products}}
+            <a href="/profile/orders/{{../_id}}" class="container">
+                <div class="order-card">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-2 col-3">
+                            <img src="/images/{{this.productId.mainImage}}" alt="">
+                        </div>
+                        <div class="col-lg-5 col-7">
+                            <p>Ordered on Aug 10</p>
+                            <p>{{this.productId.name}}</p>
+                        </div>
+                        <div class="">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {{/each}}
+            {{/each}}
+            {{else}}
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7 col-6">
+                        <img width="200" src="/assets/images/demos/demo-13/no-item-imgs/5928293_2953962.jpg" alt="">
+                        
+                    </div>
+                    <div class="col-md-7 col-6 ml-3">
+                        <a href="/" class="btn btn-outline-primary">Purchase Now<i
+                                class="icon-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+
+
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
