@@ -1,5 +1,4 @@
-
-body{
+body {
     margin: 0 !important;
     padding: 0 !important;
     overflow-x: hidden !important;
@@ -28,7 +27,7 @@ body{
 .srch {
     border-top-left-radius: 7px !important;
     border-bottom-left-radius: 7px !important;
-   
+
 }
 
 .icon-bars {
@@ -82,7 +81,7 @@ body{
 
 /* Header dropdown border-radius */
 .cart-dropdown .dropdown-menu,
-.compare-dropdown .dropdown-menu { 
+.compare-dropdown .dropdown-menu {
     border-radius: 10px !important;
 }
 
@@ -90,7 +89,17 @@ body{
     padding-top: 5px !important;
     padding-bottom: 0px !important;
     padding-left: 10px !important;
-    
 
+}
 
+.nav-link:focus,
+.nav-link:active {
+    color: black !important;
+    /* Change this to the color you want */
+}
+
+.nav-link:focus {
+    outline: none !important;
+    color: initial !important;
+    /* Or reset to original color */
 }

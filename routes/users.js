@@ -49,7 +49,6 @@ router.get('/cart/checkout/method', (req, res) => {
 });
 
 
-
 /// Success route
 router.get('/success/:id', getOrderSuccess);
 

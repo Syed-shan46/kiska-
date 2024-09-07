@@ -194,7 +194,7 @@ const postUpdateAddress = async (req, res) => {
     }
 }
 
-const getOrders = async (req, res) => {
+const getOrders = async (req, res,) => {
     const userId = req.session.userId;
     if (req.session && req.session.userId) {
         const orders = await Order.find({ userId: userId, paymentStatus: 'Paid' })

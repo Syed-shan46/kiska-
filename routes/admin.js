@@ -18,7 +18,9 @@ router.get('/add-product', async (req, res) => {
   } catch (error) {
     console.error(error);
   }
-})
+});
+
+
 router.post('/upload', uploadProduct);
 router.get('/delete', deleteController);
 router.get('/edit/:id', getProductDetails);

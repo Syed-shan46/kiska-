@@ -1,6 +1,8 @@
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
-
+require('dotenv').config();
+ADMIN_PANEL = process.env.ADMIN_PANEL
+PANEL_PASS = process.env.PANEL_PASS
 
 const checkEmailExists = async (email) => {
     try {
@@ -20,7 +22,7 @@ const isValidEmail = (email) => {
 };
 
 const handleRegister = async (req, res) => {
-    const { firstName, email, lastName, city, phone, password, confirmPw, } = req.body; 
+    const { firstName, email, lastName, city, phone, password, confirmPw, } = req.body;
 
     // Array to collect error messages
     const errors = {};
@@ -61,11 +63,12 @@ const handleRegister = async (req, res) => {
         return res.redirect('/login')
     } catch (error) {
         console.error(error);
-        return res.render('user/register', { error: 'Error during registration' }); 
+        return res.render('user/register', { error: 'Error during registration' });
     }
 };
 
-const handleLogin = async (req, res) => {
+const handleLogin = async (req, res, next) => {
+    const isAdmin = false;
     const { email, password } = req.body;
 
     // Array to collect error messages
@@ -86,6 +89,11 @@ const handleLogin = async (req, res) => {
         return res.render('user/login', { errors, email });
     }
     try {
+
+        if (email === process.env.ADMIN_PANEL && password === process.env.PANEL_PASS) {
+            req.session.adminEmail = email;
+            return res.redirect('admin');
+        }
         // Check if user exists
         const user = await User.findOne({ email });
 

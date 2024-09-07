@@ -1,9 +1,17 @@
 const session = require('express-session');
 const Product = require('../../models/product_model');
 const CartItem = require('../../models/cart_model');
-
+require('dotenv').config();
+ADMIN_PANEL = process.env.ADMIN_PANEL;
+PANEL_PASS = process.env.PANEL_PASS;
 
 const viewProduct = async (req, res, next) => {
+
+
+    if (!req.session.adminEmail) { 
+        return res.redirect('404');
+    }
+
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 4;
 

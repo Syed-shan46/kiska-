@@ -11,6 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  
+
 }
 );
+
+document.querySelectorAll('.nav-link').forEach(function (link) {
+  link.addEventListener('click', function () {
+    this.blur(); // This removes focus
+  });
+});
+
