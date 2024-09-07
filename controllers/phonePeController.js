@@ -10,7 +10,7 @@ require('dotenv').config();
 const { sendOrderConfirmationEmail, sendOrderNotificationToAdmin } = require('../controllers/mailController')
 
 const MERCHANT_ID = process.env.MERCHANT_ID
-const SALT_KEY = 'ffc08980-85e0-4247-a999-be8f8fec8cc8'
+const SALT_KEY = process.env.SALT_KEY
 
 payController = async (req, res) => {
     try {
@@ -43,7 +43,7 @@ payController = async (req, res) => {
             "merchantId": MERCHANT_ID,
             "merchantTransactionId": merchantTransactionId,
             "merchantUserId": userId,
-            "amount": totalAmount * 100,
+            "amount": 100,
             "redirectUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
             "redirectMode": "REDIRECT",
             "callbackUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,

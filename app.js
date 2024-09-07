@@ -17,7 +17,6 @@ var hbs = require('express-handlebars');
 require('dotenv').config();
 var app = express();
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +27,8 @@ app.use(session({
   resave: false,
   store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/ziadb' }),
   cookie: { secure: false },
-}))
+}));
+
 app.engine('hbs', hbs.engine({
   extname: 'hbs',
   defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/partials/', runtimeOptions: {
