@@ -1,8 +1,15 @@
 const mongoose = require('mongoose');
 
 const visitorSchema = new mongoose.Schema({
-    ip: { type: String, unique: true },  // Store IP address
-    date: { type: Date, default: Date.now }  // Timestamp of visit
+    ip: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    visitCount: {
+        type: Number,
+        default: 1
+    }
 });
 
 const Visitor = mongoose.model('Visitor', visitorSchema);

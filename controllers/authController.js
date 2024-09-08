@@ -152,19 +152,31 @@ const visiterCheck = async (req, res) => {
     try {
         // Capture user IP and check if it exists in the DB
         const userIp = req.userIp;
-        const existingVisitor = await Visitor.findOne({ ip: userIp });
+        let visitor = await Visitor.findOne({ ip: userIp });
 
-        if (!existingVisitor) {
-            // If IP is new, save it in the database
-            const newVisitor = new Visitor({ ip: userIp });
-            await newVisitor.save();
+        if (!visitor) {
+            // If IP is new, create a new visitor with a visitCount of 1
+            visitor = new Visitor({ ip: userIp, visitCount: 1 });
+            await visitor.save();
+        } else {
+            // If IP exists, increment the visitCount
+            visitor.visitCount += 1;
+            await visitor.save();
         }
 
         // Count the total number of unique visitors
         const totalVisitors = await Visitor.countDocuments();
+        
+        // Optionally, you can count total visits (sum of all visitCounts)
+        const totalVisits = await Visitor.aggregate([
+            { $group: { _id: null, totalVisits: { $sum: "$visitCount" } } }
+        ]);
 
-        // Render the view with total visitors
-        res.render('user/visiter-check', { totalVisitors });
+        // Render the view with total visitors and total visits
+        res.render('user/visiter-check', { 
+            totalVisitors, 
+            totalVisits: totalVisits[0] ? totalVisits[0].totalVisits : 0 
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send('Error tracking visitor');
