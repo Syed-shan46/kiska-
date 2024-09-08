@@ -18,6 +18,7 @@ require('dotenv').config();
 var app = express();
 
 // view engine setup
+app.set('trust proxy', true);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
@@ -71,12 +72,22 @@ app.get('/404', (req, res) => {
   res.status(404).render('404'); // Assuming you're using a template engine like HBS
 });
 
-// Middleware to capture user IP
 app.use((req, res, next) => {
+  // Check if the IP is behind a proxy, and use the first IP in the 'X-Forwarded-For' header if available
   const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  req.userIp = userIp.split(',')[0]; // If there's a proxy, split and get the first IP
+
+  // If there's a proxy, 'x-forwarded-for' may contain multiple IPs, we need the first one
+  const realIp = userIp.split(',')[0].trim();
+
+  req.userIp = realIp;
   next();
 });
+
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store');
+  next();
+});
+
 
 
 
