@@ -71,6 +71,13 @@ app.get('/404', (req, res) => {
   res.status(404).render('404'); // Assuming you're using a template engine like HBS
 });
 
+// Middleware to capture user IP
+app.use((req, res, next) => {
+  const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  req.userIp = userIp.split(',')[0]; // If there's a proxy, split and get the first IP
+  next();
+});
+
 
 
 module.exports = app;

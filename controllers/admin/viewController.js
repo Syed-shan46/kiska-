@@ -8,7 +8,7 @@ PANEL_PASS = process.env.PANEL_PASS;
 const viewProduct = async (req, res, next) => {
 
 
-    if (!req.session.adminEmail) { 
+    if (!req.session.adminEmail) {
         return res.redirect('404');
     }
 
@@ -65,6 +65,8 @@ const viewUserProduct = async (req, res, next) => {
         res.status(500).send("Error retrieving product");
     }
 };
+
+
 
 
 module.exports = { viewProduct, viewUserProduct }

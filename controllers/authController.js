@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Visitor = require('../models/visiterSchema');
 const bcrypt = require('bcrypt')
 require('dotenv').config();
 ADMIN_PANEL = process.env.ADMIN_PANEL
@@ -147,4 +148,27 @@ registerPage = (req, res) => {
     res.render('user/authentication');
 }
 
-module.exports = { handleRegister, handleLogin, handleLogout, registerPage };
+const visiterCheck = async (req, res) => {
+    try {
+        // Capture user IP and check if it exists in the DB
+        const userIp = req.userIp;
+        const existingVisitor = await Visitor.findOne({ ip: userIp });
+
+        if (!existingVisitor) {
+            // If IP is new, save it in the database
+            const newVisitor = new Visitor({ ip: userIp });
+            await newVisitor.save();
+        }
+
+        // Count the total number of unique visitors
+        const totalVisitors = await Visitor.countDocuments();
+
+        // Render the view with total visitors
+        res.render('user/visiter-check', { totalVisitors });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error tracking visitor');
+    }
+}
+
+module.exports = { handleRegister, handleLogin, handleLogout, registerPage, visiterCheck };

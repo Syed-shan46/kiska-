@@ -3,7 +3,7 @@ var router = express.Router();
 const Order = require('../models/order_model');
 
 const { viewUserProduct } = require('../controllers/admin/viewController');
-const { handleRegister, handleLogin, handleLogout, registerPage } = require('../controllers/authController');
+const { handleRegister, handleLogin, handleLogout, registerPage, visiterCheck } = require('../controllers/authController');
 const { postAddress, getAddress, updateUserProfile, getProfile, getUpdateAddress, viewAllAddress, postUpdateAddress, getOrders, getOrderDetails } = require('../controllers/profileController');
 //const { getCardPayment, successPage } = require('../controllers/stripeController');
 const { getCart, addToCart, cartIncrease, cartDecrease, cartRemove } = require('../controllers/cartController');
@@ -40,13 +40,15 @@ router.post('/remove', cartRemove);
 /// View single item
 router.get('/product/:id', viewSingleItem);
 router.get('/cart/checkout', checkoutPage);
-router.post('/pendingOrder', PendingOrder);
+router.post('/pendingOrder', PendingOrder); 
 router.get('/cart/checkout/method', (req, res) => {
     const userId = req.session.userId;
     const merchantTransactionId = req.query.merchantTransactionId;
     const totalAmount = req.query.totalAmount;
     res.render('user/method', { userId, merchantTransactionId, totalAmount });
 });
+
+router.get('/visit-user', visiterCheck);
 
 
 /// Success route
