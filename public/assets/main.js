@@ -21,3 +21,5 @@ document.querySelectorAll('.nav-link').forEach(function (link) {
   });
 });
 
+AOS.init();
+
