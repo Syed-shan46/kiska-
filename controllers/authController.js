@@ -23,7 +23,7 @@ const isValidEmail = (email) => {
 };
 
 const handleRegister = async (req, res) => {
-    const { firstName, email, lastName, city, phone, password, confirmPw, } = req.body;
+    const { userName, email, city, phone, password, confirmPw, } = req.body;
 
     // Array to collect error messages
     const errors = {};
@@ -45,14 +45,13 @@ const handleRegister = async (req, res) => {
         errors.confirmPw = 'Passwords do not match.';
     }
 
-    // Validate Phone Number
-    if (!phone || !/^\+?[0-9\s\-()]*$/.test(phone)) {
-        errors.phone = 'Please enter a valid phone number.';
+    // Validate Phone Number (10 digits)
+    if (!phone || !/^\d{10}$/.test(phone)) {
+        errors.phone = 'Phone number must be exactly 10 digits.';
     }
-
     // Check for validation errors
     if (Object.keys(errors).length > 0) {
-        return res.render('user/register', { errors, email, phone, firstName, lastName, city, phone });
+        return res.render('user/register', { errors, email, phone, userName, city, phone });
     }
 
     try {
@@ -60,7 +59,7 @@ const handleRegister = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create the user if there are no errors
-        await User.create({ firstName, lastName, city, phone, email, password: hashedPassword, });
+        await User.create({ userName, city, phone, email, password: hashedPassword, });
         return res.redirect('/login')
     } catch (error) {
         console.error(error);
