@@ -1,5 +1,5 @@
 const User = require('../models/user')
-const Visitor = require('../models/visiterSchema');
+const VisitCounter = require('../models/visiterSchema');
 const bcrypt = require('bcrypt')
 require('dotenv').config();
 ADMIN_PANEL = process.env.ADMIN_PANEL
@@ -150,37 +150,15 @@ registerPage = (req, res) => {
 
 const visiterCheck = async (req, res) => {
     try {
-        // Capture user IP and check if it exists in the DB
-        const userIp = req.userIp;
-        let visitor = await Visitor.findOne({ ip: userIp });
-
-        if (!visitor) {
-            // If IP is new, create a new visitor with a visitCount of 1
-            visitor = new Visitor({ ip: userIp, visitCount: 1 });
-            await visitor.save();
-        } else {
-            // If IP exists, increment the visitCount
-            visitor.visitCount += 1;
-            await visitor.save();
-        }
-
-        // Count the total number of unique visitors
-        const totalVisitors = await Visitor.countDocuments();
-        
-        // Optionally, you can count total visits (sum of all visitCounts)
-        const totalVisits = await Visitor.aggregate([
-            { $group: { _id: null, totalVisits: { $sum: "$visitCount" } } }
-        ]);
-
-        // Render the view with total visitors and total visits
-        res.render('user/visiter-check', { 
-            totalVisitors, 
-            totalVisits: totalVisits[0] ? totalVisits[0].totalVisits : 0 
-        });
+        const visitCounter = await VisitCounter.findOne();
+        const totalVisits = visitCounter ? visitCounter.count : 0;
+        res.render('user/visiter-check', { totalVisits }); // Render the view with the visit count
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Error tracking visitor');
+        console.error('Error retrieving visit count:', err);
+        res.status(500).send('Error retrieving visit count');
     }
-}
+};
+
+
 
 module.exports = { handleRegister, handleLogin, handleLogout, registerPage, visiterCheck };

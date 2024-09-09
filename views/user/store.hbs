@@ -67,7 +67,7 @@
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
                                             <span class="product-label label-new">New</span>
-                                            <a href="product.html">
+                                            <a href="/product/{{this._id}}">
                                                 <img src="/images/{{this.mainImage}}" alt="Product image"
                                                     class="product-image">
                                             </a>
@@ -76,7 +76,8 @@
                                             <div class="product-cat">
                                                 <a href="#">Women</a>
                                             </div>
-                                            <h3 class="product-title"><a href="product.html">{{this.name}}</a></h3>
+                                            <h3 class="product-title"><a href="/product/{{this._id}}">{{this.name}}</a>
+                                            </h3>
                                             <div class="product-price">{{this.price}}</div>
                                             <div class="product-nav product-nav-thumbs">
                                                 <a href="#" class="active">
@@ -132,8 +133,10 @@
                                         <div class="filter-items filter-items-count">
                                             <div class="filter-item">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="cat-{{@index}}">
-                                                    <label class="custom-control-label" for="cat-{{@index}}">{{this}}</label>
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        id="cat-{{@index}}">
+                                                    <label class="custom-control-label"
+                                                        for="cat-{{@index}}">{{this}}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,7 +172,7 @@
                             <div class="col-6 col-md-4 col-lg-4">
                                 <div class="product product-7 text-center">
                                     <figure class="product-media">
-                                        <a href="product.html">
+                                        <a href="/product/${product._id}">
                                             <img src="/images/${product.mainImage}" alt="Product image" class="product-image">
                                         </a>
                                     </figure>
@@ -177,7 +180,7 @@
                                         <div class="product-cat">
                                             <a href="#">${product.category}</a>
                                         </div>
-                                        <h3 class="product-title"><a href="product.html">${product.name}</a></h3>
+                                        <h3 class="product-title"><a href="/product/{{this._id}}">${product.name}</a></h3>
                                         <div class="product-price">${product.price}</div>
                                     </div>
                                 </div>

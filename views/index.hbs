@@ -54,6 +54,25 @@
         min-width: 90px;
         padding: .65rem 1rem;
     }
+
+    /* Responsive iframe for Bootstrap 4 */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
 <body>
@@ -362,7 +381,10 @@
                 </div><!-- .End .tab-pane -->
             </div><!-- .End .tab-content -->
 
+
+
         </div><!-- End .container -->
+
 
         <div class="mb-3"></div><!-- End .mb-3 -->
 
@@ -1837,7 +1859,27 @@
                 </div><!-- End .row -->
             </div><!-- End .container -->
         </div><!-- End .cta --> --}}
-
+        <div class="container mt-5 px-5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6">
+                    <div class="card mx-auto">
+                        <div class="card-header text-center">
+                            <h5>Watch Our Promotion Video</h5>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/DcJ4at_Gk5U?si=ednddUUbUxM3vTHN"
+                                title="YouTube video" allowfullscreen></iframe>
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="card-text">Check out our latest promotion video for more details!</p>
+                            <a href="https://www.youtube.com/watch?v=DcJ4at_Gk5U" class="btn btn-outline-primary">Watch
+                                on
+                                YouTube</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <footer class="footer footer-2">

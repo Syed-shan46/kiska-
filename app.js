@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const VisitCounter = require('./models/visiterSchema'); // Adjust the path as needed
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 var path = require('path');
@@ -18,7 +19,7 @@ require('dotenv').config();
 var app = express();
 
 // view engine setup
-app.set('trust proxy', true);
+//app.set('trust proxy', true);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
@@ -72,23 +73,20 @@ app.get('/404', (req, res) => {
   res.status(404).render('404'); // Assuming you're using a template engine like HBS
 });
 
-app.use((req, res, next) => {
-  // Check if the IP is behind a proxy, and use the first IP in the 'X-Forwarded-For' header if available
-  const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
-  // If there's a proxy, 'x-forwarded-for' may contain multiple IPs, we need the first one
-  const realIp = userIp.split(',')[0].trim();
-
-  req.userIp = realIp;
-  next();
+app.use(async (req, res, next) => {
+  try {
+    // Find or create a visit counter document
+    let visitCounter = await VisitCounter.findOne();
+    if (!visitCounter) {
+      visitCounter = new VisitCounter();
+    }
+    visitCounter.count += 1; // Increment the visit count
+    await visitCounter.save(); // Save the updated counter
+  } catch (err) {
+    console.error('Error updating visit counter:', err);
+  }
+  next(); // Proceed to the next middleware or route
 });
-
-app.use((req, res, next) => {
-  res.setHeader('Cache-Control', 'no-store');
-  next();
-});
-
-
-
 
 module.exports = app;

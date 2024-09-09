@@ -1,17 +1,12 @@
 const mongoose = require('mongoose');
 
-const visitorSchema = new mongoose.Schema({
-    ip: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    visitCount: {
+const visitCounterSchema = new mongoose.Schema({
+    count: {
         type: Number,
-        default: 1
-    }
+        default: 0,
+    },
 });
 
-const Visitor = mongoose.model('Visitor', visitorSchema);
+const VisitCounter = mongoose.model('VisitCounter', visitCounterSchema);
 
-module.exports = Visitor;
+module.exports = VisitCounter;
