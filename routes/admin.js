@@ -12,13 +12,17 @@ const Category = require('../models/admin/category_model');
 router.get('/', viewProduct);
 
 router.get('/add-product', async (req, res) => {
+  if (!req.session.adminEmail) {
+    return res.redirect('404');
+  }
   try {
     const categories = await Category.find();
     res.render('admin/add-product', { isAdmin: true, categories });
   } catch (error) {
     console.error(error);
   }
-});
+}
+);
 
 
 router.post('/upload', uploadProduct);

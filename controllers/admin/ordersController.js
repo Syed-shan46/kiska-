@@ -4,6 +4,9 @@ const User = require('../../models/user');
   
 
 const getOrders = async (req, res) => {
+    if (!req.session.adminEmail) {
+        return res.redirect('404');
+    }
     try {
         const orders = await Order.find().populate({
             path: 'userId products.productId',
@@ -17,6 +20,9 @@ const getOrders = async (req, res) => {
 }
 
 const getOrderDetails = async (req, res) => {
+    if (!req.session.adminEmail) {
+        return res.redirect('404');
+    }
     const { orderId } = req.params;
     try {
         const order = await Order.findById(orderId).populate('userId products.productId');

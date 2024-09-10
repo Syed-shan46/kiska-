@@ -1,4 +1,7 @@
 const CategoryName = require('../../models/admin/category_model')
+if (!req.session.adminEmail) {
+    return res.redirect('404');
+}
 const categoryPage = (req, res) => {
     res.render('admin/add-category');
 }
@@ -9,12 +12,12 @@ const addCategory = async (req, res) => {
         categoryName,
     })
     try {
-        await  newCategory.save();
+        await newCategory.save();
         res.redirect('/admin');
     } catch (error) {
         console.error(error);
-    } 
-    
+    }
+
 }
 
 module.exports = { addCategory, categoryPage };

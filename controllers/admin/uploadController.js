@@ -21,6 +21,7 @@ const uploadProduct = [upload.fields([
 ]),
 async (req, res) => {
     const { name, description, category, price } = req.body
+
     // Multiple images handling
     const images = req.files['images'] ? req.files['images'].map(file => file.filename) : [];
     // Single image handling
@@ -50,6 +51,10 @@ const updateProduct = [upload.fields([
     { name: 'images', maxCount: 4 } // Multiple images
 ]),
 async (req, res) => {
+    if (!req.session.adminEmail) {
+        return res.redirect('404');
+    }
+
     const { _id, name, description, category, price } = req.body;
 
     try {
