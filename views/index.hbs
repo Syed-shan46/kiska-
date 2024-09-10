@@ -237,7 +237,7 @@
                                                 {{!-- <h4 style="line-height: 1.3; color: #333333cc;">
                                                     Discover Your Style <br>
                                                     with Our Latest <br>Collections!</h4> --}}
-                                                <a href="/store" class="btn btn-dark mt-5" data-aos="fade-right"
+                                                <a href="/store" class="btn btn-primary mt-5" data-aos="fade-right"
                                                     data-aos-duration="2000">
                                                     <span>Shop Now</span>
                                                     <i class="icon-long-arrow-right"></i>
@@ -449,7 +449,7 @@
                                     data-aos-duration="2500">
                                     <input type="hidden" name="userId" value="{{../userId}}">
                                     <input type="hidden" name="productId" value="{{this._id}}">
-                                    <button type="submit" class="btn btn-outline-dark ml-3 add-to-cart-btn"
+                                    <button type="submit" class="btn btn-outline-primary ml-3 add-to-cart-btn"
                                         title="Add to cart">
                                         <div class="button-content">
                                             <span class="button-text">Add to Cart</span>
@@ -497,18 +497,7 @@
 
         <div class="mb-3"></div><!-- End .mb-3 -->
 
-        <!-- Add to Cart Form -->
-        <form id="addToCartForm" action="cart/add" method="POST" data-aos="flip-up" data-aos-duration="2500">
-            <input type="hidden" name="userId" value="{{../userId}}">
-            <input type="hidden" name="productId" value="{{this._id}}">
-            <button type="submit" id="addToCartBtn" class="btn btn-dark ml-3" title="Add to cart">
-                <div class="button-content">
-                    <span id="buttonText">Add to Cart</span>
-                    <span id="spinner" class="spinner" style="display: none;"></span>
-                    <span id="tickMark" class="tick-mark" style="display: none;">✔</span>
-                </div>
-            </button>
-        </form>
+       
 
 
 
