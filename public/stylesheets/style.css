@@ -103,3 +103,35 @@ body {
     color: initial !important;
     /* Or reset to original color */
 }
+
+/* Default button color */
+.btn-outline-dark {
+    background-color: #343a40;
+    /* Dark background */
+    color: #ffffff;
+    /* White text */
+}
+
+/* Button hover state */
+.btn:hover {
+    background-color: #495057;
+    /* Slightly lighter background */
+}
+
+
+
+/* Button focus state (if applicable) */
+.btn:focus {
+    outline: none !important;
+    /* Blue outline on focus */
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:focus,
+.btn-outline-dark.focus,
+.btn-outline-dark:not(:disabled):not(.disabled):active,
+.btn-outline-dark:not(:disabled):not(.disabled).active,
+.show>.btn-outline-dark.dropdown-toggle {
+    color: black !important;
+    background-color: transparent;
+}

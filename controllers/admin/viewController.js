@@ -35,12 +35,14 @@ const viewProduct = async (req, res, next) => {
 
 const viewUserProduct = async (req, res, next) => {
     try {
+        // Retrieve userId from session
+        const userId = req.session.userId;
+
         const userData = {
             cartItems: req.session.cartItems || []
         };
 
-        // Retrieve userId from session
-        const userId = req.session.userId;
+
 
         // Fetch all products from the database
         const products = await Product.find();
@@ -53,9 +55,8 @@ const viewUserProduct = async (req, res, next) => {
         // Render the index page with products, login status, and userId
         res.render('index', {
             products,
-
             userData,
-            isLoggedIn: !!req.session.userId, // Check if userId exists to determine login status
+            isLoggedIn: !!userId, // Check if userId exists to determine login status
             userId,
             isAdmin: false,
         });
