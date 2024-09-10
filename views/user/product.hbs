@@ -208,6 +208,52 @@
             height: 400px;
             background-color: white;
         }
+
+        /* popup container for add to cart  */
+        /* Popup container, initially hidden */
+        .popup-container {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent background */
+            z-index: 9999;
+            /* Ensure it appears above other content */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Popup content box */
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: scale(0);
+            /* Start scaled down */
+            transition: transform 0.3s ease;
+            /* Zoom-in effect */
+        }
+
+        /* Show the popup with zoom-in effect */
+        .popup-container.show .popup-content {
+            transform: scale(1);
+            /* Fully zoomed in to normal size */
+        }
+
+        /* Close button inside the popup */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -281,7 +327,7 @@
                                     ₹{{product.price}}
                                 </div><!-- End .product-price -->
 
-                                
+
                             </div><!-- End .details-filter-row -->
 
                             {{#if inCart }}
@@ -407,7 +453,28 @@
             <button class="btn btn-primary mt-1" onclick="redirectToLogin()">Log In</button>
         </div>
     </div>
+    <script>
+        function showLoginPopup() {
+            const popup = document.getElementById('loginPopup');
+            popup.style.display = 'flex'; // Show popup
+            setTimeout(() => {
+                popup.classList.add('show'); // Trigger zoom-in effect
+            }, 10); // Small delay to ensure the transition works
+        }
 
+        function closePopup() {
+            const popup = document.getElementById('loginPopup');
+            popup.classList.remove('show'); // Zoom-out back in
+            setTimeout(() => {
+                popup.style.display = 'none'; // Hide after animation
+            }, 300); // Wait for the animation to finish
+        }
+
+        function redirectToLogin() {
+            window.location.href = '/login'; // Redirect to login page
+        }
+
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const thumbnails = document.querySelectorAll('.thumbnail-image');
@@ -427,6 +494,8 @@
             });
         });
     </script>
+
+
 </body>
 
 </html>

@@ -162,6 +162,57 @@
         min-width: 120px;
         /* Adjust as needed */
     }
+
+    /* popup container for add to cart  */
+    /* Popup container, initially hidden */
+    .popup-container {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent background */
+        z-index: 9999;
+        /* Ensure it appears above other content */
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Popup content box */
+    .popup-content {
+        background-color: white;
+        padding: 20px;
+        width: 300px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transform: scale(0);
+        /* Start scaled down */
+        transition: transform 0.3s ease;
+        /* Zoom-in effect */
+    }
+
+    /* Show the popup with zoom-in effect */
+    .popup-container.show .popup-content {
+        transform: scale(1);
+        /* Fully zoomed in to normal size */
+    }
+
+    /* Close button inside the popup */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .product {
+        border-radius: .2rem;
+        padding-bottom: 10px;
+    }
 </style>
 
 <body>
@@ -470,8 +521,9 @@
                                 </form>
 
                                 {{else}}
-                                <button class="btn btn-outline-primary ml-3 mt-2" title="Add to cart"
-                                    onclick="showLoginPopup()"><span>Add to Cart</span></button>
+                                <button class="btn btn-outline-primary ml-3 " data-aos="flip-up"
+                                    data-aos-duration="2500" title="Add to cart" onclick="showLoginPopup()"><span>Add to
+                                        Cart</span></button>
                                 {{/if}}
 
                                 {{!-- --}}
@@ -563,15 +615,14 @@
                 </div>
             </div>
         </div> --}}
-
-
-
-
-
-
-
-
-
+        <div id="loginPopup" class="popup-container" onclick="closePopup()">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup()">&times;</span>
+                <h4>Login Required</h4>
+                <p id="popupMessage">You are not logged in. Please log in to add items to your cart.</p>
+                <button class="btn btn-primary mt-1" onclick="redirectToLogin()">Log In</button>
+            </div>
+        </div>
 
 
         <script>
