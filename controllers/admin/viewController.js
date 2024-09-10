@@ -42,8 +42,6 @@ const viewUserProduct = async (req, res, next) => {
             cartItems: req.session.cartItems || []
         };
 
-
-
         // Fetch all products from the database
         const products = await Product.find();
 

@@ -129,6 +129,82 @@ body {
 .btn-outline-dark:not(:disabled):not(.disabled):active,
 .btn-outline-dark:not(:disabled):not(.disabled).active,
 .show>.btn-outline-dark.dropdown-toggle {
-    
+
     background-color: transparent;
+}
+
+
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:hover {
+    background-color: none !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show>.btn-primary.dropdown-toggle {
+    background-color: #113f67 !important;
+    border-color: #113f67 !important;
+    box-shadow: none;
+}
+
+.mobile-menu li.open>a,
+.mobile-menu li.active>a {
+    color: #333;
+    border-radius: 10px;
+    background: white !important;
+}
+
+.btn-product:hover,
+.btn-product:focus {
+    background-color: none !important;
+}
+
+/* popup container for add to cart  */
+/* Popup container, initially hidden */
+.popup-container {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    z-index: 9999;
+    /* Ensure it appears above other content */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Popup content box */
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0);
+    /* Start scaled down */
+    transition: transform 0.3s ease;
+    /* Zoom-in effect */
+}
+
+/* Show the popup with zoom-in effect */
+.popup-container.show .popup-content {
+    transform: scale(1);
+    /* Fully zoomed in to normal size */
+}
+
+/* Close button inside the popup */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
 }
