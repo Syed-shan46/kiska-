@@ -1,8 +1,9 @@
 const CategoryName = require('../../models/admin/category_model')
-if (!req.session.adminEmail) {
-    return res.redirect('404');
-}
+
 const categoryPage = (req, res) => {
+    if (!req.session.adminEmail) {
+        return res.redirect('404');
+    }
     res.render('admin/add-category');
 }
 

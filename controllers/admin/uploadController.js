@@ -51,6 +51,7 @@ const updateProduct = [upload.fields([
     { name: 'images', maxCount: 4 } // Multiple images
 ]),
 async (req, res) => {
+
     if (!req.session.adminEmail) {
         return res.redirect('404');
     }
