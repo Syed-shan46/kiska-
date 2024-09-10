@@ -16,6 +16,16 @@
 
 </head>
 <style>
+    .product:focus,
+    .product:active,
+    .product:hover {
+        box-shadow: none !important;
+        /* Removes box-shadow */
+        outline: none !important;
+        /* Removes focus outline if present */
+    }
+
+
     .category-container {
         white-space: nowrap;
         overflow-x: auto;
@@ -110,7 +120,7 @@
     .spinner {
         border: 2px solid #f3f3f3;
         /* Light grey */
-        border-top: 2px solid #113f67; 
+        border-top: 2px solid #113f67;
         /* Blue */
         border-radius: 50%;
         width: 16px;
