@@ -113,10 +113,7 @@ body {
 }
 
 /* Button hover state */
-.btn:hover {
-    background-color: #495057;
-    /* Slightly lighter background */
-}
+
 
 
 
@@ -132,6 +129,6 @@ body {
 .btn-outline-dark:not(:disabled):not(.disabled):active,
 .btn-outline-dark:not(:disabled):not(.disabled).active,
 .show>.btn-outline-dark.dropdown-toggle {
-    color: black !important;
+    
     background-color: transparent;
 }
