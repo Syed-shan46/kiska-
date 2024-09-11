@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        .add-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <script>
     function previewImage(event) {
@@ -72,12 +81,33 @@
 
                                     {{!-- onchange="previewImage(event)" --}}
 
+
                                     <div class="col-12">
                                         <label for="">Description</label>
 
                                         <textarea class="form-control" rows="7" name="description" id=""></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+
+                                    <div id="input-container">
+                                       
+                                        <div class=" mt-2">
+                                            <input type="text" placeholder="Heading">
+                                            <br>
+                                            <input type="text" placeholder="Key">
+                                            <input type="text" placeholder="Value">
+                                            <br>
+                                             <a class="add-link btn btn-primary text-white" id="add-more-key-value">Add
+                                            Key-Value</a>
+                                            <!-- Add link for adding more key-value pairs under this heading -->
+                                            <a class="add-link btn btn-primary text-white"
+                                                id="add-heading-with-key-values">Add Heading</a>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <button type="submit" class="btn btn-primary mt-5">Submit</button>
                                 </div>
                             </div>
                     </form>
@@ -88,7 +118,83 @@
     </div>
 
 
+    <script>
+        const container = document.getElementById('input-container');
+        const addHeadingLink = document.getElementById('add-heading-with-key-values');
 
+        // Function to handle adding key-value inputs dynamically
+        function addKeyValueInputs(linkElement) {
+            const parentDiv = linkElement.parentElement;
+
+            // Create new key and value input fields
+            const keyInput = document.createElement('input');
+            keyInput.type = 'text';
+            keyInput.placeholder = 'Key';
+
+            const valueInput = document.createElement('input');
+            valueInput.type = 'text';
+            valueInput.placeholder = 'Value';
+
+            // Append key and value inputs before the add link
+            parentDiv.insertBefore(keyInput, linkElement);
+            parentDiv.insertBefore(valueInput, linkElement);
+            parentDiv.insertBefore(document.createElement('br'), linkElement); // Add line break
+        }
+
+        // Event listener for "Add Key-Value" link
+        document.getElementById('add-more-key-value').addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default link behavior
+            addKeyValueInputs(this);
+        });
+
+        // Function to create a new heading with key-value inputs
+        function createHeadingWithKeyValueInputs() {
+            // Create a new div for the heading and key-value inputs
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+
+            // Create heading input
+            const headingInput = document.createElement('input');
+            headingInput.type = 'text';
+            headingInput.placeholder = 'Heading';
+
+            // Create key and value input fields
+            const keyInput = document.createElement('input');
+            keyInput.type = 'text';
+            keyInput.placeholder = 'Key';
+
+            const valueInput = document.createElement('input');
+            valueInput.type = 'text';
+            valueInput.placeholder = 'Value';
+
+            // Create the add link for adding more key-value pairs
+            const addLink = document.createElement('a');
+            addLink.textContent = '+';
+            addLink.className = 'add-link';
+            addLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                addKeyValueInputs(this);
+            });
+            inputGroup.appendChild(document.createElement('br'));
+
+            // Append inputs to the new input group
+            inputGroup.appendChild(headingInput);
+            inputGroup.appendChild(document.createElement('br'));
+            inputGroup.appendChild(keyInput);
+            inputGroup.appendChild(valueInput);
+            inputGroup.appendChild(document.createElement('br'));
+            inputGroup.appendChild(addLink);
+
+            // Append the input group to the container
+            container.appendChild(inputGroup);
+        }
+
+        // Event listener for adding a new heading with key-value inputs
+        addHeadingLink.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default link behavior
+            createHeadingWithKeyValueInputs();
+        });
+    </script>
 </body>
 
 </html>

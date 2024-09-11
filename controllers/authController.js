@@ -19,7 +19,7 @@ const checkEmailExists = async (email) => {
 // Helper function to validate email
 const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    return emailRegex.test(email.toLowerCase());
 };
 
 const handleRegister = async (req, res) => {

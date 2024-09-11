@@ -167,51 +167,94 @@
     /* Popup container, initially hidden */
     .popup-container {
         display: none;
-        /* Hidden by default */
+        /* Initially hidden */
         position: fixed;
-        top: 0;
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
         left: 0;
+        top: 0;
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        /* Semi-transparent background */
-        z-index: 9999;
-        /* Ensure it appears above other content */
-        justify-content: center;
-        align-items: center;
     }
 
-    /* Popup content box */
     .popup-content {
-        background-color: white;
+        background-color: #fff;
+        margin: 15% auto;
         padding: 20px;
+        border: 1px solid #888;
         width: 300px;
+        text-align: center;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transform: scale(0);
-        /* Start scaled down */
-        transition: transform 0.3s ease;
-        /* Zoom-in effect */
     }
 
-    /* Show the popup with zoom-in effect */
-    .popup-container.show .popup-content {
-        transform: scale(1);
-        /* Fully zoomed in to normal size */
-    }
-
-    /* Close button inside the popup */
     .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 24px;
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: black;
+        text-decoration: none;
         cursor: pointer;
     }
 
     .product {
         border-radius: .2rem;
         padding-bottom: 10px;
+    }
+
+    .spinner-border {
+        border: 2px solid #f3f3f3;
+        /* Light grey */
+        border-top: 2px solid #113f67;
+        /* Blue */
+        border-radius: 50%;
+        width: 16px;
+        height: 14px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .fa-circle-exclamation {
+        font-size: 14px;
+        color: red;
+        margin-left: 10px !important;
+    }
+
+    /* Set a fixed width for the button */
+    .add-btn {
+        min-width: 120px;
+        border: ;
+        transition: border 0.3s;
+    }
+
+    .add-btn.border-red {
+        border-color: red;
+        /* Border color when showing exclamation */
+    }
+
+    /* Center content inside the button */
+    #add-btn .spinner-border,
+    #add-btn .bi,
+    #add-btn span {
+        text-align: center;
+        /* Full width inside the button */
+    }
+
+    .product-label.label-new {
+        color: #333;
+        background-color: yellow;
     }
 </style>
 
@@ -461,14 +504,13 @@
                             <a class="nav-link active" id="elec-new-link" data-toggle="tab" href="#elec-new-tab"
                                 role="tab" aria-controls="elec-new-tab" aria-selected="true">Products</a>
                         </li>
-                        {{!-- <li class="nav-item">
-                            <a class="nav-link" id="elec-featured-link" data-toggle="tab" href="#elec-featured-tab"
-                                role="tab" aria-controls="elec-featured-tab" aria-selected="false">45 days🚚</a>
-                        </li>
+
+                        {{!--
                         <li class="nav-item">
                             <a class="nav-link" id="elec-featured-link" data-toggle="tab" href="#elec-featured-tab"
-                                role="tab" aria-controls="elec-featured-tab" aria-selected="false">Others</a>
+                                role="tab" aria-controls="elec-featured-tab" aria-selected="false">Videos</a>
                         </li> --}}
+
                         {{!-- <li class="nav-item">
                             <a class="nav-link" id="elec-best-link" data-toggle="tab" href="#elec-best-tab" role="tab"
                                 aria-controls="elec-best-tab" aria-selected="false">Best Seller</a>
@@ -521,9 +563,13 @@
                                 </form>
 
                                 {{else}}
-                                <button class="btn btn-outline-primary ml-3 " data-aos="flip-up"
-                                    data-aos-duration="2500" title="Add to cart" onclick="showLoginPopup()"><span>Add to
-                                        Cart</span></button>
+
+                                <button id="add-btn" class="btn btn-outline-primary add-btn" data-aos="flip-up"
+                                    data-aos-duration="2500" onclick="handleButtonClick(this)">
+                                    <div class="spinner-border spinner-border-sm hidden" role="status"></div>
+                                    <i class="fa fa-circle-exclamation hidden"></i>
+                                    <span>Add to Cart</span>
+                                </button>
                                 {{/if}}
 
                                 {{!-- --}}
@@ -535,31 +581,16 @@
                     </div><!-- End .row -->
 
                     <div class="row justify-content-center" data-aos="fade-right" data-aos-duration="2000">
-                        <a href="/store" class="btn btn-outline-dark mt-2"> STORE <i
+                        <a href="/store" class="btn btn-outline-primary mt-1"> STORE <i
                                 class="fa-solid fa-arrow-right-long"></i></a>
                     </div>
                 </div><!-- .End .tab-pane -->
             </div><!-- .End .tab-content -->
-
-
-
-
         </div><!-- End .container -->
 
-
         <div class="mb-3"></div><!-- End .mb-3 -->
-
-
-
         <div class="mb-1"></div><!-- End .mb-1 -->
-
-
-
         <div class="mb-3"></div><!-- End .mb-3 -->
-
-
-
-
 
         <div class="container mt-5 p-5">
             <div class="row justify-content-center" data-aos="fade-right" data-aos-duration="1500">
@@ -584,6 +615,20 @@
 
 
 
+
+        <!-- Custom Popup -->
+        <div id="loginPopup" class="popup-container" onclick="closePopup()">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup()">&times;</span>
+                <h4>Login Required</h4>
+                <p id="popupMessage">You are not logged in. Please log in to add items to your cart.</p>
+                <button class="btn btn-primary mt-1" onclick="redirectToLogin()">Log In</button>
+            </div>
+        </div>
+
+
+
+
         {{>footer}}
         </div><!-- End .page-wrapper -->
 
@@ -600,29 +645,8 @@
         {{>user-mobile-menu}}
         {{/if}}
 
-        {{!-- <div class="container newsletter-popup-container mfp-hide" id="loginPopup">
-            <div class="row justify-content-center">
-                <div class="col-10">
-                    <div class="row no-gutters bg-white newsletter-popup-content">
-                        <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
-                            <div class="banner-content text-center">
-                                <p id="popupMessage"></p> <!-- Message will be inserted here -->
-                                <button onclick="redirectToLogin()">Log In</button>
-                                <button onclick="closePopup()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <div id="loginPopup" class="popup-container" onclick="closePopup()">
-            <div class="popup-content">
-                <span class="close-btn" onclick="closePopup()">&times;</span>
-                <h4>Login Required</h4>
-                <p id="popupMessage">You are not logged in. Please log in to add items to your cart.</p>
-                <button class="btn btn-primary mt-1" onclick="redirectToLogin()">Log In</button>
-            </div>
-        </div>
+
+
 
 
         <script>
@@ -661,6 +685,53 @@
 
         </script>
 
+        <script>
+            function handleButtonClick(buttonElement) {
+                const spinner = buttonElement.querySelector('.spinner-border');
+                const exclamation = buttonElement.querySelector('.fa-circle-exclamation');
+                const buttonText = buttonElement.querySelector('span');
+
+                // Show spinner and hide button text
+                spinner.classList.remove('hidden');
+                buttonText.classList.add('hidden');
+
+                // After 2 seconds, show exclamation mark and change button border color
+                setTimeout(function () {
+                    spinner.classList.add('hidden');
+                    exclamation.classList.remove('hidden');
+                    buttonElement.classList.add('border-red');
+
+                    // After 1 second of showing the exclamation, reset the button
+                    setTimeout(function () {
+                        exclamation.classList.add('hidden');
+                        buttonText.classList.remove('hidden');
+
+                        // Reset button border color
+                        buttonElement.classList.remove('border-red');
+
+                        // Show the custom popup after resetting the button
+                        showPopup();
+
+                    }, 1000); // 1 second delay for resetting the button
+
+                }, 2000); // 2 seconds delay for showing the exclamation icon
+            }
+
+            // Function to display the popup
+            function showPopup() {
+                document.getElementById('loginPopup').style.display = 'flex';
+            }
+
+            // Function to close the popup
+            function closePopup() {
+                document.getElementById('loginPopup').style.display = 'none'; // Hide the popup
+            }
+
+            // Optional function for the login button inside the popup
+            function redirectToLogin() {
+                window.location.href = '/login'; // Replace with your actual login URL
+            }
+        </script>
 
 </body>
 
