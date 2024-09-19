@@ -295,31 +295,9 @@
                                 <span class="slider-loader"></span><!-- End .slider-loader -->
                             </div><!-- End .intro-slider-container -->
                         </div><!-- End .col-lg-8 -->
-                        {{!-- <div class="col-md-6">
-                            <div class="product-gallery product-gallery-vertical">
-                                <div class="row justify-content-center">
-                                    <figure class="product-main-image">
-                                        <img id="product-zoom" src="/images/{{product.mainImage}}"
-                                            data-zoom-image="assets/images/products/single/1-big.jpg"
-                                            alt="product image">
-                                    </figure><!-- End .product-main-image -->
 
-                                    <div class="thumbnail-container">
-                                        <div class="img-box">
-                                            <img src="/images/{{product.mainImage}}" alt=""
-                                                class="thumbnail-image active">
-                                        </div>
-                                        {{#each product.images }}
-                                        <div class="img-box">
-                                            <img src="/images/{{this}}" alt="" class="thumbnail-image">
-                                        </div>
-                                        {{/each}}
-                                    </div>
-                                </div><!-- End .row -->
-                            </div><!-- End .product-gallery -->
-                        </div><!-- End .col-md-6 --> --}}
 
-                        <div class="col-md-6 mt-lg-4">
+                        <div class="col-md-6 col-lg-4 mt-lg-4">
                             <div class="product-details">
                                 <h1 class="product-title">{{product.name}}</h1>
 
@@ -330,12 +308,7 @@
 
                             </div><!-- End .details-filter-row -->
 
-                            {{#if inCart }}
-                            <div class="product-details-action mt-2">
-                                <button onclick="window.location.href='/cart'" type="button"
-                                    class="btn-product btn-cart"><span>Go to cart</span></button>
-                            </div><!-- End .product-details-action -->
-                            {{else}}
+
                             {{#if isLoggedIn}}
                             <form action="/cart/add" method="POST">
                                 <input type="hidden" name="userId" value="{{userId}}">
@@ -351,7 +324,7 @@
                                         class="text-dark">add to
                                         cart</span></button>
                                 {{/if}}
-                                {{/if}}
+
 
                                 <div class="product-details-footer">
                                     <div class="social-icons social-icons-sm">

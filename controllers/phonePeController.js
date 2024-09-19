@@ -43,7 +43,7 @@ payController = async (req, res) => {
             "merchantId": MERCHANT_ID,
             "merchantTransactionId": merchantTransactionId,
             "merchantUserId": userId,
-            "amount": totalAmount * 100,
+            "amount": 100,
             "redirectUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,
             "redirectMode": "REDIRECT",
             "callbackUrl": `https://kiska.in/pay/validate/${merchantTransactionId}`,

@@ -17,11 +17,13 @@ const productSchema = new mongoose.Schema({
     images: [{
         type: String,
     }],
+    mrp: {
+        type: Number,
+    },
     price: {
         type: Number,
         required: true,
     },
-
 
 })
 
